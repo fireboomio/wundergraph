@@ -1,0 +1,159 @@
+package logging
+
+import (
+	"context"
+	"fmt"
+	"github.com/hashicorp/go-uuid"
+	"golang.org/x/exp/slices"
+	"math"
+	"net/http"
+	"os"
+	"strings"
+	"time"
+
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+)
+
+const (
+	RequestIDHeader = "X-Request-Id"
+
+	// logger field name must be aligned with fastify
+	requestIDField = "reqId"
+)
+
+type RequestIDKey struct{}
+
+func New(prettyLogging bool, debug bool, level zapcore.Level) *zap.Logger {
+	return newZapLogger(zapcore.AddSync(os.Stdout), prettyLogging, debug, level)
+}
+
+func zapBaseEncoderConfig() zapcore.EncoderConfig {
+	ec := zap.NewProductionEncoderConfig()
+	ec.EncodeDuration = zapcore.SecondsDurationEncoder
+	ec.TimeKey = "time"
+	return ec
+}
+
+func zapJsonEncoder() zapcore.Encoder {
+	ec := zapBaseEncoderConfig()
+	ec.EncodeTime = func(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+		nanos := t.UnixNano()
+		millis := int64(math.Trunc(float64(nanos) / float64(time.Millisecond)))
+		enc.AppendInt64(millis)
+	}
+	return zapcore.NewJSONEncoder(ec)
+}
+
+func zapConsoleEncoder() zapcore.Encoder {
+	ec := zapBaseEncoderConfig()
+	ec.ConsoleSeparator = " "
+	ec.EncodeTime = zapcore.RFC3339TimeEncoder
+	ec.EncodeLevel = zapcore.CapitalColorLevelEncoder
+	return zapcore.NewConsoleEncoder(ec)
+}
+
+func newZapLogger(syncer zapcore.WriteSyncer, prettyLogging bool, debug bool, level zapcore.Level) *zap.Logger {
+	var encoder zapcore.Encoder
+	var zapOpts []zap.Option
+
+	if prettyLogging {
+		encoder = zapConsoleEncoder()
+	} else {
+		encoder = zapJsonEncoder()
+	}
+
+	if debug {
+		zapOpts = append(zapOpts, zap.AddCaller(), zap.AddStacktrace(zap.ErrorLevel))
+	}
+
+	zapLogger := zap.New(zapcore.NewCore(
+		encoder,
+		syncer,
+		level,
+	), zapOpts...)
+
+	if prettyLogging {
+		return zapLogger
+	}
+
+	host, err := os.Hostname()
+	if err != nil {
+		host = "unknown"
+	}
+
+	return zapLogger.With(
+		zap.String("hostname", host),
+		zap.Int("pid", os.Getpid()),
+	)
+}
+
+func FindLogLevel(logLevel string) (zapcore.Level, error) {
+	switch strings.ToUpper(logLevel) {
+	case "DEBUG":
+		return zap.DebugLevel, nil
+	case "INFO":
+		return zap.InfoLevel, nil
+	case "WARNING":
+		return zap.WarnLevel, nil
+	case "ERROR":
+		return zap.ErrorLevel, nil
+	case "FATAL":
+		return zap.FatalLevel, nil
+	case "PANIC":
+		return zap.PanicLevel, nil
+	default:
+		return -1, fmt.Errorf("unknown log level: %s", logLevel)
+	}
+}
+
+var applyRequestIdPathPrefixes = []string{
+	"/auth/",
+	"/operations/",
+	"/internal/operations/",
+	"/s3/",
+}
+
+func RequestIDMiddleware(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if slices.ContainsFunc(applyRequestIdPathPrefixes, func(prefix string) bool {
+			return strings.HasPrefix(r.URL.Path, prefix)
+		}) {
+			requestID := r.Header.Get(RequestIDHeader)
+			if requestID == "" {
+				requestID, _ = uuid.GenerateUUID()
+				r.Header.Set(RequestIDHeader, requestID)
+			}
+
+			r = r.WithContext(context.WithValue(r.Context(), RequestIDKey{}, requestID))
+		}
+		handler.ServeHTTP(w, r)
+	})
+}
+
+func RequestIDFromContext(ctx context.Context) string {
+	requestID, ok := ctx.Value(RequestIDKey{}).(string)
+	if !ok {
+		return ""
+	}
+
+	return requestID
+}
+
+func WithRequestID(reqID string) zap.Field {
+	return zap.String(requestIDField, reqID)
+}
+
+func WithRequestIDFromContext(ctx context.Context) zap.Field {
+	return WithRequestID(RequestIDFromContext(ctx))
+}
+
+func NoneMultipartContentType(request *http.Request) bool {
+	// If the request looks like a file upload, avoid printing the whole
+	// encoded file as a debug message.
+	return !strings.HasPrefix(request.Header.Get("Content-Type"), "multipart/form-data")
+}
+
+func NoneStreamContentType(headers http.Header) bool {
+	return !strings.HasSuffix(headers.Get("Content-Type"), "-stream")
+}

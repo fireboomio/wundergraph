@@ -1,0 +1,847 @@
+syntax = "proto3";
+package wgpb;
+option go_package = "github.com/wundergraph/wundergraph/pkg/wgpb";
+
+
+message WunderNodeConfig {
+  Server server = 1;
+  Logging logging = 2;
+  repeated Api apis = 3;
+}
+
+message Server {
+  int64 gracefulShutdownTimeout = 1;
+  int64 keepAlive = 2;
+  int64 readTimeout = 3;
+  int64 writeTimeout = 4;
+  int64 idleTimeout = 5;
+  repeated Certificate certificates = 6;
+}
+
+message Certificate {
+  string keyPem = 2;
+  string certPem = 3;
+}
+
+message Logging {
+  LogLevel level = 1;
+}
+
+enum LogLevel {
+  DEBUG = 0;
+  INFO = 1;
+  ERROR = 2;
+  WARNING = 3;
+  PANIC = 4;
+  FATAL = 5;
+}
+
+message Api {
+  repeated string hosts = 1;
+  string pathPrefix = 2;
+  EngineConfiguration engineConfiguration = 3;
+  bool enableSingleFlight = 4;
+  bool enableGraphqlEndpoint = 5;
+  repeated Operation operations = 6;
+  CorsConfiguration corsConfiguration = 7;
+  string primaryHost = 8;
+  string deploymentId = 9;
+  ApiCacheConfig cacheConfig = 10;
+  string apiConfigHash = 11;
+  ApiAuthenticationConfig authenticationConfig = 12;
+  repeated S3UploadConfiguration s3UploadConfiguration = 13;
+  repeated WebhookConfiguration webhooks = 14;
+  string hooksServerURL = 15;
+}
+
+message ApiAuthenticationConfig {
+  CookieBasedAuthentication cookieBased = 1;
+  ApiAuthenticationHooks hooks = 2;
+  JwksBasedAuthentication jwksBased = 3;
+  repeated string publicClaims = 4;
+}
+
+message JwksBasedAuthentication {
+  repeated JwksAuthProvider providers = 1;
+}
+
+message JwksAuthProvider {
+  ConfigurationVariable issuer = 5;
+  ConfigurationVariable jwksJson = 2;
+  int64 userInfoCacheTtlSeconds = 4;
+}
+
+message ApiAuthenticationHooks {
+  bool postAuthentication = 1;
+  bool mutatingPostAuthentication = 2;
+  bool revalidateAuthentication = 3;
+  bool postLogout = 4;
+}
+
+message CookieBasedAuthentication {
+  repeated AuthProvider providers = 1;
+  repeated ConfigurationVariable authorizedRedirectUris = 2;
+  repeated ConfigurationVariable authorizedRedirectUriRegexes = 3;
+  ConfigurationVariable hashKey = 4;
+  ConfigurationVariable blockKey = 5;
+  ConfigurationVariable csrfSecret = 6;
+}
+
+message AuthProvider {
+  string id = 1;
+  AuthProviderKind kind = 2;
+  GithubAuthProviderConfig githubConfig = 3;
+  OpenIDConnectAuthProviderConfig oidcConfig = 4;
+}
+
+enum AuthProviderKind {
+  AuthProviderGithub = 0;
+  AuthProviderOIDC = 1;
+  AuthProviderAuth0 = 2;
+}
+
+message GithubAuthProviderConfig {
+  ConfigurationVariable clientId = 1;
+  ConfigurationVariable clientSecret = 2;
+}
+
+message OpenIDConnectQueryParameter {
+  ConfigurationVariable name = 1;
+  ConfigurationVariable value = 2;
+}
+
+message OpenIDConnectAuthProviderConfig {
+  ConfigurationVariable issuer = 1;
+  ConfigurationVariable clientId = 2;
+  ConfigurationVariable clientSecret = 3;
+  repeated OpenIDConnectQueryParameter queryParameters = 4;
+}
+
+message ApiCacheConfig {
+  ApiCacheKind kind = 1;
+  InMemoryCacheConfig inMemoryConfig = 2;
+  RedisCacheConfig redisConfig = 3;
+}
+
+enum ApiCacheKind {
+  NO_CACHE = 0;
+  IN_MEMORY_CACHE = 1;
+  REDIS_CACHE = 2;
+}
+
+message InMemoryCacheConfig {
+  int64 maxSize = 1;
+}
+
+message RedisCacheConfig {
+  string redisUrlEnvVar = 1;
+}
+
+message Operation {
+  string name = 1;
+  string path = 17;
+  string content = 2;
+  OperationType operationType = 3;
+  OperationExecutionEngine engine = 16;
+  bool internal = 13; // they cannot be reached from the public surface of the API
+  string responseSchema = 5; // [omitempty]
+  string variablesSchema = 4; // [omitempty]
+  string interpolationVariablesSchema = 14; // [omitempty]
+  OperationCacheConfig cacheConfig = 7;
+  OperationAuthenticationConfig authenticationConfig = 8;
+  OperationLiveQueryConfig liveQueryConfig = 9;
+  OperationAuthorizationConfig authorizationConfig = 10;
+  OperationHooksConfiguration hooksConfiguration = 11;
+  OperationVariablesConfiguration variablesConfiguration = 12;
+  repeated PostResolveTransformation postResolveTransformations = 15;
+  map<string, DatasourceQuote> datasourceQuotes = 20;
+  OperationTransaction transaction = 21;
+  OperationRateLimit rateLimit = 22;
+  OperationSemaphore semaphore = 23;
+  repeated OperationMultipartForm multipartForms = 24;
+  bool ruleExpressionExisted = 25;
+  string internalVariablesSchema = 254; // [omitempty]
+  string injectedVariablesSchema = 255; // [omitempty]
+}
+
+message OperationSemaphore {
+  bool enabled = 1;
+  int64 tickets = 2;
+  int64 timeoutSeconds = 3;
+}
+
+message OperationTransaction {
+  int64 maxWaitSeconds = 1;
+  int64 timeoutSeconds = 2;
+  OperationTransactionIsolationLevel isolationLevel = 3;
+}
+
+enum OperationTransactionIsolationLevel {
+  read_committed = 0;
+  read_uncommitted = 1;
+  repeatable_read = 2;
+  serializable = 3;
+}
+
+message OperationMultipartForm {
+  string fieldName = 1;
+  bool isArray = 2;
+}
+
+message OperationRateLimit {
+  bool enabled = 1;
+  int32 requests = 2;
+  int64 perSecond = 3;
+}
+
+message DatasourceQuote {
+  repeated string fields = 1;
+}
+
+enum OperationExecutionEngine {
+  ENGINE_GRAPHQL = 0;
+  ENGINE_FUNCTION = 1;
+  ENGINE_PROXY = 2;
+}
+
+message PostResolveTransformation {
+  PostResolveTransformationKind kind = 1;
+  int32 depth = 2;
+  PostResolveGetTransformation get = 3;
+}
+
+message PostResolveGetTransformation {
+  repeated string from = 1;
+  repeated string to = 2;
+  string dateTimeFormat = 3;
+}
+
+enum PostResolveTransformationKind {
+  GET_POST_RESOLVE_TRANSFORMATION = 0;
+}
+
+message OperationVariablesConfiguration {
+  repeated VariableInjectionConfiguration injectVariables = 1;
+  repeated VariableWhereInputConfiguration whereInputs = 2;
+}
+
+message VariableInjectionConfiguration {
+  repeated string variablePathComponents = 1;
+  InjectVariableKind variableKind = 2;
+  string dateFormat = 3;
+  DateOffset dateOffset = 6;
+  string environmentVariableName = 4;
+  string fromHeaderName = 5;
+  string ruleExpression = 7;
+  string ruleValueTypeName = 8;
+}
+
+enum InjectVariableKind {
+  UUID = 0;
+  DATE_TIME = 1;
+  ENVIRONMENT_VARIABLE = 2;
+  FROM_HEADER = 3;
+  RULE_EXPRESSION = 4;
+}
+
+message DateOffset {
+  bool previous = 1;
+  int32 value = 2;
+  DateOffsetUnit unit = 3;
+}
+
+enum DateOffsetUnit {
+  YEAR = 0;
+  MONTH = 1;
+  DAY = 2;
+  HOUR = 3;
+  MINUTE = 4;
+  SECOND = 5;
+}
+
+message GraphQLDataSourceHooksConfiguration {
+  bool onWSTransportConnectionInit = 1;
+}
+
+message OperationHooksConfiguration {
+  bool preResolve = 1;
+  bool postResolve = 2;
+  bool mutatingPreResolve = 3;
+  bool mutatingPostResolve = 4;
+  bool customResolve = 8;
+  MockResolveHookConfiguration mockResolve = 5;
+  bool httpTransportOnRequest = 6;
+  bool httpTransportOnResponse = 7;
+  bool onConnectionInit = 10;
+  bool httpTransportBeforeRequest = 11;
+  bool httpTransportAfterResponse = 12;
+}
+
+message MockResolveHookConfiguration {
+  bool enabled = 1;
+  int64 subscriptionPollingIntervalMillis = 2;
+}
+
+message OperationAuthorizationConfig {
+  repeated ClaimConfig claims = 1;
+  OperationRoleConfig roleConfig = 2;
+}
+
+message OperationRoleConfig {
+  // the user must match all roles
+  repeated string requireMatchAll = 1;
+  // the user must match at least one of the roles
+  repeated string requireMatchAny = 2;
+  // the user must not match all of the roles
+  repeated string denyMatchAll = 3;
+  // the user must not match any of the roles
+  repeated string denyMatchAny = 4;
+}
+
+message CustomClaim {
+  string name = 1;
+  repeated string jsonPathComponents = 2;
+  ValueType type = 3;
+  bool required = 4;
+}
+
+message ClaimConfig {
+  repeated string variablePathComponents = 1;
+  ClaimType claimType = 2;
+  // Available iff claimType == CUSTOM
+  optional CustomClaim custom = 3;
+  ClaimRemoveIfNoneMatch removeIfNoneMatch = 4;
+}
+
+message ClaimRemoveIfNoneMatch {
+  ClaimRemoveIfNoneMatchType type = 1;
+  string name = 2;
+}
+
+enum ClaimRemoveIfNoneMatchType {
+  Header = 0;
+  Environment = 1;
+}
+
+message VariableWhereInputConfiguration {
+  repeated string variablePathComponents = 1;
+  VariableWhereInput whereInput = 2;
+}
+
+message VariableWhereInput {
+  optional VariableWhereInput not = 1;
+  optional VariableWhereInputFilter filter = 2;
+}
+
+message VariableWhereInputFilter {
+  string field = 1;
+  VariableWhereInputScalarFilter scalar = 2;
+  VariableWhereInputRelationFilter relation = 3;
+}
+
+message VariableWhereInputScalarFilter {
+  VariableWhereInputScalarFilterType type = 1;
+  bool insensitive = 2;
+}
+
+message VariableWhereInputRelationFilter {
+  VariableWhereInputRelationFilterType type = 1;
+  VariableWhereInput where = 2;
+}
+
+enum VariableWhereInputScalarFilterType {
+  equals = 0;
+  in = 1;
+  notIn = 2;
+  lt = 3;
+  lte = 4;
+  gt = 5;
+  gte = 6;
+  contains = 7;
+  startsWith = 8;
+  endsWith = 9;
+}
+
+enum VariableWhereInputRelationFilterType {
+  is = 0;
+  isNot = 1;
+  some = 2;
+  every = 3;
+  none = 4;
+}
+
+enum ClaimType {
+  // https://www.iana.org/assignments/jwt/jwt.xhtml
+  option allow_alias = true;
+  ISSUER = 0; // iss
+  PROVIDER = 0; // alias for iss, deprecated
+  SUBJECT = 1; // sub
+  USERID = 1; // alias for sub
+  NAME = 2; // name
+  GIVEN_NAME = 3; // given_name
+  FAMILY_NAME = 4; // family_name
+  MIDDLE_NAME = 5; // middle_name
+  NICKNAME = 6; // nickname
+  PREFERRED_USERNAME = 7; // preferred_username
+  PROFILE = 8; // profile
+  PICTURE = 9; // picture
+  WEBSITE = 10; // website
+  EMAIL = 11; // email
+  EMAIL_VERIFIED = 12; // email_verified
+  GENDER = 13; // gender
+  BIRTH_DATE = 14; // birthdate
+  ZONE_INFO = 15; // zoneinfo
+  LOCALE = 16; // locale
+  LOCATION = 17; // location
+  ROLES = 18; // roles
+
+  // CustomAttributes = 998;
+  CUSTOM = 999;
+
+}
+
+enum ValueType {
+  STRING = 0;
+  INT = 1;
+  FLOAT = 2;
+  BOOLEAN = 3;
+  ARRAY = 4;
+}
+
+message OperationLiveQueryConfig {
+  bool enabled = 1;
+  int64 pollingIntervalSeconds = 2;
+}
+
+message OperationAuthenticationConfig {
+  bool authRequired = 1;
+}
+
+message OperationCacheConfig {
+  bool enabled = 1;
+  int64 maxAge = 2;
+  bool public = 3;
+  int64 staleWhileRevalidate = 4;
+}
+
+enum OperationType {
+  QUERY = 0;
+  MUTATION = 1;
+  SUBSCRIPTION = 2;
+}
+
+message EngineConfiguration {
+  int64 defaultFlushInterval = 1;
+  repeated DataSourceConfiguration datasourceConfigurations = 2;
+  repeated FieldConfiguration fieldConfigurations = 3;
+  string graphqlSchema = 4;
+  repeated TypeConfiguration typeConfigurations = 5;
+}
+
+message DataSourceConfiguration {
+  DataSourceKind kind = 1;
+  repeated TypeField rootNodes = 2;
+  repeated TypeField childNodes = 3;
+  bool overrideFieldPathFromAlias = 4;
+  map<string, DataSourceCustom_REST> customRestMap = 12; // [omitempty]
+  map<string, DataSourceCustom_REST_Rewriter> customRestRequestRewriterMap = 13; // [omitempty]
+  map<string, DataSourceCustom_REST_Rewriter> customRestResponseRewriterMap = 14; // [omitempty]
+  DataSourceCustom_REST customRest = 5;
+  DataSourceCustom_GraphQL customGraphql = 6;
+  DataSourceCustom_Static customStatic = 7;
+  DataSourceCustom_Database customDatabase = 8;
+  repeated DirectiveConfiguration directives = 9;
+  int64 requestTimeoutSeconds = 10;
+  string id = 11;
+}
+
+message DirectiveConfiguration {
+  string directiveName = 1;
+  string renameTo = 2;
+}
+
+enum DataSourceKind {
+  STATIC = 0;
+  REST = 1;
+  GRAPHQL = 2;
+  POSTGRESQL = 3;
+  MYSQL = 4;
+  SQLSERVER = 5;
+  MONGODB = 6;
+  SQLITE = 7;
+  PRISMA = 8;
+  ASYNCAPI = 9;
+}
+
+message DataSourceCustom_REST {
+  FetchConfiguration fetch = 1;
+  RESTSubscriptionConfiguration subscription = 2;
+  repeated StatusCodeTypeMapping statusCodeTypeMappings = 3;
+  string defaultTypeName = 4;
+  repeated DataSourceRESTRewriter requestRewriters = 5; // [omitempty]
+  repeated DataSourceRESTRewriter responseRewriters = 6; // [omitempty]
+  DataSourceRESTResponseExtractor responseExtractor = 7; // [omitempty]
+}
+
+message DataSourceRESTResponseExtractor {
+  string statusCodeJsonpath = 1;
+  string errorMessageJsonpath = 2;
+  repeated DataSourceRESTResponseStatusCodeScope statusCodeScopes = 3;
+}
+
+message DataSourceRESTResponseStatusCodeScope {
+  int32 min = 1;
+  int32 max = 2;
+}
+
+enum DataSourceRESTRewriterType {
+  quoteObject = 0;
+  valueRewrite = 1;
+  fieldRewrite = 2;
+  extractAllSubfield = 3;
+  extractCustomEnumFieldValue = 4;
+  applyAllSubObject = 5;
+  applyBySubCommonFieldValue = 6;
+  applyBySubfieldType = 7;
+}
+
+message DataSourceCustom_REST_Rewriter {
+  repeated DataSourceRESTRewriter rewriters = 1;
+}
+
+message DataSourceRESTRewriter {
+  repeated string pathComponents = 1;
+  DataSourceRESTRewriterType type = 2;
+  string quoteObjectName = 3; // [omitempty]
+  string fieldRewriteTo = 4; // [omitempty]
+  // request rewrite
+  map<string, string> valueRewrites = 5; // [omitempty]
+  string customObjectName = 6; // [omitempty]
+  string customEnumField = 7; // [omitempty]
+  // response rewrite
+  string applySubCommonField = 8; // [omitempty]
+  map<string, string> applySubCommonFieldValues = 9; // [omitempty]
+  repeated DataSourceRESTSubObject applySubObjects = 10; // [omitempty]
+  repeated DataSourceRESTSubfield applySubFieldTypes = 11; // [omitempty]
+}
+
+message DataSourceRESTSubObject {
+  string name = 1;
+  repeated DataSourceRESTSubfield fields = 2;
+}
+
+message DataSourceRESTSubfield {
+  string name = 1;
+  int32 type = 2;
+}
+
+message StatusCodeTypeMapping {
+  int64 statusCode = 1;
+  string typeName = 2;
+  bool injectStatusCodeIntoBody = 3;
+}
+
+message DataSourceCustom_GraphQL {
+  FetchConfiguration fetch = 1;
+  GraphQLSubscriptionConfiguration subscription = 2;
+  GraphQLFederationConfiguration federation = 3;
+  string upstreamSchema = 4;
+  GraphQLDataSourceHooksConfiguration hooksConfiguration = 5;
+  repeated SingleTypeField customScalarTypeFields = 6;
+}
+
+message DataSourceCustom_Database {
+  ConfigurationVariable databaseURL = 1;
+  string prismaSchema = 2;
+  string graphqlSchema = 3;
+  // closeTimeoutSeconds define that the database connection will be closed after the given amount of seconds of inactivity
+  int32 closeTimeoutSeconds = 4;
+  repeated SingleTypeField jsonTypeFields = 5;
+  repeated string jsonInputVariables = 6;
+  string environmentVariable = 7;
+}
+
+message GraphQLFederationConfiguration {
+  bool enabled = 1;
+  string serviceSdl = 2;
+}
+
+message DataSourceCustom_Static {
+  ConfigurationVariable data = 1;
+}
+
+message GraphQLSubscriptionConfiguration {
+  bool enabled = 1;
+  ConfigurationVariable url = 2;
+  bool useSSE = 3;
+}
+
+message FetchConfiguration {
+  // You should either configure url OR a combination of baseURL and path
+  // If url resolves to a non empty string, it takes precedence over baseURL and path
+  // If url resolves to an empty string, the url will be configured as "{{baseURL}}{{path}}"
+  ConfigurationVariable url = 1;
+  HTTPMethod method = 2;
+  map<string, HTTPHeader> header = 3;
+  ConfigurationVariable body = 4;
+  repeated URLQueryConfiguration query = 5;
+  UpstreamAuthentication upstreamAuthentication = 6;
+  // urlEncodeBody defines whether the body should be URL encoded or not
+  // by default, the body will be JSON encoded
+  // setting urlEncodeBody to true will render the body empty,
+  // the Header Content-Type will be set to application/x-www-form-urlencoded,
+  // and the body will be URL encoded and set as the URL Query String
+  bool urlEncodeBody = 7;
+  MTLSConfiguration mTLS = 8;
+  ConfigurationVariable baseUrl = 9;
+  ConfigurationVariable path = 10;
+  string requestContentType = 11;
+  string responseContentType = 12;
+}
+
+message MTLSConfiguration {
+  ConfigurationVariable key = 1;
+  ConfigurationVariable cert = 2;
+  bool insecureSkipVerify = 3;
+}
+
+message UpstreamAuthentication {
+  UpstreamAuthenticationKind kind = 1;
+  JwtUpstreamAuthenticationConfig jwtConfig = 2;
+  JwtUpstreamAuthenticationWithAccessTokenExchange jwtWithAccessTokenExchangeConfig = 3;
+}
+
+enum UpstreamAuthenticationKind {
+  UpstreamAuthenticationJWT = 0;
+  UpstreamAuthenticationJWTWithAccessTokenExchange = 1;
+}
+
+message JwtUpstreamAuthenticationConfig {
+  ConfigurationVariable secret = 1;
+  SigningMethod signingMethod = 2;
+}
+
+message JwtUpstreamAuthenticationWithAccessTokenExchange {
+  ConfigurationVariable secret = 1;
+  SigningMethod signingMethod = 2;
+  ConfigurationVariable accessTokenExchangeEndpoint = 3;
+}
+
+enum SigningMethod {
+  SigningMethodHS256 = 0;
+}
+
+message RESTSubscriptionConfiguration {
+  bool enabled = 1;
+  int64 pollingIntervalMillis = 2;
+  bool skipPublishSameResponse = 3;
+  string doneData = 4; // [omitempty]
+}
+
+message URLQueryConfiguration {
+  string name = 1;
+  string value = 2;
+}
+
+message HTTPHeader {
+  repeated ConfigurationVariable values = 1;
+}
+
+enum HTTPMethod {
+  GET = 0;
+  POST = 1;
+  PUT = 2;
+  DELETE = 3;
+  OPTIONS = 4;
+  CONNECT = 5;
+  HEAD = 6;
+  PATCH = 7;
+  TRACE = 8;
+}
+
+message TypeConfiguration {
+  string typeName = 1;
+  string renameTo = 2;
+}
+
+message FieldConfiguration {
+  string typeName = 1;
+  string fieldName = 2;
+  bool disableDefaultFieldMapping = 3;
+  repeated string path = 4;
+  repeated ArgumentConfiguration argumentsConfiguration = 6;
+  repeated string requiresFields = 7;
+  bool unescapeResponseJson = 8;
+}
+
+message TypeField {
+  string typeName = 1;
+  repeated string fieldNames = 2;
+  map<int32, QuoteField> quotes = 3; // [omitempty]
+}
+
+message QuoteField {
+  repeated int32 indexes = 1;
+}
+
+message SingleTypeField {
+  string typeName = 1;
+  string fieldName = 2;
+}
+
+enum ArgumentSource {
+  OBJECT_FIELD = 0;
+  FIELD_ARGUMENT = 1;
+}
+
+message ArgumentConfiguration {
+  string name = 1;
+  ArgumentSource sourceType = 2;
+  repeated string sourcePath = 3;
+  ArgumentRenderConfiguration renderConfiguration = 4;
+  string renameTypeTo = 5;
+}
+
+enum ArgumentRenderConfiguration {
+  RENDER_ARGUMENT_DEFAULT = 0;
+  RENDER_ARGUMENT_AS_GRAPHQL_VALUE = 1;
+  RENDER_ARGUMENT_AS_ARRAY_CSV = 2;
+  RENDER_ARGUMENT_AS_JSON_VALUE = 3;
+}
+// 最终结果
+message WunderGraphConfiguration {
+  UserDefinedApi api = 1;
+  string apiId = 2; // [omitempty]
+  repeated string environmentIds = 3; // [omitempty]
+  bool dangerouslyEnableGraphQLEndpoint = 4; // [omitempty]
+  string deploymentName = 5; // [omitempty]
+  string apiName = 6; // [omitempty]
+}
+
+message S3UploadProfileHooksConfiguration {
+  bool preUpload = 1;
+  bool postUpload = 2;
+}
+
+message S3UploadProfile {
+  bool requireAuthentication = 1;
+  int32 maxAllowedUploadSizeBytes = 2;
+  int32 maxAllowedFiles = 3;
+  repeated string allowedMimeTypes = 4;
+  repeated string allowedFileExtensions = 5;
+  string metadataJSONSchema = 6;
+  S3UploadProfileHooksConfiguration hooks = 7;
+}
+
+message S3UploadConfiguration {
+  string name = 1;
+  ConfigurationVariable endpoint = 2;
+  ConfigurationVariable accessKeyID = 3;
+  ConfigurationVariable secretAccessKey = 4;
+  ConfigurationVariable bucketName = 5;
+  ConfigurationVariable bucketLocation = 6;
+  bool useSSL = 7;
+  map<string, S3UploadProfile> uploadProfiles = 8;
+}
+
+message UserDefinedApi {
+  EngineConfiguration engineConfiguration = 3;
+  bool enableGraphqlEndpoint = 5;
+  repeated Operation operations = 6;
+  CorsConfiguration corsConfiguration = 7;
+  ApiAuthenticationConfig authenticationConfig = 8;
+  repeated S3UploadConfiguration s3UploadConfiguration = 9;
+  repeated ConfigurationVariable allowedHostNames = 11;
+  repeated WebhookConfiguration webhooks = 12;
+  ServerOptions serverOptions = 14;
+  NodeOptions nodeOptions = 15;
+  repeated string invalidOperationNames = 16;
+}
+
+message ListenerOptions {
+  ConfigurationVariable host = 1;
+  ConfigurationVariable port = 2;
+}
+
+message NodeLogging {
+  ConfigurationVariable level = 1;
+}
+
+message NodeOptions {
+  ConfigurationVariable nodeUrl = 1;
+  ConfigurationVariable publicNodeUrl = 4;
+  ListenerOptions listen = 2;
+  NodeLogging logger = 3;
+  int64 defaultRequestTimeoutSeconds = 5;
+}
+
+message ServerLogging {
+  ConfigurationVariable level = 1;
+}
+
+message ServerOptions {
+  ConfigurationVariable serverUrl = 1;
+  ListenerOptions listen = 2;
+  ServerLogging logger = 3;
+}
+
+message WebhookConfiguration {
+  // Name of the webhook.
+  string name = 1;
+  // The path to the bundled file.
+  // The path is relative to the bundle directory.
+  string filePath = 2;
+  WebhookVerifier verifier = 3;
+}
+
+message WebhookVerifier {
+  WebhookVerifierKind kind = 1;
+  ConfigurationVariable secret = 2;
+  string signatureHeader = 3;
+  string signatureHeaderPrefix = 4;
+}
+
+enum WebhookVerifierKind {
+  HMAC_SHA256 = 0;
+}
+
+message CorsConfiguration {
+  // AllowedOrigins is a list of origins a cross-domain request can be executed from.
+  // If the special "*" value is present in the list, all origins will be allowed.
+  // An origin may contain a wildcard (*) to replace 0 or more characters
+  // (i.e.: http://*.domain.com). Usage of wildcards implies a small performance penalty.
+  // Only one wildcard can be used per origin.
+  // Default value is ["*"]
+  repeated ConfigurationVariable allowedOrigins = 1;
+  // AllowedMethods is a list of methods the client is allowed to use with
+  // cross-domain requests. Default value is simple methods (HEAD, GET and POST).
+  repeated string allowedMethods = 2;
+  // AllowedHeaders is list of non simple headers the client is allowed to use with
+  // cross-domain requests.
+  // If the special "*" value is present in the list, all headers will be allowed.
+  // Default value is [] but "Origin" is always appended to the list.
+  repeated string allowedHeaders = 3;
+  // ExposedHeaders indicates which headers are safe to expose to the API of a CORS
+  // API specification
+  repeated string exposedHeaders = 4;
+  // MaxAge indicates how long (in seconds) the results of a preflight request
+  // can be cached
+  int64 maxAge = 5;
+  // AllowCredentials indicates whether the request can include user credentials like
+  // cookies, HTTP authentication or client side SSL certificates.
+  bool allowCredentials = 6;
+}
+
+message ConfigurationVariable {
+  ConfigurationVariableKind kind = 1;
+  string staticVariableContent = 2; // [omitempty]
+  string environmentVariableName = 3; // [omitempty]
+  string environmentVariableDefaultValue = 4; // [omitempty]
+  string placeholderVariableName = 5; // [omitempty]
+};
+
+enum ConfigurationVariableKind {
+  STATIC_CONFIGURATION_VARIABLE = 0;
+  ENV_CONFIGURATION_VARIABLE = 1;
+  PLACEHOLDER_CONFIGURATION_VARIABLE = 2;
+}

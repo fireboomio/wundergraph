@@ -1,0 +1,32 @@
+node_modules
+
+# Package manager
+pnpm-lock.yaml
+*lock.json
+
+# WunderGraph
+**/.wundergraph/cache
+**/.wundergraph/generated
+
+# Next.js build output
+.next
+out
+
+# Logs
+logs
+*.log
+
+# IDE
+.vscode
+.idea
+
+CHANGELOG.md
+
+# Ignore html files
+*.html
+
+# Ignore go files
+*.go
+
+# Generated PB files
+packages/protobuf/wgpb
