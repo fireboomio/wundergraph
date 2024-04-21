@@ -1195,9 +1195,13 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 	}()
 
 	request := input
-	unrenderVariables, ok := resolve.GetUnrenderVariables(ctx, input)
-	if ok {
+	if unrenderVariables, ok := resolve.GetUnrenderVariables(ctx, input); ok {
 		if request, err = clearUnrenderVariables(ctx, unrenderVariables, input); err != nil {
+			return
+		}
+	}
+	if skipFieldJsonPaths, ok := resolve.GetSkipFieldJsonPaths(ctx, input); ok {
+		if request, err = clearSkipFetchFieldPaths(skipFieldJsonPaths, request); err != nil {
 			return
 		}
 	}
