@@ -46,7 +46,7 @@ type UserLoader struct {
 	client            *http.Client
 	userLoadConfigs   []*UserLoadConfig
 	hooks             Hooks
-	authRequiredPaths map[string]bool
+	authRequiredFuncs map[string]func(*http.Request) bool
 }
 
 type UserLoadConfig struct {
@@ -644,7 +644,7 @@ type LoadUserConfig struct {
 	Hooks         Hooks
 }
 
-func NewLoadUserMw(config LoadUserConfig) (map[string]bool, *ristretto.Cache, func(handler http.Handler) http.Handler) {
+func NewLoadUserMw(config LoadUserConfig) (map[string]func(*http.Request) bool, *ristretto.Cache, func(handler http.Handler) http.Handler) {
 
 	var (
 		jwkConfigs    []*UserLoadConfig
@@ -721,7 +721,7 @@ func NewLoadUserMw(config LoadUserConfig) (map[string]bool, *ristretto.Cache, fu
 		)
 	}
 
-	authRequiredPaths := make(map[string]bool)
+	authRequiredFuncs := make(map[string]func(*http.Request) bool)
 	loader := &UserLoader{
 		log:             config.Log,
 		userLoadConfigs: jwkConfigs,
@@ -731,10 +731,10 @@ func NewLoadUserMw(config LoadUserConfig) (map[string]bool, *ristretto.Cache, fu
 			Timeout: time.Second * 10,
 		},
 		hooks:             config.Hooks,
-		authRequiredPaths: authRequiredPaths,
+		authRequiredFuncs: authRequiredFuncs,
 	}
 
-	return authRequiredPaths, cache, func(handler http.Handler) http.Handler {
+	return authRequiredFuncs, cache, func(handler http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			var (
 				user        User
@@ -742,7 +742,7 @@ func NewLoadUserMw(config LoadUserConfig) (map[string]bool, *ristretto.Cache, fu
 			)
 			loadErr := user.Load(loader, r)
 			if errors.As(loadErr, &deniedError) {
-				if _, ok := authRequiredPaths[r.URL.Path]; ok {
+				if requiredFunc, ok := authRequiredFuncs[r.URL.Path]; ok && (requiredFunc == nil || requiredFunc(r)) {
 					http.Error(w, loadErr.Error(), http.StatusUnauthorized)
 					return
 				}

@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/json"
 	"github.com/buger/jsonparser"
-	"github.com/gorilla/mux"
 	"github.com/wundergraph/wundergraph/pkg/authentication"
 	"github.com/wundergraph/wundergraph/pkg/hooks"
 	"github.com/wundergraph/wundergraph/pkg/pool"
@@ -16,44 +15,36 @@ import (
 )
 
 func (r *Builder) registerProxyOperation(operation *wgpb.Operation, apiPath string) error {
-	return registerProxyOperation(r.router, r.log, r.middlewareClient, operation, apiPath, false, r.authRequiredPaths)
+	handler := &ProxyHandler{
+		log:          r.log,
+		operation:    operation,
+		rbacEnforcer: authentication.NewRBACEnforcer(operation),
+		hooksClient:  r.middlewareClient,
+	}
+	routeHandler := ensureRequiresRateLimiter(operation, handler)
+	routeHandler = ensureRequiresSemaphore(operation, routeHandler)
+	routeHandler = r.ensureRequiresAuthentication(operation, routeHandler, apiPath)
+	routeHandler = intercept(routeHandler, r.middlewareClient, operation, nil)
+	r.router.Path(apiPath).Name(apiPath).Handler(routeHandler)
+
+	r.log.Debug("registered ProxyHandler",
+		zap.String("operation", operation.Path),
+		zap.String("Endpoint", apiPath),
+		zap.String("method", operation.OperationType.String()),
+	)
+	return nil
 }
 
 func (i *InternalBuilder) registerProxyOperation(operation *wgpb.Operation, apiPath string) error {
-	return registerProxyOperation(i.router, i.log, i.middlewareClient, operation, apiPath, true, nil)
-}
-
-func registerProxyOperation(router *mux.Router, log *zap.Logger, middlewareClient *hooks.Client, operation *wgpb.Operation, apiPath string, internal bool, authRequiredPaths map[string]bool) error {
-	apiName := apiPath
-	if internal {
-		apiName = internalPrefix + apiName
-	}
-	route := router.Path(apiPath).Name(apiName)
 	handler := &ProxyHandler{
-		log:          log,
+		log:          i.log,
 		operation:    operation,
 		rbacEnforcer: authentication.NewRBACEnforcer(operation),
-		hooksClient:  middlewareClient,
+		hooksClient:  i.middlewareClient,
 	}
+	i.router.Path(apiPath).Name(internalPrefix + apiPath).Handler(handler)
 
-	var (
-		routeHandler http.Handler
-		authRequired bool
-	)
-	if !internal {
-		routeHandler = ensureRequiresRateLimiter(operation, handler)
-		routeHandler = ensureRequiresSemaphore(operation, routeHandler)
-		routeHandler, authRequired = authentication.EnsureRequiresAuthentication(operation, routeHandler)
-		if authRequired && authRequiredPaths != nil {
-			authRequiredPaths[apiPath] = true
-		}
-		routeHandler = intercept(routeHandler, middlewareClient, operation, nil)
-	} else {
-		routeHandler = handler
-	}
-	route.Handler(routeHandler)
-
-	log.Debug("registered ProxyHandler",
+	i.log.Debug("registered ProxyHandler",
 		zap.String("operation", operation.Path),
 		zap.String("Endpoint", apiPath),
 		zap.String("method", operation.OperationType.String()),

@@ -112,7 +112,7 @@ type Builder struct {
 
 	cache             *apicache.CacheStruct
 	authCache         *ristretto.Cache
-	authRequiredPaths map[string]bool
+	authRequiredFuncs map[string]func(*http.Request) bool
 
 	insecureCookies     bool
 	forceHttpsRedirects bool
@@ -334,11 +334,13 @@ func (r *Builder) registerS3UploadClient(s3Provider *wgpb.S3UploadConfiguration)
 	)
 	if err != nil {
 		r.log.Error("registerS3UploadClient", zap.String("storage", s3Provider.Name), zap.Error(err))
-	} else {
-		s3Path := fmt.Sprintf("/s3/%s/upload", s3Provider.Name)
-		r.router.Handle(s3Path, http.HandlerFunc(s3.UploadFile)).Name(s3Path)
-		r.log.Debug("registerS3UploadClient", zap.String("storage", s3Provider.Name), zap.String("endpoint", s3Path))
+		return
 	}
+
+	s3Path := fmt.Sprintf("/s3/%s/upload", s3Provider.Name)
+	r.authRequiredFuncs[s3Path] = s3.AuthRequired
+	r.router.Handle(s3Path, http.HandlerFunc(s3.UploadFile)).Name(s3Path)
+	r.log.Debug("registerS3UploadClient", zap.String("storage", s3Provider.Name), zap.String("endpoint", s3Path))
 }
 
 func (r *Builder) registerWebhook(config *wgpb.WebhookConfiguration) error {
@@ -500,10 +502,7 @@ func (r *Builder) registerOperation(operation *wgpb.Operation, ctx context.Conte
 		route := r.router.Methods(http.MethodGet, http.MethodOptions).Path(apiPath).Name(apiPath)
 		routeHandler := ensureRequiresRateLimiter(operation, handler)
 		routeHandler = ensureRequiresSemaphore(operation, routeHandler)
-		routeHandler, authRequired := authentication.EnsureRequiresAuthentication(operation, routeHandler)
-		if authRequired {
-			r.authRequiredPaths[apiPath] = true
-		}
+		routeHandler = r.ensureRequiresAuthentication(operation, routeHandler, apiPath)
 		routeHandler = intercept(routeHandler, r.middlewareClient, operation, queryParamsAllowList)
 		route.Handler(routeHandler)
 
@@ -552,10 +551,7 @@ func (r *Builder) registerOperation(operation *wgpb.Operation, ctx context.Conte
 		route := r.router.Methods(http.MethodPost, http.MethodOptions).Path(apiPath).Name(apiPath)
 		routeHandler := ensureRequiresRateLimiter(operation, handler)
 		routeHandler = ensureRequiresSemaphore(operation, routeHandler)
-		routeHandler, authRequired := authentication.EnsureRequiresAuthentication(operation, routeHandler)
-		if authRequired {
-			r.authRequiredPaths[apiPath] = true
-		}
+		routeHandler = r.ensureRequiresAuthentication(operation, routeHandler, apiPath)
 		routeHandler = intercept(routeHandler, r.middlewareClient, operation, queryParamsAllowList)
 		route.Handler(routeHandler)
 
@@ -600,10 +596,7 @@ func (r *Builder) registerOperation(operation *wgpb.Operation, ctx context.Conte
 		route := r.router.Methods(http.MethodGet, http.MethodOptions).Path(apiPath).Name(apiPath)
 		routeHandler := ensureRequiresRateLimiter(operation, handler)
 		routeHandler = ensureRequiresSemaphore(operation, routeHandler)
-		routeHandler, authRequired := authentication.EnsureRequiresAuthentication(operation, routeHandler)
-		if authRequired {
-			r.authRequiredPaths[apiPath] = true
-		}
+		routeHandler = r.ensureRequiresAuthentication(operation, routeHandler, apiPath)
 		routeHandler = intercept(routeHandler, r.middlewareClient, operation, queryParamsAllowList)
 		route.Handler(routeHandler)
 
@@ -2235,7 +2228,7 @@ func (r *Builder) registerAuth(insecureCookies bool) error {
 
 	authRequiredPaths, authCache, authHandler := authentication.NewLoadUserMw(loadUserConfig)
 	r.authCache = authCache
-	r.authRequiredPaths = authRequiredPaths
+	r.authRequiredFuncs = authRequiredPaths
 	r.router.Use(authHandler)
 	if r.enableCSRFProtect {
 		r.router.Use(authentication.NewCSRFMw(authentication.CSRFConfig{
@@ -2456,10 +2449,7 @@ func (r *Builder) registerFunctionOperation(operation *wgpb.Operation, apiPath s
 
 	routeHandler := ensureRequiresRateLimiter(operation, handler)
 	routeHandler = ensureRequiresSemaphore(operation, routeHandler)
-	routeHandler, authRequired := authentication.EnsureRequiresAuthentication(operation, routeHandler)
-	if authRequired {
-		r.authRequiredPaths[apiPath] = true
-	}
+	routeHandler = r.ensureRequiresAuthentication(operation, routeHandler, apiPath)
 	routeHandler = intercept(routeHandler, r.middlewareClient, operation, queryParamsAllowList)
 	route.Handler(routeHandler)
 
@@ -2470,6 +2460,14 @@ func (r *Builder) registerFunctionOperation(operation *wgpb.Operation, apiPath s
 	)
 
 	return nil
+}
+
+func (r *Builder) ensureRequiresAuthentication(operation *wgpb.Operation, routeHandler http.Handler, apiPath string) http.Handler {
+	routeHandler, authRequired := authentication.EnsureRequiresAuthentication(operation, routeHandler)
+	if authRequired {
+		r.authRequiredFuncs[apiPath] = nil
+	}
+	return routeHandler
 }
 
 type FunctionHandler struct {

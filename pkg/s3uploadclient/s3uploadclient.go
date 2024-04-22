@@ -429,6 +429,11 @@ func (s *S3UploadClient) handlePart(ctx context.Context, r *http.Request, part *
 	return info, nil
 }
 
+func (s *S3UploadClient) AuthRequired(r *http.Request) bool {
+	_, profile, _ := s.uploadProfile(r)
+	return profile == nil || profile.RequireAuthentication
+}
+
 func (s *S3UploadClient) hasRequiredAuthentication(w http.ResponseWriter, r *http.Request) bool {
 	// Don't check for a valid profile name here. Since the default is requiring users
 	// to be authenticated, we can just check if there's a profile. If the name

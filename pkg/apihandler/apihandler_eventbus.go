@@ -30,7 +30,8 @@ func (r *Builder) eventbusSubscribeOperation() {
 	})
 	eventbus.Subscribe(eventbus.ChannelOperation, eventbus.EventDelete, func(data any) any {
 		operationPath := data.(string)
-		if addRouteSkipMatcher(r.router, OperationApiPath(operationPath)) {
+		if apiPath := OperationApiPath(operationPath); addRouteSkipMatcher(r.router, apiPath) {
+			delete(r.authRequiredFuncs, apiPath)
 			r.log.Debug("unregisterOperation", zap.String("operation", operationPath))
 		}
 		return data
@@ -68,7 +69,8 @@ func (r *Builder) eventbusSubscribeS3UploadClient() {
 	})
 	eventbus.Subscribe(eventbus.ChannelStorage, eventbus.EventDelete, func(data any) any {
 		provider := data.(string)
-		if addRouteSkipMatcher(r.router, fmt.Sprintf("/s3/%s/upload", provider)) {
+		if apiPath := fmt.Sprintf("/s3/%s/upload", provider); addRouteSkipMatcher(r.router, apiPath) {
+			delete(r.authRequiredFuncs, apiPath)
 			r.log.Debug("unregisterS3UploadClient", zap.String("storage", provider))
 		}
 		return data
