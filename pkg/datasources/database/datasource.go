@@ -1200,11 +1200,11 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 			return
 		}
 	}
-	if skipFieldJsonPaths, ok := resolve.GetSkipFieldJsonPaths(ctx, input); ok {
+	/*if skipFieldJsonPaths, ok := resolve.GetSkipFieldJsonPaths(ctx, input); ok {
 		if request, err = clearSkipFetchFieldPaths(skipFieldJsonPaths, request); err != nil {
 			return
 		}
-	}
+	}*/
 	request, _ = jsonparser.Set(request, []byte("{}"), "variables")
 	request = bytes.ReplaceAll(request, []byte(`\\\\\"`), []byte(`\\\"`))
 	request = s.ensureMutationPrefix(request)
