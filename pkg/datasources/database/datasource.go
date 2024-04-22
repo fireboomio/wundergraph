@@ -1196,7 +1196,7 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 
 	request := input
 	if unrenderVariables, ok := resolve.GetUnrenderVariables(ctx, input); ok {
-		if request, err = clearUnrenderVariables(ctx, unrenderVariables, input); err != nil {
+		if request, err = clearUnrenderVariables(ctx, unrenderVariables, request); err != nil {
 			return
 		}
 	}
