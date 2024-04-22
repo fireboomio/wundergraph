@@ -16,14 +16,14 @@ import (
 )
 
 func (r *Builder) registerProxyOperation(operation *wgpb.Operation, apiPath string) error {
-	return registerProxyOperation(r.router, r.log, r.middlewareClient, operation, apiPath, false)
+	return registerProxyOperation(r.router, r.log, r.middlewareClient, operation, apiPath, false, r.authRequiredPaths)
 }
 
 func (i *InternalBuilder) registerProxyOperation(operation *wgpb.Operation, apiPath string) error {
-	return registerProxyOperation(i.router, i.log, i.middlewareClient, operation, apiPath, true)
+	return registerProxyOperation(i.router, i.log, i.middlewareClient, operation, apiPath, true, nil)
 }
 
-func registerProxyOperation(router *mux.Router, log *zap.Logger, middlewareClient *hooks.Client, operation *wgpb.Operation, apiPath string, internal bool) error {
+func registerProxyOperation(router *mux.Router, log *zap.Logger, middlewareClient *hooks.Client, operation *wgpb.Operation, apiPath string, internal bool, authRequiredPaths map[string]bool) error {
 	apiName := apiPath
 	if internal {
 		apiName = internalPrefix + apiName
@@ -36,11 +36,17 @@ func registerProxyOperation(router *mux.Router, log *zap.Logger, middlewareClien
 		hooksClient:  middlewareClient,
 	}
 
-	var routeHandler http.Handler
+	var (
+		routeHandler http.Handler
+		authRequired bool
+	)
 	if !internal {
 		routeHandler = ensureRequiresRateLimiter(operation, handler)
 		routeHandler = ensureRequiresSemaphore(operation, routeHandler)
-		routeHandler = authentication.EnsureRequiresAuthentication(operation, routeHandler)
+		routeHandler, authRequired = authentication.EnsureRequiresAuthentication(operation, routeHandler)
+		if authRequired && authRequiredPaths != nil {
+			authRequiredPaths[apiPath] = true
+		}
 		routeHandler = intercept(routeHandler, middlewareClient, operation, nil)
 	} else {
 		routeHandler = handler

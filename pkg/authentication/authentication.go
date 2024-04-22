@@ -40,12 +40,13 @@ type DeniedError string
 func (e DeniedError) Error() string { return fmt.Sprintf("access denied: %s", string(e)) }
 
 type UserLoader struct {
-	log             *zap.Logger
-	s               *securecookie.SecureCookie
-	cache           *ristretto.Cache
-	client          *http.Client
-	userLoadConfigs []*UserLoadConfig
-	hooks           Hooks
+	log               *zap.Logger
+	s                 *securecookie.SecureCookie
+	cache             *ristretto.Cache
+	client            *http.Client
+	userLoadConfigs   []*UserLoadConfig
+	hooks             Hooks
+	authRequiredPaths map[string]bool
 }
 
 type UserLoadConfig struct {
@@ -643,7 +644,7 @@ type LoadUserConfig struct {
 	Hooks         Hooks
 }
 
-func NewLoadUserMw(config LoadUserConfig) (*ristretto.Cache, func(handler http.Handler) http.Handler) {
+func NewLoadUserMw(config LoadUserConfig) (map[string]bool, *ristretto.Cache, func(handler http.Handler) http.Handler) {
 
 	var (
 		jwkConfigs    []*UserLoadConfig
@@ -720,6 +721,7 @@ func NewLoadUserMw(config LoadUserConfig) (*ristretto.Cache, func(handler http.H
 		)
 	}
 
+	authRequiredPaths := make(map[string]bool)
 	loader := &UserLoader{
 		log:             config.Log,
 		userLoadConfigs: jwkConfigs,
@@ -728,23 +730,27 @@ func NewLoadUserMw(config LoadUserConfig) (*ristretto.Cache, func(handler http.H
 		client: &http.Client{
 			Timeout: time.Second * 10,
 		},
-		hooks: config.Hooks,
+		hooks:             config.Hooks,
+		authRequiredPaths: authRequiredPaths,
 	}
 
-	return cache, func(handler http.Handler) http.Handler {
+	return authRequiredPaths, cache, func(handler http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			var (
 				user        User
 				deniedError DeniedError
 			)
 			loadErr := user.Load(loader, r)
+			if errors.As(loadErr, &deniedError) {
+				if _, ok := authRequiredPaths[r.URL.Path]; ok {
+					http.Error(w, loadErr.Error(), http.StatusUnauthorized)
+					return
+				}
+			}
 			if loadErr == nil {
 				r = r.WithContext(context.WithValue(r.Context(), "user", &user))
 				userBytes, _ := json.Marshal(user)
 				r = r.WithContext(context.WithValue(r.Context(), "userBytes", userBytes))
-			} else if errors.As(loadErr, &deniedError) {
-				http.Error(w, loadErr.Error(), http.StatusUnauthorized)
-				return
 			}
 			handler.ServeHTTP(w, r)
 		})
@@ -937,9 +943,9 @@ func NewCSRFMw(config CSRFConfig) func(handler http.Handler) http.Handler {
 	}
 }
 
-func EnsureRequiresAuthentication(operation *wgpb.Operation, handler http.Handler) http.Handler {
+func EnsureRequiresAuthentication(operation *wgpb.Operation, handler http.Handler) (http.Handler, bool) {
 	if operation.AuthenticationConfig == nil || !operation.AuthenticationConfig.AuthRequired {
-		return handler
+		return handler, false
 	}
 
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -948,7 +954,7 @@ func EnsureRequiresAuthentication(operation *wgpb.Operation, handler http.Handle
 			return
 		}
 		handler.ServeHTTP(w, r)
-	})
+	}), true
 }
 
 func resetUserCookies(w http.ResponseWriter, r *http.Request, secure bool) {
