@@ -42,6 +42,7 @@ type Planner struct {
 	variables                  resolve.Variables
 	lastFieldEnclosingTypeName string
 	disallowSingleFlight       bool
+	disallowFieldAlias         bool
 	client                     *http.Client
 	isNested                   bool   // isNested - flags that datasource is nested e.g. field with datasource is not on a query type
 	rootTypeName               string // rootTypeName - holds name of top level type
@@ -536,7 +537,7 @@ func (p *Planner) addJsonField(ref int) {
 	astField := ast.Field{
 		Name: p.upstreamOperation.Input.AppendInputString(fieldName),
 	}
-	if nameOrAlias != fieldName {
+	if nameOrAlias != fieldName && !p.disallowFieldAlias {
 		astField.Alias = ast.Alias{
 			IsDefined: true,
 			Name:      p.upstreamOperation.Input.AppendInputString(nameOrAlias),
@@ -577,6 +578,7 @@ func (p *Planner) EnterDocument(operation, definition *ast.Document) {
 	p.upstreamVariables = nil
 	p.variables = p.variables[:0]
 	p.disallowSingleFlight = false
+	p.disallowFieldAlias = true
 	p.isQueryRaw = false
 	p.isQueryRawRow = false
 
@@ -1004,7 +1006,7 @@ func (p *Planner) addField(ref int) {
 	}
 
 	downstreamFieldName := p.visitor.Operation.FieldAliasOrNameString(ref)
-	if downstreamFieldName != fieldName {
+	if downstreamFieldName != fieldName && !p.disallowFieldAlias {
 		astField.Alias = ast.Alias{
 			IsDefined: true,
 			Name:      p.upstreamOperation.Input.AppendInputString(downstreamFieldName),
@@ -1012,10 +1014,6 @@ func (p *Planner) addField(ref int) {
 	}
 
 	field := p.upstreamOperation.AddField(astField)
-	field = p.upstreamOperation.AddField(ast.Field{
-		Name: p.upstreamOperation.Input.AppendInputString(fieldName),
-	})
-
 	selection := ast.Selection{
 		Kind: ast.SelectionKindField,
 		Ref:  field.Ref,
