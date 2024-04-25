@@ -9,6 +9,7 @@ import (
 	"fmt"
 	"github.com/opentracing/opentracing-go"
 	"io"
+	"math/rand"
 	"net/http"
 	"os"
 	"os/exec"
@@ -28,7 +29,45 @@ import (
 	"github.com/wundergraph/graphql-go-tools/pkg/repair"
 )
 
-const prismaVersion = "b131176726d613a34b5c2e5e2230f9c930791ba3"
+func init() {
+	_ = EnsurePrismaEngineDownloaded()
+}
+
+const (
+	prismaVersion            = "b131176726d613a34b5c2e5e2230f9c930791ba3"
+	prismaQueryEngineEnvKey  = "PRISMA_QUERY_ENGINE_BINARY"
+	prismaSchemaEngineEnvKey = "PRISMA_INTROSPECTION_ENGINE_BINARY"
+	prismaEngineExitTimeout  = 5 * time.Second
+)
+
+// EnsurePrismaEngineDownloaded 安装检测prisma引擎环境
+func EnsurePrismaEngineDownloaded() (err error) {
+	cacheDir, err := os.UserCacheDir()
+	if err != nil {
+		return
+	}
+	prismaPath := filepath.Join(cacheDir, "fireboom", "prisma")
+	if err = os.MkdirAll(prismaPath, os.ModePerm); err != nil {
+		return
+	}
+
+	// Acquire a file lock before trying to download
+	lockPath := filepath.Join(prismaPath, ".lock")
+	lock := flock.New(lockPath)
+	if err = lock.Lock(); err != nil {
+		return fmt.Errorf("creating prisma lockfile: %w", err)
+	}
+	defer func() { _ = lock.Unlock() }()
+
+	fetchResp, err := binaries.FetchNativeWithVersion(prismaPath, prismaVersion)
+	if err != nil {
+		return
+	}
+
+	_ = os.Setenv(prismaQueryEngineEnvKey, fetchResp.QueryEnginePath)
+	_ = os.Setenv(prismaSchemaEngineEnvKey, fetchResp.SchemaEnginePath)
+	return
+}
 
 type JsonRPCExtension struct {
 	CmdArgs []string
@@ -82,8 +121,6 @@ func NewEngine(client *http.Client, log *zap.Logger, wundergraphDir string) *Eng
 	}
 }
 
-var messageId = 1
-
 func GetRPCPayload(method string, params map[string]interface{}, singled bool) JsonRPCPayload {
 	var rpcParams any
 	if singled {
@@ -91,13 +128,13 @@ func GetRPCPayload(method string, params map[string]interface{}, singled bool) J
 	} else {
 		rpcParams = []JsonRPCPayloadParams{params}
 	}
+
 	var payload = JsonRPCPayload{
-		ID:      messageId,
+		ID:      rand.Int(),
 		JSONRPC: "2.0",
 		Method:  method,
 		Params:  rpcParams,
 	}
-	messageId++
 	return payload
 }
 
@@ -370,45 +407,15 @@ func (e *Engine) StartQueryEngine(schema string, env ...string) error {
 	return nil
 }
 
-// GlobalWunderGraphCacheDir returns the path to the global
-// cache directory for WunderGraph
-func GlobalWunderGraphCacheDir() (string, error) {
-	cacheDir, err := os.UserCacheDir()
-	if err != nil {
-		return "", err
-	}
-	return filepath.Join(cacheDir, "fireboom"), nil
-}
-
 // 安装检测prisma引擎环境
-func (e *Engine) ensurePrisma() error {
-	cacheDir, err := GlobalWunderGraphCacheDir()
-	if err != nil {
-		return fmt.Errorf("retrieving cache dir: %w", err)
+func (e *Engine) ensurePrisma() (err error) {
+	if err = EnsurePrismaEngineDownloaded(); err != nil {
+		return
 	}
 
-	prismaPath := filepath.Join(cacheDir, "prisma")
-	if err := os.MkdirAll(prismaPath, os.ModePerm); err != nil {
-		return err
-	}
-
-	// Acquire a file lock before trying to download
-	lockPath := filepath.Join(prismaPath, ".lock")
-	lock := flock.New(lockPath)
-
-	if err := lock.Lock(); err != nil {
-		return fmt.Errorf("creating prisma lockfile: %w", err)
-	}
-	defer lock.Unlock()
-
-	res, err := binaries.FetchNativeWithVersion(prismaPath, prismaVersion)
-	if err != nil {
-		return err
-	}
-	e.queryEnginePath = res.QueryEnginePath
-	e.introspectionEnginePath = res.SchemaEnginePath
-
-	return os.Setenv("PRISMA_QUERY_ENGINE_BINARY", e.queryEnginePath)
+	e.queryEnginePath = os.Getenv(prismaQueryEngineEnvKey)
+	e.introspectionEnginePath = os.Getenv(prismaSchemaEngineEnvKey)
+	return
 }
 
 func (e *Engine) StopPrismaEngine() {
@@ -418,31 +425,29 @@ func (e *Engine) StopPrismaEngine() {
 	e.cancel()
 	exitCh := make(chan error)
 	go func() {
-		signal := e.cmd.Wait()
-		exitCh <- signal
+		exitCh <- e.cmd.Wait()
 		close(exitCh)
 	}()
-	const prismaExitTimeout = 5 * time.Second
 	select {
 	case <-exitCh:
 		// Ignore errors here, since killing the process with a signal
 		// will cause Wait() to return an error and there's no cross-platform
 		// way to tell it apart from an interesting failure
-	case <-time.After(prismaExitTimeout):
-		e.log.Warn(fmt.Sprintf("prisma didn't exit after %s, killing", prismaExitTimeout))
-		if err := forceKillProcess(e.cmd.Process); err != nil {
+	case <-time.After(prismaEngineExitTimeout):
+		e.log.Warn(fmt.Sprintf("prisma didn't exit after %s, killing", prismaEngineExitTimeout))
+		if err := e.forceKillProcess(); err != nil {
 			e.log.Error("killing prisma", zap.Error(err))
 		}
 	}
 	e.cmd, e.cancel, e.stderr = nil, nil, nil
 }
 
-func forceKillProcess(process *os.Process) error {
+func (e *Engine) forceKillProcess() error {
 	switch runtime.GOOS {
 	case "windows":
-		return process.Kill()
+		return e.cmd.Process.Kill()
 	default:
-		return process.Signal(os.Interrupt)
+		return e.cmd.Process.Signal(os.Interrupt)
 	}
 }
 

@@ -3,17 +3,15 @@ package database
 import (
 	"bytes"
 	"context"
-	"errors"
 	"fmt"
 	"github.com/buger/jsonparser"
+	json "github.com/json-iterator/go"
 	"github.com/wundergraph/graphql-go-tools/pkg/ast"
-	"github.com/wundergraph/graphql-go-tools/pkg/astparser"
 	"github.com/wundergraph/graphql-go-tools/pkg/astprinter"
 	"github.com/wundergraph/graphql-go-tools/pkg/engine/resolve"
 	"github.com/wundergraph/graphql-go-tools/pkg/lexer/literal"
 	"github.com/wundergraph/wundergraph/pkg/pool"
 	"golang.org/x/exp/slices"
-	"strconv"
 	"strings"
 )
 
@@ -149,39 +147,60 @@ func clearInputWithScope(input []byte, jointIndexes []int, clearedScope []string
 	return clearInputWithScope(clearedInput, nextJointIndexes, nextClearedScope)
 }
 
-func clearSkipFetchFieldPaths(skipFieldJsonPaths map[string]bool, request []byte) ([]byte, error) {
-	originQueryBytes, _, _, _ := jsonparser.Get(request, "query")
-	doc, report := astparser.ParseGraphqlDocumentBytes(originQueryBytes)
-	if report.HasErrors() {
-		return nil, errors.New(report.Error())
+func (p *Planner) resetRawInput(_ *resolve.Context, skipFieldJsonPaths map[string]bool) (clearedInput string) {
+	document := *p.upstreamOperation
+	document.SelectionSets = make([]ast.SelectionSet, len(document.SelectionSets))
+	copy(document.SelectionSets, p.upstreamOperation.SelectionSets)
+	clearHelper := &clearDocumentHelper{
+		document:              &document,
+		skipFieldJsonPaths:    skipFieldJsonPaths,
+		clearedFieldJsonPaths: make(map[string]bool, len(skipFieldJsonPaths)),
 	}
-
-	for _, operation := range doc.OperationDefinitions {
+	for _, operation := range document.OperationDefinitions {
 		if operation.HasSelections {
-			clearDocumentWithSkipFieldJsonPaths(&doc, skipFieldJsonPaths, operation.SelectionSet)
+			clearHelper.clearSelectionRefs(operation.SelectionSet)
 		}
 	}
-	clearedQueryString, err := astprinter.PrintString(&doc, nil)
+	clearedQuery, err := astprinter.PrintString(&document, nil)
 	if err != nil {
-		return nil, err
+		return
 	}
-	return jsonparser.Set(request, []byte(strconv.Quote(clearedQueryString)), "query")
+
+	for i, variable := range p.inlinedVariables {
+		if !slices.Contains(clearHelper.skipVariableRefs, i) {
+			clearedQuery = variable.replaceFunc(clearedQuery)
+		}
+	}
+	rawInput, err := json.Marshal(fetchInput{Query: clearedQuery, Variables: p.upstreamVariables})
+	if err != nil {
+		return
+	}
+	clearedInput = string(rawInput)
+	return
 }
 
-func clearDocumentWithSkipFieldJsonPaths(doc *ast.Document, skipFieldJsonPaths map[string]bool, selectionSet int, parent ...string) (clearOvered, noneSaved bool) {
+type clearDocumentHelper struct {
+	document              *ast.Document
+	clearedFieldJsonPaths map[string]bool
+	skipFieldJsonPaths    map[string]bool
+	skipVariableRefs      []int
+}
+
+func (c *clearDocumentHelper) clearSelectionRefs(selectionSet int, parent ...string) (clearOvered, clearedAll bool) {
 	var (
-		itemNoneSaved bool
-		itemWalkIndex int
+		itemClearedAll bool
+		itemCleared    bool
+		itemWalkIndex  int
 	)
 	parentLength := len(parent)
-	originSelectionRefs := doc.SelectionSets[selectionSet].SelectionRefs
+	originSelectionRefs := c.document.SelectionSets[selectionSet].SelectionRefs
 	savedSelectionRefs := make([]int, 0, len(originSelectionRefs))
 	for i, selectionRef := range originSelectionRefs {
 		if clearOvered {
 			break
 		}
 		itemWalkIndex = i
-		selection := doc.Selections[selectionRef]
+		selection := c.document.Selections[selectionRef]
 		if selection.Kind != ast.SelectionKindField {
 			savedSelectionRefs = append(savedSelectionRefs, selectionRef)
 			continue
@@ -189,25 +208,27 @@ func clearDocumentWithSkipFieldJsonPaths(doc *ast.Document, skipFieldJsonPaths m
 
 		fieldJsonPath := make([]string, parentLength+1)
 		copy(fieldJsonPath, parent)
-		fieldJsonPath[parentLength] = doc.FieldNameString(selection.Ref)
+		fieldJsonPath[parentLength] = c.document.FieldNameString(selection.Ref)
 		fieldJsonPathStr := strings.Join(fieldJsonPath, ".")
-		if _, skip := skipFieldJsonPaths[fieldJsonPathStr]; skip {
-			delete(skipFieldJsonPaths, fieldJsonPathStr)
-			clearOvered = len(skipFieldJsonPaths) == 0
-			continue
+		if _, itemCleared = c.skipFieldJsonPaths[fieldJsonPathStr]; itemCleared {
+			c.clearedFieldJsonPaths[fieldJsonPathStr] = true
+			clearOvered = len(c.skipFieldJsonPaths) == len(c.clearedFieldJsonPaths)
 		}
-		if field := doc.Fields[selection.Ref]; field.HasSelections {
-			clearOvered, itemNoneSaved = clearDocumentWithSkipFieldJsonPaths(doc, skipFieldJsonPaths, field.SelectionSet, fieldJsonPath...)
-			if itemNoneSaved {
-				continue
+		if field := c.document.Fields[selection.Ref]; field.HasSelections {
+			clearOvered, itemClearedAll = c.clearSelectionRefs(field.SelectionSet, fieldJsonPath...)
+		}
+		if itemCleared || itemClearedAll {
+			for _, argumentRef := range c.document.FieldArguments(selection.Ref) {
+				c.skipVariableRefs = append(c.skipVariableRefs, c.document.SearchVariableRefs(c.document.ArgumentValue(argumentRef))...)
 			}
+			continue
 		}
 		savedSelectionRefs = append(savedSelectionRefs, selectionRef)
 	}
 	savedSelectionRefs = append(savedSelectionRefs, originSelectionRefs[itemWalkIndex+1:]...)
 	if !slices.Equal(originSelectionRefs, savedSelectionRefs) {
-		doc.SelectionSets[selectionSet].SelectionRefs = savedSelectionRefs
-		noneSaved = len(savedSelectionRefs) == 0
+		c.document.SelectionSets[selectionSet].SelectionRefs = savedSelectionRefs
+		clearedAll = len(savedSelectionRefs) == 0
 	}
 	return
 }

@@ -71,6 +71,7 @@ type inlinedVariable struct {
 	isJSON       bool
 	isRaw        bool
 	parentIsJson bool
+	replaceFunc  func(string) string
 }
 
 // ErrResponse add for transform prisma returnError to graphqlError
@@ -240,37 +241,39 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 		Variables: p.upstreamVariables,
 	}
 
-	for _, inlinedVariable := range p.inlinedVariables {
-		currentName := "$" + inlinedVariable.name
+	for i, variable := range p.inlinedVariables {
+		currentName := "$" + variable.name
 		var (
 			renderer resolve.VariableRenderer
 			err      error
 		)
-		if inlinedVariable.isRaw {
+		if variable.isRaw {
 			renderer = &RawJsonVariableRenderer{
-				parentIsJson: inlinedVariable.parentIsJson,
+				parentIsJson: variable.parentIsJson,
 			}
-		} else if inlinedVariable.isJSON {
+		} else if variable.isJSON {
 			renderer = resolve.NewGraphQLVariableRenderer(`{"type":"string"}`)
 		} else {
-			renderer, err = resolve.NewGraphQLVariableRendererFromTypeRefWithoutValidation(p.visitor.Operation, p.visitor.Definition, inlinedVariable.typeRef)
+			renderer, err = resolve.NewGraphQLVariableRendererFromTypeRefWithoutValidation(p.visitor.Operation, p.visitor.Definition, variable.typeRef)
 			if err != nil {
 				continue
 			}
 		}
-		variable := &resolve.ContextVariable{
-			Path:     []string{inlinedVariable.name},
+		contextVariable := &resolve.ContextVariable{
+			Path:     []string{variable.name},
 			Renderer: renderer,
-			Nullable: inlinedVariable.nullable,
+			Nullable: variable.nullable,
 		}
-		replacement, _ := p.variables.AddVariable(variable)
+		replacement, _ := p.variables.AddVariable(contextVariable)
 		re, err := regexp.Compile(fmt.Sprintf(`%s\b`, regexp.QuoteMeta(currentName)))
 		if err != nil {
 			p.log.Error("failed to compile regexp", zap.Error(err))
 			continue
 		}
 
-		input.Query = re.ReplaceAllLiteralString(input.Query, replacement)
+		replaceVariableFunc := func(query string) string { return re.ReplaceAllLiteralString(query, replacement) }
+		input.Query = replaceVariableFunc(input.Query)
+		p.inlinedVariables[i].replaceFunc = replaceVariableFunc
 	}
 
 	rawInput, err := json.Marshal(input)
@@ -280,12 +283,14 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 
 	var engine *LazyEngine
 	if !p.testsSkipEngine {
-		engine = p.engineFactory.Engine(prismaCache[p.config.DatabaseURL], p.config.WunderGraphDir, p.config.CloseTimeoutSeconds, p.config.EnvironmentVariable)
+		prismaSchema := prismaCache[p.config.DatabaseURL]
+		engine = p.engineFactory.Engine(prismaSchema, p.config.WunderGraphDir, p.config.CloseTimeoutSeconds, p.config.EnvironmentVariable)
 		engine.client = p.client
 	}
 
 	return plan.FetchConfiguration{
-		Input: string(rawInput),
+		Input:          string(rawInput),
+		ResetInputFunc: p.resetRawInput,
 		DataSource: &Source{
 			engine:         engine,
 			debug:          p.debug,
@@ -1062,7 +1067,7 @@ func (f *LazyEngineFactory) Engine(prismaSchema, wundergraphDir string, closeTim
 		return engine
 	}
 	engine = newLazyEngine(prismaSchema, wundergraphDir, closeTimeoutSeconds, environmentVariable)
-	go engine.Start(f.closer)
+	go engine.start(f.closer)
 	runtime.SetFinalizer(engine, finalizeEngine)
 	f.engines[prismaSchema] = engine
 	return engine
@@ -1099,7 +1104,7 @@ func newLazyEngine(prismaSchema string, wundergraphDir string, closeTimeoutSecon
 	}
 }
 
-func (e *LazyEngine) Start(closer <-chan struct{}) {
+func (e *LazyEngine) start(closer <-chan struct{}) {
 	<-closer
 	e.mutex.Lock()
 	defer e.mutex.Unlock()
@@ -1200,11 +1205,6 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 			return
 		}
 	}
-	/*if skipFieldJsonPaths, ok := resolve.GetSkipFieldJsonPaths(ctx, input); ok {
-		if request, err = clearSkipFetchFieldPaths(skipFieldJsonPaths, request); err != nil {
-			return
-		}
-	}*/
 	request, _ = jsonparser.Set(request, []byte("{}"), "variables")
 	request = bytes.ReplaceAll(request, []byte(`\\\\\"`), []byte(`\\\"`))
 	request = s.ensureMutationPrefix(request)
