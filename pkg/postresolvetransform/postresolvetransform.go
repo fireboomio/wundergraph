@@ -2,13 +2,9 @@ package postresolvetransform
 
 import (
 	"fmt"
+	"github.com/buger/jsonparser"
 	"github.com/spf13/cast"
 	"github.com/tidwall/gjson"
-	"strconv"
-	"strings"
-
-	"github.com/buger/jsonparser"
-
 	"github.com/wundergraph/wundergraph/pkg/wgpb"
 )
 
@@ -22,42 +18,43 @@ func NewTransformer(transformations []*wgpb.PostResolveTransformation) *Transfor
 	}
 }
 
-func formatDateTimeValue(value []byte, get *wgpb.PostResolveGetTransformation) []byte {
-	if get.DateTimeFormat == "" {
-		return value
-	}
-
-	return []byte(strconv.Quote(cast.ToTime(strings.Trim(string(value), `""`)).Format(get.DateTimeFormat)))
-}
-
-func (t *Transformer) applyGet(input []byte, get *wgpb.PostResolveGetTransformation) (out []byte, err error) {
-	froms := t.resolvePaths(input, [][]string{get.From})
-	tos := t.resolvePaths(input, [][]string{get.To})
+func (t *Transformer) applyGet(input []byte, get *wgpb.PostResolveGetTransformation) (output []byte, err error) {
+	output = input
+	froms := t.resolvePaths(output, [][]string{get.From})
+	tos := t.resolvePaths(output, [][]string{get.To})
 	if len(froms) != len(tos) {
 		if len(froms) == 0 {
-			input, err = jsonparser.Set(input, []byte("null"), tos[0][:len(tos[0])-1]...)
-			return input, err
+			output, err = jsonparser.Set(output, []byte("null"), tos[0][:len(tos[0])-1]...)
+			return
 		}
-		return nil, fmt.Errorf("applyGet: from and to must have the same length")
+		err = fmt.Errorf("applyGet: from and to must have the same length")
+		return
 	}
+	var (
+		value     []byte
+		valueType jsonparser.ValueType
+	)
 	for i := range froms {
-		value, valueType, offset, err := jsonparser.Get(input, froms[i]...)
+		value, valueType, _, err = jsonparser.Get(output, froms[i]...)
 		if err != nil {
-			input, err = jsonparser.Set(input, []byte("null"), tos[i]...)
-			if err != nil {
-				return nil, err
+			if _, _, _, err = jsonparser.Get(output, froms[i][:len(froms[i])-1]...); err != nil {
+				err = nil
+				continue
 			}
-			continue
+			value = []byte("null")
+		} else {
+			if get.DateTimeFormat != "" {
+				value = []byte(cast.ToTime(string(value)).Format(get.DateTimeFormat))
+			}
+			if valueType == jsonparser.String {
+				value = []byte(`"` + string(value) + `"`)
+			}
 		}
-		if valueType == jsonparser.String {
-			value = input[offset-len(value)-2 : offset]
-		}
-		value = formatDateTimeValue(value, get)
-		if input, err = jsonparser.Set(input, value, tos[i]...); err != nil {
-			return nil, fmt.Errorf("applyGet: %s", err)
+		if output, err = jsonparser.Set(output, value, tos[i]...); err != nil {
+			return
 		}
 	}
-	return input, nil
+	return
 }
 
 func (t *Transformer) resolvePaths(input []byte, paths [][]string) [][]string {
