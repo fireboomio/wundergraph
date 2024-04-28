@@ -266,13 +266,13 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 			Nullable: variable.nullable,
 		}
 		replacement, _ := p.variables.AddVariable(contextVariable)
-		re, err := regexp.Compile(fmt.Sprintf(`%s\b`, regexp.QuoteMeta(currentName)))
+		currentRegexp, err := regexp.Compile(fmt.Sprintf(`%s\b`, regexp.QuoteMeta(currentName)))
 		if err != nil {
 			p.log.Error("failed to compile regexp", zap.Error(err))
 			continue
 		}
 
-		replaceVariableFunc := func(query string) string { return re.ReplaceAllLiteralString(query, replacement) }
+		replaceVariableFunc := func(query string) string { return currentRegexp.ReplaceAllLiteralString(query, replacement) }
 		input.Query = replaceVariableFunc(input.Query)
 		p.inlinedVariables[i].replaceFunc = replaceVariableFunc
 	}
