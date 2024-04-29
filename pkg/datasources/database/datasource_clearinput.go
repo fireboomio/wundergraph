@@ -45,11 +45,15 @@ func getKeywordStartIndex(data []byte, jointIndexes []int) int {
 	return startIndex
 }
 
-func getEndIndexOffset(data []byte, index int) (offset int) {
-	if data[index] == charCOMMA {
+func getEndIndexOffset(data []byte, startChar byte, endIndex int) (offset int) {
+	if startChar == charCOMMA {
+		return
+	}
+
+	if data[endIndex] == charCOMMA {
 		offset++
 	}
-	if data[index+1] == charSPACE {
+	if data[endIndex+1] == charSPACE {
 		offset++
 	}
 	return
@@ -84,7 +88,7 @@ func clearUnrenderVariables(ctx context.Context, unrenderVariables []resolve.Unr
 
 		startIndex := getKeywordStartIndex(input[:variableIndex], jointIndexes)
 		endIndex := variableIndex + nullBytesLength
-		endIndex += getEndIndexOffset(input, endIndex)
+		endIndex += getEndIndexOffset(input, input[startIndex], endIndex)
 		if len(jointIndexes) == 0 {
 			jointIndexes = append(jointIndexes, 0)
 		}
@@ -130,7 +134,7 @@ func clearInputWithScope(input []byte, jointIndexes []int, clearedScope []string
 				start++
 				nextClearEnd++
 			}
-			nextClearEnd += getEndIndexOffset(input, start+1)
+			nextClearEnd += getEndIndexOffset(input, clearedBytes[nextClearStart], start+1)
 		}
 		if len(nextJointIndexes) == 0 {
 			nextJointIndexes = append(nextJointIndexes, 0)
