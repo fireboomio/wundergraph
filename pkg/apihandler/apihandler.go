@@ -792,6 +792,7 @@ func (h *GraphQLHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		shared.Ctx.Variables = MergeJsonRightIntoLeft(prepared.variables, shared.Ctx.Variables)
 	}
 
+	makeRuleParameters(r, shared.Ctx)
 	switch p := prepared.preparedPlan.(type) {
 	case *plan.SynchronousResponsePlan:
 		w.Header().Set("Content-Type", "application/json")
@@ -1173,43 +1174,41 @@ func buildWhereInputScalarFilter(value []byte, valueType jsonparser.ValueType, s
 
 var environments map[string]string
 
-func makeRuleParameters(operation *wgpb.Operation, r *http.Request, ctx *resolve.Context) (ruleParameters map[string]interface{}) {
-	if operation.RuleExpressionExisted {
-		var arguments map[string]interface{}
-		_ = json.Unmarshal(ctx.Variables, &arguments)
-		if environments == nil {
-			environments = make(map[string]string)
-			for _, item := range os.Environ() {
-				k, v, found := strings.Cut(item, "=")
-				if found {
-					environments[k] = v
-				}
+func makeRuleParameters(r *http.Request, ctx *resolve.Context) (ruleParameters map[string]interface{}) {
+	var arguments map[string]interface{}
+	_ = json.Unmarshal(ctx.Variables, &arguments)
+	if environments == nil {
+		environments = make(map[string]string)
+		for _, item := range os.Environ() {
+			k, v, found := strings.Cut(item, "=")
+			if found {
+				environments[k] = v
 			}
 		}
-		ruleParameters = map[string]interface{}{
-			"arguments":    arguments,
-			"headers":      hooks.HeaderSliceToCSV(r.Header),
-			"environments": environments,
+	}
+	ruleParameters = map[string]interface{}{
+		"arguments":    arguments,
+		"headers":      hooks.HeaderSliceToCSV(r.Header),
+		"environments": environments,
+	}
+	if userBytes := authentication.UserBytesFromContext(r.Context()); userBytes != nil {
+		var user map[string]interface{}
+		_ = json.Unmarshal(userBytes, &user)
+		ruleParameters["user"] = user
+	}
+	ctxVariables := ctx.Variables
+	ctx.RuleEvaluate = func(variablesBytes []byte, expression string) bool {
+		if !bytes.Equal(variablesBytes, ctxVariables) {
+			_ = json.Unmarshal(variablesBytes, &arguments)
+			ruleParameters["arguments"] = arguments
+			ctxVariables = variablesBytes
 		}
-		if userBytes := authentication.UserBytesFromContext(r.Context()); userBytes != nil {
-			var user map[string]interface{}
-			_ = json.Unmarshal(userBytes, &user)
-			ruleParameters["user"] = user
+		expression = strings.ReplaceAll(expression, "'", "`")
+		ruleValue, err := GvalFullLanguage.Evaluate(expression, ruleParameters)
+		if err != nil {
+			return false
 		}
-		ctxVariables := ctx.Variables
-		ctx.RuleEvaluate = func(variablesBytes []byte, expression string) bool {
-			if !bytes.Equal(variablesBytes, ctxVariables) {
-				_ = json.Unmarshal(variablesBytes, &arguments)
-				ruleParameters["arguments"] = arguments
-				ctxVariables = variablesBytes
-			}
-			expression = strings.ReplaceAll(expression, "'", "`")
-			ruleValue, err := GvalFullLanguage.Evaluate(expression, ruleParameters)
-			if err != nil {
-				return false
-			}
-			return !GvalIsEmptyValue(ruleValue)
-		}
+		return !GvalIsEmptyValue(ruleValue)
 	}
 	return
 }
@@ -1220,7 +1219,10 @@ var (
 )
 
 func injectVariables(operation *wgpb.Operation, r *http.Request, ctx *resolve.Context) ([]byte, error) {
-	ruleParameters := makeRuleParameters(operation, r, ctx)
+	var ruleParameters map[string]interface{}
+	if operation.RuleExpressionExisted {
+		ruleParameters = makeRuleParameters(r, ctx)
+	}
 	variablesConfiguration := operation.VariablesConfiguration
 	if variablesConfiguration == nil {
 		return ctx.Variables, nil
