@@ -130,7 +130,7 @@ func clearInputWithScope(input []byte, jointIndexes []int, clearedScope []string
 			nextClearStart = clearedLength - 1
 		} else {
 			nextClearStart = getKeywordStartIndex(clearedBytes[:clearedLength-1], nextJointIndexes)
-			if braceCleared && input[start+1] == charRBRACK {
+			if braceCleared && clearedBytes[clearedLength-2] == charLBRACK && input[start+1] == charRBRACK {
 				start++
 				nextClearEnd++
 			}
