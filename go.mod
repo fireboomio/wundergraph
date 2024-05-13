@@ -157,5 +157,5 @@ require (
 replace (
 	github.com/getkin/kin-openapi => github.com/fireboomio/kin-openapi v0.0.0-20240110095352-e1b4433e41a8
 	github.com/prisma/prisma-client-go => github.com/fireboomio/prisma-client-go v0.0.0-20240206070833-9430191256ec
-	github.com/wundergraph/graphql-go-tools => github.com/fireboomio/graphql-go-tools v0.0.0-20240426081015-f356507ba1d7
+	github.com/wundergraph/graphql-go-tools => github.com/fireboomio/graphql-go-tools v0.0.0-20240513101407-0cb10f9c1f01
 )

@@ -3,7 +3,6 @@ package postresolvetransform
 import (
 	"fmt"
 	"github.com/buger/jsonparser"
-	"github.com/spf13/cast"
 	"github.com/tidwall/gjson"
 	"github.com/wundergraph/wundergraph/pkg/wgpb"
 )
@@ -42,13 +41,8 @@ func (t *Transformer) applyGet(input []byte, get *wgpb.PostResolveGetTransformat
 				continue
 			}
 			value = []byte("null")
-		} else {
-			if get.DateTimeFormat != "" {
-				value = []byte(cast.ToTime(string(value)).Format(get.DateTimeFormat))
-			}
-			if valueType == jsonparser.String {
-				value = []byte(`"` + string(value) + `"`)
-			}
+		} else if valueType == jsonparser.String {
+			value = []byte(`"` + string(value) + `"`)
 		}
 		if output, err = jsonparser.Set(output, value, tos[i]...); err != nil {
 			return

@@ -32,7 +32,8 @@ func PutBytesBuffer(buf *bytes.Buffer) {
 }
 
 var (
-	ctxPool sync.Pool
+	ctxPool        sync.Pool
+	DateFormatFunc func(map[string]string, string) string
 )
 
 type Config struct {
@@ -56,6 +57,7 @@ func GetCtx(r, clientRequest *http.Request, cfg Config) *resolve.Context {
 	resolveContext.Context = ctx
 	resolveContext.Request.Header = r.Header
 	resolveContext.RenameTypeNames = cfg.RenameTypeNames
+	resolveContext.DateFormatFunc = DateFormatFunc
 	return resolveContext
 }
 
@@ -135,6 +137,7 @@ func (p *Pool) GetSharedFromRequest(ctx context.Context, r *http.Request, planCo
 	resolveCtx := resolve.NewContext(c)
 	resolveCtx.Request.Header = r.Header
 	resolveCtx.RenameTypeNames = cfg.RenameTypeNames
+	resolveCtx.DateFormatFunc = DateFormatFunc
 	return &Shared{
 		Doc:         ast.NewDocument(),
 		Planner:     plan.NewPlanner(ctx, planConfig),

@@ -213,7 +213,6 @@ message PostResolveTransformation {
 message PostResolveGetTransformation {
   repeated string from = 1;
   repeated string to = 2;
-  string dateTimeFormat = 3;
 }
 
 enum PostResolveTransformationKind {
