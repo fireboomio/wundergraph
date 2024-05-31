@@ -75,15 +75,18 @@ type inlinedVariable struct {
 	replaceFunc  func(string) string
 }
 
-// ErrResponse add for transform prisma returnError to graphqlError
-type ErrResponse struct {
-	Errors []*SQLErrResult `json:"errors"`
-}
+var (
+	graphqlErrorsPath           = []string{"errors"}
+	graphqlItemErrorPath        = []string{"error"}
+	graphqlItemErrorMessagePath = []string{"message"}
+	graphqlItemErrorCodePath    = []string{"user_facing_error", "error_code"}
+	graphqlItemMetaPath         = []string{"user_facing_error", "meta"}
+)
 
 // SQLErrResult graphqlError use Message, so replace Message with Error if Message is empty
 type SQLErrResult struct {
-	Error     string        `json:"error"`
-	Message   string        `json:"message"`
+	Code      string        `json:"code,omitempty"`
+	Message   string        `json:"error"`
 	Path      []string      `json:"path"`
 	Locations []interface{} `json:"locations"`
 }
@@ -1214,19 +1217,24 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 		return
 	}
 
-	var resultErr ErrResponse
-	_ = json.Unmarshal(buf.Bytes(), &resultErr)
-	if len(resultErr.Errors) > 0 {
-		for _, errItem := range resultErr.Errors {
-			if errItem.Message == "" {
-				errItem.Message = errItem.Error
-				errItem.Error = ""
+	errorsBytes, errorsType, _, _ := jsonparser.Get(buf.Bytes(), graphqlErrorsPath...)
+	if errorsType == jsonparser.Array {
+		var index int
+		_, _ = jsonparser.ArrayEach(errorsBytes, func(value []byte, _ jsonparser.ValueType, _ int, _ error) {
+			newValue, ok := extractBytesByPath(value, []byte(`{}`), graphqlItemErrorCodePath, graphqlItemErrorMessagePath, func(codeBytes []byte) []byte {
+				metaBytes, _, _, _ := jsonparser.Get(value, graphqlItemMetaPath...)
+				return translateError(codeBytes, metaBytes)
+			})
+			if !ok {
+				newValue, _ = extractBytesByPath(value, newValue, graphqlItemErrorPath, graphqlItemErrorMessagePath)
 			}
-		}
+			errorsBytes, _ = jsonparser.Set(errorsBytes, newValue, fmt.Sprintf(`[%d]`, index))
+			index++
+		})
+		resultBytes, _ := jsonparser.Set(buf.Bytes(), errorsBytes, graphqlErrorsPath...)
 		buf.Reset()
-		errBytes, _ := json.Marshal(resultErr)
-		buf.Write(errBytes)
-		reportError(errors.New(string(errBytes)))
+		buf.Write(resultBytes)
+		reportError(errors.New(string(resultBytes)))
 		spanFuncs = append(spanFuncs, func(span opentracing.Span) { ext.Error.Set(span, true) })
 	}
 
