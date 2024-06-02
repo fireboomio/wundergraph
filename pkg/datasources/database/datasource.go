@@ -76,11 +76,10 @@ type inlinedVariable struct {
 }
 
 var (
-	graphqlErrorsPath           = []string{"errors"}
-	graphqlItemErrorPath        = []string{"error"}
-	graphqlItemErrorMessagePath = []string{"message"}
-	graphqlItemErrorCodePath    = []string{"user_facing_error", "error_code"}
-	graphqlItemMetaPath         = []string{"user_facing_error", "meta"}
+	graphqlErrorsPath              = []string{"errors"}
+	graphqlItemErrorPath           = []string{"error"}
+	graphqlItemErrorMessagePath    = []string{"message"}
+	graphqlItemUserFacingErrorPath = []string{"user_facing_error"}
 )
 
 // SQLErrResult graphqlError use Message, so replace Message with Error if Message is empty
@@ -1221,12 +1220,9 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 	if errorsType == jsonparser.Array {
 		var index int
 		_, _ = jsonparser.ArrayEach(errorsBytes, func(value []byte, _ jsonparser.ValueType, _ int, _ error) {
-			newValue, ok := extractBytesByPath(value, []byte(`{}`), graphqlItemErrorCodePath, graphqlItemErrorMessagePath, func(codeBytes []byte) []byte {
-				metaBytes, _, _, _ := jsonparser.Get(value, graphqlItemMetaPath...)
-				return translateError(codeBytes, metaBytes)
-			})
+			newValue, ok := extractAndSetBytes(value, []byte(`{}`), graphqlItemUserFacingErrorPath, graphqlItemErrorMessagePath, translateError)
 			if !ok {
-				newValue, _ = extractBytesByPath(value, newValue, graphqlItemErrorPath, graphqlItemErrorMessagePath)
+				newValue, _ = extractAndSetBytes(value, newValue, graphqlItemErrorPath, graphqlItemErrorMessagePath)
 			}
 			errorsBytes, _ = jsonparser.Set(errorsBytes, newValue, fmt.Sprintf(`[%d]`, index))
 			index++

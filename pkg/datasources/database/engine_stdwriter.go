@@ -49,8 +49,8 @@ func (p stderrMsg) Error() string {
 }
 
 func (t *stderrWriter) Write(p []byte) (n int, err error) {
-	if msg := gjson.GetBytes(p, "message"); msg.Exists() {
-		t.engine.stderr = stderrMsg(msg.String())
+	if v := translateError(p); len(v) > 0 {
+		t.engine.stderr = stderrMsg(v)
 	}
 	return len(p), nil
 }

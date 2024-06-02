@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/buger/jsonparser"
 	"github.com/opentracing/opentracing-go"
 	"io"
 	"math/rand"
@@ -84,7 +85,6 @@ type JsonRPCPayload struct {
 }
 
 type JsonRPCResponse struct {
-	ID      int    `json:"id"`
 	JSONRPC string `json:"jsonrpc"`
 	Result  struct {
 		ExecutedSteps *int     `json:"executedSteps"`
@@ -92,13 +92,6 @@ type JsonRPCResponse struct {
 		Warnings      any      `json:"warnings"`
 		Unexecutable  []string `json:"unexecutable"`
 	} `json:"result"`
-	Error *struct {
-		Code    int64  `json:"code"`
-		Message string `json:"message"`
-		Data    struct {
-			Message string `json:"message"`
-		} `json:"data"`
-	} `json:"error"`
 }
 
 type Engine struct {
@@ -211,21 +204,22 @@ Loop:
 		}
 	}
 
-	var response JsonRPCResponse
-	err = json.NewDecoder(&buf).Decode(&response)
-	if err != nil {
-		return "", err
-	}
-	var errorMsg string
-	if respErr := response.Error; respErr != nil {
-		if msg := respErr.Data.Message; msg != "" {
-			errorMsg = msg
+	errorBytes, _, _, _ := jsonparser.Get(buf.Bytes(), "error")
+	if len(errorBytes) > 0 {
+		var errorMsg string
+		dataBytes, _, _, _ := jsonparser.Get(errorBytes, "data")
+		if dataBytes = translateError(dataBytes); len(dataBytes) > 0 {
+			errorMsg = string(dataBytes)
 		} else {
-			errorMsg = respErr.Message
+			messageBytes, _, _, _ := jsonparser.Get(errorBytes, "message")
+			errorMsg = string(messageBytes)
 		}
-	}
-	if errorMsg != "" {
 		return "", fmt.Errorf("error while %s database: %s", method, errorMsg)
+	}
+
+	var response JsonRPCResponse
+	if err = json.NewDecoder(&buf).Decode(&response); err != nil {
+		return "", err
 	}
 	if resultWarnings := response.Result.Warnings; resultWarnings != nil {
 		var warnings []string
