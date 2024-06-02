@@ -1220,9 +1220,9 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 	if errorsType == jsonparser.Array {
 		var index int
 		_, _ = jsonparser.ArrayEach(errorsBytes, func(value []byte, _ jsonparser.ValueType, _ int, _ error) {
-			newValue, ok := extractAndSetBytes(value, []byte(`{}`), graphqlItemUserFacingErrorPath, graphqlItemErrorMessagePath, translateError)
+			newValue, ok := extractAndSetErrorBytes(value, []byte(`{}`), graphqlItemUserFacingErrorPath, graphqlItemErrorMessagePath, translateError)
 			if !ok {
-				newValue, _ = extractAndSetBytes(value, newValue, graphqlItemErrorPath, graphqlItemErrorMessagePath)
+				newValue, _ = extractAndSetErrorBytes(value, newValue, graphqlItemErrorPath, graphqlItemErrorMessagePath)
 			}
 			errorsBytes, _ = jsonparser.Set(errorsBytes, newValue, fmt.Sprintf(`[%d]`, index))
 			index++

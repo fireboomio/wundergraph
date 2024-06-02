@@ -34,7 +34,7 @@ func translateError(prismaErrorBytes []byte) []byte {
 	if codeTranslate == "" {
 		return nil
 	}
-	if translateSplit := strings.Split(codeTranslate, "||"); len(translateSplit) > 0 {
+	if translateSplit := strings.Split(codeTranslate, "||"); len(translateSplit) > 1 {
 		metaData := make(map[string]string)
 		_ = jsonparser.ObjectEach(metaBytes, func(key []byte, value []byte, _ jsonparser.ValueType, _ int) error {
 			metaData["{"+string(key)+"}"] = strings.ReplaceAll(string(value), `"`, "")
@@ -66,8 +66,8 @@ func translateError(prismaErrorBytes []byte) []byte {
 	return []byte(fmt.Sprintf("[%s]%s", codeStr, codeTranslate))
 }
 
-func extractAndSetBytes(origin, target []byte, from, to []string, convert ...func([]byte) []byte) ([]byte, bool) {
-	dataBytes, dataTypes, _, err := jsonparser.Get(origin, from...)
+func extractAndSetErrorBytes(origin, target []byte, from, to []string, convert ...func([]byte) []byte) ([]byte, bool) {
+	dataBytes, _, _, err := jsonparser.Get(origin, from...)
 	if err != nil {
 		return target, false
 	}
@@ -80,9 +80,6 @@ func extractAndSetBytes(origin, target []byte, from, to []string, convert ...fun
 	if len(dataBytes) == 0 {
 		return target, false
 	}
-	if dataTypes == jsonparser.String {
-		dataBytes = []byte(`"` + string(dataBytes) + `"`)
-	}
-	target, _ = jsonparser.Set(target, dataBytes, to...)
+	target, _ = jsonparser.Set(target, []byte(`"`+string(dataBytes)+`"`), to...)
 	return target, true
 }
