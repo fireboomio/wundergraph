@@ -34,15 +34,24 @@ func translateError(prismaErrorBytes []byte) []byte {
 	if codeTranslate == "" {
 		return nil
 	}
-	if translateSplit := strings.Split(codeTranslate, "||"); len(translateSplit) > 1 {
-		metaData := make(map[string]string)
-		_ = jsonparser.ObjectEach(metaBytes, func(key []byte, value []byte, _ jsonparser.ValueType, _ int) error {
-			metaData["{"+string(key)+"}"] = strings.ReplaceAll(string(value), `"`, "")
-			return nil
-		})
+	if codeTranslate = replaceMetaData(metaBytes, codeTranslate, true); codeTranslate == "" {
+		return nil
+	}
+	return []byte(fmt.Sprintf("[%s]%s", codeStr, codeTranslate))
+}
+
+func replaceMetaData(metaBytes []byte, codeTranslate string, top bool) (result string) {
+	result = codeTranslate
+	metaData := parseObjectData(metaBytes)
+	if translateSplit := strings.Split(result, "||"); len(translateSplit) > 1 {
 		metaKeys := maps.Keys(metaData)
 		slices.Sort(metaKeys)
 		matchIndex := slices.IndexFunc(translateSplit, func(item string) bool {
+			if cond, _, ok := strings.Cut(item, "<?>"); ok {
+				if k, v, ok := strings.Cut(cond, "="); ok {
+					return strings.EqualFold(v, metaData[k])
+				}
+			}
 			params := placeHolderRegexp.FindAllString(item, -1)
 			slices.Sort(params)
 			return slices.Equal(params, metaKeys)
@@ -50,20 +59,45 @@ func translateError(prismaErrorBytes []byte) []byte {
 		if matchIndex == -1 {
 			matchIndex = 0
 		}
-		codeTranslate = translateSplit[matchIndex]
-		for k, v := range metaData {
-			codeTranslate = strings.ReplaceAll(codeTranslate, k, v)
+		if result = translateSplit[matchIndex]; result == "" {
+			return
 		}
-	} else {
-		_ = jsonparser.ObjectEach(metaBytes, func(key []byte, value []byte, valueType jsonparser.ValueType, _ int) error {
-			valueStr := strings.ReplaceAll(string(value), `"`, "")
-			codeTranslate = strings.ReplaceAll(codeTranslate, "{"+string(key)+"}", valueStr)
-			return nil
-		})
+		if _, after, ok := strings.Cut(result, "<?>"); ok {
+			result = after
+		}
+		if before, eachKey, ok := strings.Cut(result, "<each>"); ok {
+			eachResult := make([]string, 0)
+			_, _ = jsonparser.ArrayEach(metaBytes, func(value []byte, _ jsonparser.ValueType, _ int, _ error) {
+				itemResult := strings.TrimPrefix(replaceMetaData(value, codeTranslate, false), result)
+				if !slices.Contains(eachResult, itemResult) {
+					eachResult = append(eachResult, itemResult)
+				}
+			}, eachKey)
+			if result = strings.Join(eachResult, `\n`); top {
+				result = before + result
+			}
+		}
 	}
+	for k, v := range metaData {
+		result = strings.ReplaceAll(result, "{"+k+"}", v)
+	}
+	result = colorRegexp.ReplaceAllString(result, "")
+	return
+}
 
-	codeTranslate = colorRegexp.ReplaceAllString(codeTranslate, "")
-	return []byte(fmt.Sprintf("[%s]%s", codeStr, codeTranslate))
+func parseObjectData(objectBytes []byte) map[string]string {
+	metaData := make(map[string]string)
+	_ = jsonparser.ObjectEach(objectBytes, func(key []byte, value []byte, valueType jsonparser.ValueType, _ int) error {
+		keyStr := string(key)
+		metaData[keyStr] = strings.ReplaceAll(string(value), `"`, "")
+		if valueType == jsonparser.Object {
+			for k, v := range parseObjectData(value) {
+				metaData[keyStr+"."+k] = v
+			}
+		}
+		return nil
+	})
+	return metaData
 }
 
 func extractAndSetErrorBytes(origin, target []byte, from, to []string, convert ...func([]byte) []byte) ([]byte, bool) {

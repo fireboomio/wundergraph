@@ -78,14 +78,15 @@ type JsonRPCExtension struct {
 type JsonRPCPayloadParams map[string]interface{}
 
 type JsonRPCPayload struct {
-	ID      int    `json:"id"`
-	JSONRPC string `json:"jsonrpc"`
+	Id      int    `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
 	Method  string `json:"method"`
 	Params  any    `json:"params"`
 }
 
 type JsonRPCResponse struct {
-	JSONRPC string `json:"jsonrpc"`
+	Id      int    `json:"id"`
+	Jsonrpc string `json:"jsonrpc"`
 	Result  struct {
 		ExecutedSteps *int     `json:"executedSteps"`
 		DataModel     string   `json:"datamodel"`
@@ -123,8 +124,8 @@ func GetRPCPayload(method string, params map[string]interface{}, singled bool) J
 	}
 
 	var payload = JsonRPCPayload{
-		ID:      rand.Int(),
-		JSONRPC: "2.0",
+		Id:      rand.Int(),
+		Jsonrpc: "2.0",
 		Method:  method,
 		Params:  rpcParams,
 	}
