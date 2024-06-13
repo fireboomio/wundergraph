@@ -37,6 +37,7 @@ func translateError(prismaErrorBytes []byte) []byte {
 	if codeTranslate = replaceMetaData(metaBytes, codeTranslate, true); codeTranslate == "" {
 		return nil
 	}
+	codeTranslate = colorRegexp.ReplaceAllString(codeTranslate, "")
 	return []byte(fmt.Sprintf("[%s]%s", codeStr, codeTranslate))
 }
 
@@ -81,7 +82,6 @@ func replaceMetaData(metaBytes []byte, codeTranslate string, top bool) (result s
 	for k, v := range metaData {
 		result = strings.ReplaceAll(result, "{"+k+"}", v)
 	}
-	result = colorRegexp.ReplaceAllString(result, "")
 	return
 }
 
@@ -89,7 +89,8 @@ func parseObjectData(objectBytes []byte) map[string]string {
 	metaData := make(map[string]string)
 	_ = jsonparser.ObjectEach(objectBytes, func(key []byte, value []byte, valueType jsonparser.ValueType, _ int) error {
 		keyStr := string(key)
-		metaData[keyStr] = strings.ReplaceAll(string(value), `"`, "")
+		valueStr := strings.ReplaceAll(string(value), `\"`, "'")
+		metaData[keyStr] = strings.ReplaceAll(valueStr, `"`, "")
 		if valueType == jsonparser.Object {
 			for k, v := range parseObjectData(value) {
 				metaData[keyStr+"."+k] = v
