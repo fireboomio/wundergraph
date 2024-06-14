@@ -13,10 +13,34 @@ var (
 	TranslateErrorFunc func(string) string
 	colorRegexp        = regexp.MustCompile(`(\\)u001b\[\d+(;\d+)?m`)
 	placeHolderRegexp  = regexp.MustCompile(`\{[a-zA-Z0-9_]+\}`)
+)
 
+var (
 	prismaErrorCodePath = []string{"error_code"}
 	prismaErrorMetaPath = []string{"meta"}
+
+	graphqlErrorsPath              = []string{"errors"}
+	graphqlItemErrorPath           = []string{"error"}
+	graphqlItemErrorMessagePath    = []string{"message"}
+	graphqlItemUserFacingErrorPath = []string{"user_facing_error"}
 )
+
+func RewriteErrors(dataBytes []byte) (resultBytes []byte, rewritten bool) {
+	errorsBytes, errorsType, _, _ := jsonparser.Get(dataBytes, graphqlErrorsPath...)
+	if rewritten = errorsType == jsonparser.Array; rewritten {
+		var index int
+		_, _ = jsonparser.ArrayEach(errorsBytes, func(value []byte, _ jsonparser.ValueType, _ int, _ error) {
+			newValue, ok := extractAndSetErrorBytes(value, []byte(`{}`), graphqlItemUserFacingErrorPath, graphqlItemErrorMessagePath, translateError)
+			if !ok {
+				newValue, _ = extractAndSetErrorBytes(value, newValue, graphqlItemErrorPath, graphqlItemErrorMessagePath)
+			}
+			errorsBytes, _ = jsonparser.Set(errorsBytes, newValue, fmt.Sprintf(`[%d]`, index))
+			index++
+		})
+		resultBytes, _ = jsonparser.Set(dataBytes, errorsBytes, graphqlErrorsPath...)
+	}
+	return
+}
 
 func translateError(prismaErrorBytes []byte) []byte {
 	if TranslateErrorFunc == nil || len(prismaErrorBytes) == 0 {

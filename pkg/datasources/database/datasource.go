@@ -75,13 +75,6 @@ type inlinedVariable struct {
 	replaceFunc  func(string) string
 }
 
-var (
-	graphqlErrorsPath              = []string{"errors"}
-	graphqlItemErrorPath           = []string{"error"}
-	graphqlItemErrorMessagePath    = []string{"message"}
-	graphqlItemUserFacingErrorPath = []string{"user_facing_error"}
-)
-
 // SQLErrResult graphqlError use Message, so replace Message with Error if Message is empty
 type SQLErrResult struct {
 	Code      string        `json:"code,omitempty"`
@@ -1216,24 +1209,12 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 		return
 	}
 
-	errorsBytes, errorsType, _, _ := jsonparser.Get(buf.Bytes(), graphqlErrorsPath...)
-	if errorsType == jsonparser.Array {
-		var index int
-		_, _ = jsonparser.ArrayEach(errorsBytes, func(value []byte, _ jsonparser.ValueType, _ int, _ error) {
-			newValue, ok := extractAndSetErrorBytes(value, []byte(`{}`), graphqlItemUserFacingErrorPath, graphqlItemErrorMessagePath, translateError)
-			if !ok {
-				newValue, _ = extractAndSetErrorBytes(value, newValue, graphqlItemErrorPath, graphqlItemErrorMessagePath)
-			}
-			errorsBytes, _ = jsonparser.Set(errorsBytes, newValue, fmt.Sprintf(`[%d]`, index))
-			index++
-		})
-		resultBytes, _ := jsonparser.Set(buf.Bytes(), errorsBytes, graphqlErrorsPath...)
+	if resultBytes, rewritten := RewriteErrors(buf.Bytes()); rewritten {
 		buf.Reset()
 		buf.Write(resultBytes)
 		reportError(errors.New(string(resultBytes)))
 		spanFuncs = append(spanFuncs, func(span opentracing.Span) { ext.Error.Set(span, true) })
 	}
-
 	spanFuncs = append(spanFuncs, logging.SpanWithLogOutput(buf.Bytes()))
 	_, err = buf.WriteTo(w)
 	return
