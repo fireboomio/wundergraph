@@ -127,6 +127,7 @@ func (c *graphqlAutoComplete) autoComplete(buf *bytes.Buffer) error {
 				modified = true
 				itemSelectionSet.SelectionRefs = savedSelectionRefs
 				c.doc.SelectionSets[itemField.SelectionSet].SelectionRefs = savedSelectionRefs
+				c.doc.Fields[item.FieldIndex].HasSelections = len(savedSelectionRefs) > 0
 			}
 		}
 		if len(item.ValueTypes) == 0 {
@@ -141,10 +142,10 @@ func (c *graphqlAutoComplete) autoComplete(buf *bytes.Buffer) error {
 			subSelection := ast.Selection{Kind: ast.SelectionKindField, Ref: c.doc.AddField(subField).Ref}
 			itemSelectionSet.SelectionRefs = append(itemSelectionSet.SelectionRefs, c.doc.AddSelectionToDocument(subSelection))
 		}
+		c.doc.Fields[item.FieldIndex].HasSelections = true
 		if itemField.HasSelections {
 			c.doc.SelectionSets[itemField.SelectionSet].SelectionRefs = itemSelectionSet.SelectionRefs
 		} else {
-			c.doc.Fields[item.FieldIndex].HasSelections = true
 			c.doc.Fields[item.FieldIndex].SelectionSet = c.doc.AddSelectionSetToDocument(itemSelectionSet)
 		}
 	}

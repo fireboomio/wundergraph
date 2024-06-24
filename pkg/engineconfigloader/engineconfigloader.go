@@ -457,11 +457,13 @@ func (l *EngineConfigLoader) Load(engineConfig *wgpb.EngineConfiguration, wgServ
 			databaseURL := loadvariable.String(in.CustomDatabase.DatabaseURL)
 			database.StorePrisma(databaseURL, in.CustomDatabase.PrismaSchema)
 			config := database.Configuration{
-				DatasourceName:      in.Id,
-				DatabaseURL:         databaseURL,
-				EnvironmentVariable: in.CustomDatabase.EnvironmentVariable,
-				CloseTimeoutSeconds: in.CustomDatabase.CloseTimeoutSeconds,
-				WunderGraphDir:      l.wundergraphDir,
+				DatasourceKind:          in.Kind,
+				DatasourceKindForPrisma: in.KindForPrisma,
+				DatasourceName:          in.Id,
+				DatabaseURL:             databaseURL,
+				EnvironmentVariable:     in.CustomDatabase.EnvironmentVariable,
+				CloseTimeoutSeconds:     in.CustomDatabase.CloseTimeoutSeconds,
+				WunderGraphDir:          l.wundergraphDir,
 			}
 			for _, field := range in.CustomDatabase.JsonTypeFields {
 				config.JsonTypeFields = append(config.JsonTypeFields, database.SingleTypeField{

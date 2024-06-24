@@ -63,6 +63,7 @@ type Planner struct {
 	operationTypeDefinitionRef int
 	isQueryRaw                 bool
 	isQueryRawRow              bool
+	isOptionalRaw              bool
 }
 
 type inlinedVariable struct {
@@ -113,12 +114,14 @@ func (p *Planner) DataSourcePlanningBehavior() plan.DataSourcePlanningBehavior {
 }
 
 type Configuration struct {
-	DatasourceName      string
-	DatabaseURL         string
-	CloseTimeoutSeconds int32
-	JsonTypeFields      []SingleTypeField
-	JsonInputVariables  []string
-	WunderGraphDir      string
+	DatasourceKind          wgpb.DataSourceKind
+	DatasourceKindForPrisma wgpb.DataSourceKind
+	DatasourceName          string
+	DatabaseURL             string
+	CloseTimeoutSeconds     int32
+	JsonTypeFields          []SingleTypeField
+	JsonInputVariables      []string
+	WunderGraphDir          string
 
 	PrismaSchema        string
 	GraphqlSchema       string
@@ -249,6 +252,8 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 			}
 		} else if variable.isJSON {
 			renderer = resolve.NewGraphQLVariableRenderer(`{"type":"string"}`)
+		} else if p.isOptionalRaw {
+			renderer = &OptionalQueryRenderer{}
 		} else {
 			renderer, err = resolve.NewGraphQLVariableRendererFromTypeRefWithoutValidation(p.visitor.Operation, p.visitor.Definition, variable.typeRef)
 			if err != nil {
@@ -285,8 +290,9 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 	}
 
 	return plan.FetchConfiguration{
-		Input:          string(rawInput),
-		ResetInputFunc: p.resetRawInput,
+		Input:               string(rawInput),
+		ResetInputFunc:      p.resetRawInput,
+		RewriteVariableFunc: p.rewriteVariable,
 		DataSource: &Source{
 			engine:         engine,
 			debug:          p.debug,
@@ -294,6 +300,7 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 			datasourceName: p.config.DatasourceName,
 			rootTypeName:   p.rootTypeName,
 			rootFieldName:  p.rootFieldName,
+			isOptionalRaw:  p.isOptionalRaw,
 		},
 		Variables:            p.variables,
 		DisallowSingleFlight: p.disallowSingleFlight,
@@ -449,6 +456,10 @@ func (p *Planner) EnterField(ref int) {
 
 	if p.isQueryRawField(ref) {
 		p.isQueryRaw = true
+	}
+
+	if p.isOptionalRawField(ref) {
+		p.isOptionalRaw = true
 	}
 
 	p.ensureEmptyParametersArgOnRawOperations(ref)
@@ -1177,6 +1188,7 @@ type Source struct {
 	datasourceName string
 	rootTypeName   string
 	rootFieldName  string
+	isOptionalRaw  bool
 }
 
 func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error) {

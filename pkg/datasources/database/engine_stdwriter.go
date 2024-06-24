@@ -2,6 +2,7 @@ package database
 
 import (
 	"bytes"
+	"fmt"
 	json "github.com/json-iterator/go"
 	"github.com/opentracing/opentracing-go"
 	"github.com/tidwall/gjson"
@@ -18,6 +19,7 @@ func (t *stdoutWriter) Write(p []byte) (n int, err error) {
 
 		spansResult := gjson.GetBytes(line, "spans")
 		if !spansResult.IsArray() {
+			fmt.Println(string(line))
 			continue
 		}
 

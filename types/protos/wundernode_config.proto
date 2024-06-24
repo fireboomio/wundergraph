@@ -439,6 +439,7 @@ message EngineConfiguration {
 
 message DataSourceConfiguration {
   DataSourceKind kind = 1;
+  DataSourceKind kindForPrisma = 20; // [omitempty]
   repeated TypeField rootNodes = 2;
   repeated TypeField childNodes = 3;
   bool overrideFieldPathFromAlias = 4;

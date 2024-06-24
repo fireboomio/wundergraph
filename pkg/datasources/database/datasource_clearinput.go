@@ -6,12 +6,17 @@ import (
 	"fmt"
 	"github.com/buger/jsonparser"
 	json "github.com/json-iterator/go"
+	"github.com/spf13/cast"
+	"github.com/tidwall/gjson"
 	"github.com/wundergraph/graphql-go-tools/pkg/ast"
 	"github.com/wundergraph/graphql-go-tools/pkg/astprinter"
 	"github.com/wundergraph/graphql-go-tools/pkg/engine/resolve"
 	"github.com/wundergraph/graphql-go-tools/pkg/lexer/literal"
 	"github.com/wundergraph/wundergraph/pkg/pool"
+	"github.com/wundergraph/wundergraph/pkg/wgpb"
 	"golang.org/x/exp/slices"
+	"io"
+	"regexp"
 	"strings"
 )
 
@@ -235,4 +240,116 @@ func (c *clearDocumentHelper) clearSelectionRefs(selectionSet int, parent ...str
 		clearedAll = len(savedSelectionRefs) == 0
 	}
 	return
+}
+
+type OptionalQueryRenderer struct{}
+
+func (r *OptionalQueryRenderer) GetKind() string {
+	return "optional_query"
+}
+
+func (r *OptionalQueryRenderer) RenderVariable(_ context.Context, data []byte, out io.Writer) error {
+	_, _ = out.Write(literal.BACKSLASH)
+	_, _ = out.Write(literal.QUOTE)
+	_, _ = out.Write(data)
+	_, _ = out.Write(literal.BACKSLASH)
+	_, _ = out.Write(literal.QUOTE)
+	return nil
+}
+
+var (
+	markParameterRegexp   = regexp.MustCompile(`\?`)
+	dollarParameterRegexp = regexp.MustCompile(`\$\d+`)
+)
+
+func (p *Planner) isOptionalRawField(fieldRef int) bool {
+	name := p.visitor.Operation.FieldNameString(fieldRef)
+	return name == "optional_queryRaw" || strings.HasSuffix(name, "_optional_queryRaw")
+}
+
+func (p *Planner) rewriteVariable(ctx *resolve.Context, value []byte, valueType jsonparser.ValueType) ([]byte, error) {
+	if !p.isOptionalRaw || valueType != jsonparser.Array {
+		return value, nil
+	}
+	paramValues, paramsValueType, _, _ := jsonparser.Get(ctx.Variables, "parameters")
+	if paramsValueType != jsonparser.Array || bytes.EqualFold(paramValues, value) {
+		return value, nil
+	}
+	iEmptyValueFunc := func(index int) bool {
+		return gjson.GetBytes(paramValues, fmt.Sprintf("%d", index)).Type == gjson.Null
+	}
+
+	var (
+		paramOffset        int
+		savedParamIndexes  []int
+		savedSqlBytes      [][]byte
+		realDatasourceKind wgpb.DataSourceKind
+	)
+	switch kind := p.config.DatasourceKind; kind {
+	case wgpb.DataSourceKind_PRISMA:
+		realDatasourceKind = p.config.DatasourceKindForPrisma
+	default:
+		realDatasourceKind = kind
+	}
+	_, _ = jsonparser.ArrayEach(value, func(v []byte, t jsonparser.ValueType, _ int, _ error) {
+		sqlBytes, _, _, _ := jsonparser.Get(v, "sql")
+		var params []string
+		switch realDatasourceKind {
+		case wgpb.DataSourceKind_POSTGRESQL:
+			params = dollarParameterRegexp.FindAllString(string(sqlBytes), -1)
+		case wgpb.DataSourceKind_MYSQL:
+			params = markParameterRegexp.FindAllString(string(sqlBytes), -1)
+		}
+		foundParamsLen := len(params)
+		if foundParamsLen == 0 {
+			savedSqlBytes = append(savedSqlBytes, sqlBytes)
+			return
+		}
+		itemSavedIndexes := make([]int, 0, foundParamsLen)
+		for i, param := range params {
+			var itemIndex int
+			switch realDatasourceKind {
+			case wgpb.DataSourceKind_POSTGRESQL:
+				itemIndex = cast.ToInt(strings.TrimPrefix(param, "$")) - 1
+			case wgpb.DataSourceKind_MYSQL:
+				itemIndex = paramOffset + i
+			}
+			if !iEmptyValueFunc(itemIndex) {
+				itemSavedIndexes = append(itemSavedIndexes, itemIndex)
+			}
+		}
+		paramOffset += foundParamsLen
+		if len(itemSavedIndexes) == foundParamsLen {
+			savedSqlBytes = append(savedSqlBytes, sqlBytes)
+			savedParamIndexes = append(savedParamIndexes, itemSavedIndexes...)
+		}
+	})
+
+	var (
+		curIndex         int
+		savedParamValues [][]byte
+	)
+	_, _ = jsonparser.ArrayEach(paramValues, func(v []byte, t jsonparser.ValueType, offset int, _ error) {
+		if slices.Contains(savedParamIndexes, curIndex) {
+			if t == jsonparser.String {
+				v = paramValues[offset-2 : offset+len(v)]
+			}
+			savedParamValues = append(savedParamValues, v)
+		}
+		curIndex++
+	})
+
+	if len(savedParamIndexes) != paramOffset {
+		ctx.Variables, _ = jsonparser.Set(ctx.Variables, makeArrayBytes(savedParamValues), "parameters")
+	}
+
+	return bytes.Join(savedSqlBytes, literal.SPACE), nil
+}
+
+func makeArrayBytes(savedBytes [][]byte) []byte {
+	finalBytes := bytes.Join(savedBytes, literal.COMMA)
+	finalResult := make([]byte, len(finalBytes)+2)
+	copy(finalResult[1:], finalBytes)
+	finalResult[0], finalResult[len(finalBytes)+1] = charLBRACK, charRBRACK
+	return finalResult
 }

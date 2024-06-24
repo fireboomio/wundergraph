@@ -35,7 +35,7 @@ func init() {
 }
 
 const (
-	prismaVersion            = "b131176726d613a34b5c2e5e2230f9c930791ba3"
+	prismaVersion            = "e526d7ab29adfc5b7dd484a943ff22d97971a36e"
 	prismaQueryEngineEnvKey  = "PRISMA_QUERY_ENGINE_BINARY"
 	prismaSchemaEngineEnvKey = "PRISMA_INTROSPECTION_ENGINE_BINARY"
 	prismaEngineExitTimeout  = 5 * time.Second
