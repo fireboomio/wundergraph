@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"github.com/buger/jsonparser"
 	json "github.com/json-iterator/go"
-	"github.com/spf13/cast"
-	"github.com/tidwall/gjson"
 	"github.com/wundergraph/graphql-go-tools/pkg/ast"
 	"github.com/wundergraph/graphql-go-tools/pkg/astprinter"
 	"github.com/wundergraph/graphql-go-tools/pkg/engine/resolve"
@@ -129,15 +127,21 @@ func clearInputWithScope(input []byte, jointIndexes []int, clearedScope []string
 			continue
 		}
 
-		var nextClearStart int
-		nextClearEnd := clearedLength + 1
+		var (
+			nextClearStart int
+			nextClearEnd   = clearedLength + 1
+		)
 		if parenCleared {
 			nextClearStart = clearedLength - 1
 		} else {
-			nextClearStart = getKeywordStartIndex(clearedBytes[:clearedLength-1], nextJointIndexes)
-			if braceCleared && clearedBytes[clearedLength-2] == charLBRACK && input[start+1] == charRBRACK {
-				start++
-				nextClearEnd++
+			if braceCleared && clearedBytes[clearedLength-2] == charLBRACK {
+				nextClearStart = clearedLength - 1
+				if input[start+1] == charRBRACK {
+					start++
+					nextClearEnd++
+				}
+			} else {
+				nextClearStart = getKeywordStartIndex(clearedBytes[:clearedLength-1], nextJointIndexes)
 			}
 			nextClearEnd += getEndIndexOffset(input, clearedBytes[nextClearStart], start+1)
 		}
@@ -251,15 +255,35 @@ func (r *OptionalQueryRenderer) GetKind() string {
 func (r *OptionalQueryRenderer) RenderVariable(_ context.Context, data []byte, out io.Writer) error {
 	_, _ = out.Write(literal.BACKSLASH)
 	_, _ = out.Write(literal.QUOTE)
-	_, _ = out.Write(data)
+	for i := range data {
+		switch data[i] {
+		case '"':
+			_, _ = out.Write(literal.BACKSLASH)
+			_, _ = out.Write(literal.BACKSLASH)
+			_, _ = out.Write(literal.QUOTE)
+		default:
+			_, _ = out.Write(data[i : i+1])
+		}
+	}
 	_, _ = out.Write(literal.BACKSLASH)
 	_, _ = out.Write(literal.QUOTE)
 	return nil
 }
 
 var (
-	markParameterRegexp   = regexp.MustCompile(`\?`)
-	dollarParameterRegexp = regexp.MustCompile(`\$\d+`)
+	dollarParameter1Regexp        = regexp.MustCompile(`\${\w+}`)
+	optionalParameterReplaceFuncs = map[wgpb.DataSourceKind]optionalParameterReplaceFunc{
+		wgpb.DataSourceKind_MYSQL:      func(int, []byte) []byte { return []byte(`?`) },
+		wgpb.DataSourceKind_POSTGRESQL: func(i int, _ []byte) []byte { return []byte(fmt.Sprintf(`$%d`, i+1)) },
+	}
+)
+
+type (
+	optionalParameter struct {
+		param []byte
+		value []byte
+	}
+	optionalParameterReplaceFunc func(int, []byte) []byte
 )
 
 func (p *Planner) isOptionalRawField(fieldRef int) bool {
@@ -267,83 +291,70 @@ func (p *Planner) isOptionalRawField(fieldRef int) bool {
 	return name == "optional_queryRaw" || strings.HasSuffix(name, "_optional_queryRaw")
 }
 
-func (p *Planner) rewriteVariable(ctx *resolve.Context, value []byte, valueType jsonparser.ValueType) ([]byte, error) {
-	if !p.isOptionalRaw || valueType != jsonparser.Array {
+func (p *Planner) rewriteVariable(ctx *resolve.Context, key string, value []byte, valueType jsonparser.ValueType) ([]byte, error) {
+	if !p.isOptionalRaw || len(p.optionalParametersKey) == 0 || valueType != jsonparser.Array {
 		return value, nil
 	}
-	paramValues, paramsValueType, _, _ := jsonparser.Get(ctx.Variables, "parameters")
-	if paramsValueType != jsonparser.Array || bytes.EqualFold(paramValues, value) {
+	parameterReplaceFunc, ok := optionalParameterReplaceFuncs[p.getRealDatasourceKind()]
+	if !ok {
 		return value, nil
 	}
-	iEmptyValueFunc := func(index int) bool {
-		return gjson.GetBytes(paramValues, fmt.Sprintf("%d", index)).Type == gjson.Null
+	if v, ok := p.optionalParameters.LoadAndDelete(ctx); ok && p.optionalParametersKey == key {
+		return v.([]byte), nil
 	}
 
 	var (
-		paramOffset        int
-		savedParamIndexes  []int
-		savedSqlBytes      [][]byte
-		realDatasourceKind wgpb.DataSourceKind
+		savedParameters []*optionalParameter
+		savedSqlBytes   [][]byte
 	)
-	switch kind := p.config.DatasourceKind; kind {
-	case wgpb.DataSourceKind_PRISMA:
-		realDatasourceKind = p.config.DatasourceKindForPrisma
-	default:
-		realDatasourceKind = kind
-	}
 	_, _ = jsonparser.ArrayEach(value, func(v []byte, t jsonparser.ValueType, _ int, _ error) {
 		sqlBytes, _, _, _ := jsonparser.Get(v, "sql")
-		var params []string
-		switch realDatasourceKind {
-		case wgpb.DataSourceKind_POSTGRESQL:
-			params = dollarParameterRegexp.FindAllString(string(sqlBytes), -1)
-		case wgpb.DataSourceKind_MYSQL:
-			params = markParameterRegexp.FindAllString(string(sqlBytes), -1)
-		}
+		params := dollarParameter1Regexp.FindAllString(string(sqlBytes), -1)
 		foundParamsLen := len(params)
 		if foundParamsLen == 0 {
 			savedSqlBytes = append(savedSqlBytes, sqlBytes)
 			return
 		}
-		itemSavedIndexes := make([]int, 0, foundParamsLen)
-		for i, param := range params {
-			var itemIndex int
-			switch realDatasourceKind {
-			case wgpb.DataSourceKind_POSTGRESQL:
-				itemIndex = cast.ToInt(strings.TrimPrefix(param, "$")) - 1
-			case wgpb.DataSourceKind_MYSQL:
-				itemIndex = paramOffset + i
+		itemSavedParameters := make([]*optionalParameter, 0, foundParamsLen)
+		for _, param := range params {
+			paramKey := param[2 : len(param)-1]
+			paramValue, paramValueType, paramOffset, _ := jsonparser.Get(ctx.Variables, paramKey)
+			if paramValueType == jsonparser.NotExist {
+				break
 			}
-			if !iEmptyValueFunc(itemIndex) {
-				itemSavedIndexes = append(itemSavedIndexes, itemIndex)
+			if paramValueType == jsonparser.String {
+				paramValue = ctx.Variables[paramOffset-len(paramValue)-2 : paramOffset]
 			}
+			itemSavedParameters = append(itemSavedParameters, &optionalParameter{
+				param: []byte(param), value: paramValue,
+			})
 		}
-		paramOffset += foundParamsLen
-		if len(itemSavedIndexes) == foundParamsLen {
+		if len(itemSavedParameters) == foundParamsLen {
 			savedSqlBytes = append(savedSqlBytes, sqlBytes)
-			savedParamIndexes = append(savedParamIndexes, itemSavedIndexes...)
+			savedParameters = append(savedParameters, itemSavedParameters...)
 		}
 	})
 
 	var (
-		curIndex         int
-		savedParamValues [][]byte
+		finalParameterBytes [][]byte
+		finalSqlBytes       = bytes.Join(savedSqlBytes, literal.SPACE)
 	)
-	_, _ = jsonparser.ArrayEach(paramValues, func(v []byte, t jsonparser.ValueType, offset int, _ error) {
-		if slices.Contains(savedParamIndexes, curIndex) {
-			if t == jsonparser.String {
-				v = paramValues[offset-2 : offset+len(v)]
-			}
-			savedParamValues = append(savedParamValues, v)
-		}
-		curIndex++
-	})
-
-	if len(savedParamIndexes) != paramOffset {
-		ctx.Variables, _ = jsonparser.Set(ctx.Variables, makeArrayBytes(savedParamValues), "parameters")
+	for i, item := range savedParameters {
+		replaceElement := parameterReplaceFunc(i, item.param)
+		finalSqlBytes = bytes.Replace(finalSqlBytes, item.param, replaceElement, 1)
+		finalParameterBytes = append(finalParameterBytes, item.value)
 	}
+	p.optionalParameters.Store(ctx, makeArrayBytes(finalParameterBytes))
+	return finalSqlBytes, nil
+}
 
-	return bytes.Join(savedSqlBytes, literal.SPACE), nil
+func (p *Planner) getRealDatasourceKind() wgpb.DataSourceKind {
+	switch kind := p.config.DatasourceKind; kind {
+	case wgpb.DataSourceKind_PRISMA:
+		return p.config.DatasourceKindForPrisma
+	default:
+		return kind
+	}
 }
 
 func makeArrayBytes(savedBytes [][]byte) []byte {

@@ -63,7 +63,10 @@ type Planner struct {
 	operationTypeDefinitionRef int
 	isQueryRaw                 bool
 	isQueryRawRow              bool
-	isOptionalRaw              bool
+
+	isOptionalRaw         bool
+	optionalParametersKey string
+	optionalParameters    sync.Map
 }
 
 type inlinedVariable struct {
@@ -247,8 +250,9 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 			err      error
 		)
 		if variable.isRaw {
-			renderer = &RawJsonVariableRenderer{
-				parentIsJson: variable.parentIsJson,
+			renderer = &RawJsonVariableRenderer{parentIsJson: variable.parentIsJson}
+			if p.isOptionalRaw {
+				p.optionalParametersKey = variable.name
 			}
 		} else if variable.isJSON {
 			renderer = resolve.NewGraphQLVariableRenderer(`{"type":"string"}`)
