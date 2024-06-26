@@ -178,8 +178,11 @@ func (p *Planner) EnterField(ref int) {
 }
 
 func (p *Planner) configureInput() []byte {
-
-	input := httpclient.SetInputURL(nil, []byte(p.config.Fetch.URL))
+	fetchUrl := p.config.Fetch.URL
+	if strings.HasPrefix(fetchUrl, "{{") && strings.HasSuffix(fetchUrl, "}}") {
+		fetchUrl = strconv.Quote(fetchUrl)
+	}
+	input := httpclient.SetInputURL(nil, []byte(fetchUrl))
 	input = httpclient.SetInputMethod(input, []byte(p.config.Fetch.Method))
 	input = httpclient.SetInputBody(input, []byte(p.config.Fetch.Body))
 	input = httpclient.SetInputURLEncodeBody(input, p.config.Fetch.URLEncodeBody)
