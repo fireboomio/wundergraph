@@ -255,7 +255,8 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 				p.optionalParametersKey = variable.name
 			}
 		} else if variable.isJSON {
-			renderer = resolve.NewGraphQLVariableRenderer(`{"type":"string"}`)
+			// renderer = resolve.NewGraphQLVariableRenderer(`{"type":"string"}`)
+			renderer = &RawJsonVariableRenderer{}
 		} else if p.isOptionalRaw {
 			renderer = &OptionalQueryRenderer{}
 		} else {
@@ -657,6 +658,7 @@ func (p *Planner) configureFieldArgumentSource(upstreamFieldRef, downstreamField
 	for i := range p.config.JsonInputVariables {
 		if variableTypeName == p.config.JsonInputVariables[i] {
 			isJSON = true
+			break
 		}
 	}
 
@@ -734,6 +736,7 @@ func (p *Planner) addVariableDefinitionsRecursively(value ast.Value, argumentNam
 	for i := range p.config.JsonInputVariables {
 		if typeName == p.config.JsonInputVariables[i] {
 			isJSON = true
+			break
 		}
 	}
 
