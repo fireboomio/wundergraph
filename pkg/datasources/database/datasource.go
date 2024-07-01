@@ -234,6 +234,17 @@ func (r *RawJsonVariableRenderer) RenderVariable(ctx context.Context, data []byt
 	return nil
 }
 
+type JsonStringVariableRenderer struct{}
+
+func (r *JsonStringVariableRenderer) GetKind() string {
+	return "json_string"
+}
+
+func (r *JsonStringVariableRenderer) RenderVariable(_ context.Context, data []byte, out io.Writer) error {
+	_, _ = out.Write([]byte(strings.ReplaceAll(string(data), `"`, `\\\"`)))
+	return nil
+}
+
 func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 
 	operation := string(p.printOperation())
@@ -256,7 +267,7 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 			}
 		} else if variable.isJSON {
 			// renderer = resolve.NewGraphQLVariableRenderer(`{"type":"string"}`)
-			renderer = &RawJsonVariableRenderer{}
+			renderer = &JsonStringVariableRenderer{}
 		} else if p.isOptionalRaw {
 			renderer = &OptionalQueryRenderer{}
 		} else {

@@ -1251,6 +1251,9 @@ func injectVariables(operation *wgpb.Operation, r *http.Request, ctx *resolve.Co
 			if err != nil {
 				return nil, err
 			}
+			if ruleValue == nil {
+				continue
+			}
 			switch typeName := currentVariable.RuleValueTypeName; typeName {
 			case openapi3.TypeArray, openapi3.TypeObject:
 				var buf bytes.Buffer

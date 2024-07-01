@@ -84,7 +84,8 @@ func clearUnrenderVariables(ctx context.Context, unrenderVariables []resolve.Unr
 			}
 			rendererBuf.Write(input[variableIndex+nullBytesLength:])
 			inputOffset += rendererBuf.Len() - len(input)
-			input = rendererBuf.Bytes()
+			input = make([]byte, rendererBuf.Len())
+			copy(input, rendererBuf.Bytes())
 			pool.PutBytesBuffer(rendererBuf)
 			continue
 		}
