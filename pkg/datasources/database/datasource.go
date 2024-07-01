@@ -9,6 +9,7 @@ import (
 	"github.com/buger/jsonparser"
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
+	"github.com/wundergraph/graphql-go-tools/pkg/lexer/literal"
 	"github.com/wundergraph/wundergraph/pkg/logging"
 	"github.com/wundergraph/wundergraph/pkg/wgpb"
 	"io"
@@ -225,11 +226,23 @@ func (r *RawJsonVariableRenderer) RenderVariable(ctx context.Context, data []byt
 		// in this case, there will be a 2 variable renderers, one that renders the list (as JSON)
 		// and a second one to inline render the value of $id
 		// which doesn't need to be quoted again
-		_, _ = out.Write([]byte(`\"`))
+		_, _ = out.Write(literal.BACKSLASH)
+		_, _ = out.Write(literal.QUOTE)
 	}
-	_, _ = out.Write([]byte(strings.ReplaceAll(string(data), `"`, `\\\"`)))
+	for i := range data {
+		switch data[i] {
+		case '"':
+			_, _ = out.Write(literal.BACKSLASH)
+			_, _ = out.Write(literal.BACKSLASH)
+			_, _ = out.Write(literal.BACKSLASH)
+			_, _ = out.Write(literal.QUOTE)
+		default:
+			_, _ = out.Write(data[i : i+1])
+		}
+	}
 	if !r.parentIsJson {
-		_, _ = out.Write([]byte(`\"`))
+		_, _ = out.Write(literal.BACKSLASH)
+		_, _ = out.Write(literal.QUOTE)
 	}
 	return nil
 }
@@ -241,7 +254,27 @@ func (r *JsonStringVariableRenderer) GetKind() string {
 }
 
 func (r *JsonStringVariableRenderer) RenderVariable(_ context.Context, data []byte, out io.Writer) error {
-	_, _ = out.Write([]byte(strings.ReplaceAll(string(data), `"`, `\\\"`)))
+	isJsonString := bytes.HasPrefix(data, literal.QUOTE) && bytes.HasSuffix(data, literal.QUOTE)
+	if isJsonString {
+		data = data[1 : len(data)-1]
+	}
+	_, _ = out.Write(literal.BACKSLASH)
+	_, _ = out.Write(literal.QUOTE)
+	for i := range data {
+		switch data[i] {
+		case '"':
+			if !isJsonString {
+				_, _ = out.Write(literal.BACKSLASH)
+			}
+			_, _ = out.Write(literal.BACKSLASH)
+			_, _ = out.Write(literal.BACKSLASH)
+			_, _ = out.Write(literal.QUOTE)
+		default:
+			_, _ = out.Write(data[i : i+1])
+		}
+	}
+	_, _ = out.Write(literal.BACKSLASH)
+	_, _ = out.Write(literal.QUOTE)
 	return nil
 }
 
