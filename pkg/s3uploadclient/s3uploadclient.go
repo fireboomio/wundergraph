@@ -289,11 +289,15 @@ func (s *S3UploadClient) preUpload(ctx context.Context, r *http.Request, part *m
 	}
 
 	if fileKey == "" {
-		hexHash, err := hashContents(tempFile)
-		if err != nil {
-			return "", err
+		if r.URL.Query().Has("keepOriginName") {
+			fileKey = part.FileName()
+		} else {
+			hexHash, err := hashContents(tempFile)
+			if err != nil {
+				return "", err
+			}
+			fileKey = fmt.Sprintf("%s%s", hexHash, filepath.Ext(part.FileName()))
 		}
-		fileKey = fmt.Sprintf("%s%s", hexHash, filepath.Ext(part.FileName()))
 	}
 	// 添加从query参数中获取文件目录，支持创建目录操作
 	if dir := r.URL.Query().Get("directory"); dir != "" {
