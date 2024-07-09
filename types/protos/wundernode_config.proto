@@ -309,17 +309,6 @@ message ClaimConfig {
   ClaimType claimType = 2;
   // Available iff claimType == CUSTOM
   optional CustomClaim custom = 3;
-  ClaimRemoveIfNoneMatch removeIfNoneMatch = 4;
-}
-
-message ClaimRemoveIfNoneMatch {
-  ClaimRemoveIfNoneMatchType type = 1;
-  string name = 2;
-}
-
-enum ClaimRemoveIfNoneMatchType {
-  Header = 0;
-  Environment = 1;
 }
 
 message VariableWhereInputConfiguration {

@@ -431,52 +431,6 @@ func (DateOffsetUnit) EnumDescriptor() ([]byte, []int) {
 	return file_wundernode_config_proto_rawDescGZIP(), []int{7}
 }
 
-type ClaimRemoveIfNoneMatchType int32
-
-const (
-	ClaimRemoveIfNoneMatchType_Header      ClaimRemoveIfNoneMatchType = 0
-	ClaimRemoveIfNoneMatchType_Environment ClaimRemoveIfNoneMatchType = 1
-)
-
-// Enum value maps for ClaimRemoveIfNoneMatchType.
-var (
-	ClaimRemoveIfNoneMatchType_name = map[int32]string{
-		0: "Header",
-		1: "Environment",
-	}
-	ClaimRemoveIfNoneMatchType_value = map[string]int32{
-		"Header":      0,
-		"Environment": 1,
-	}
-)
-
-func (x ClaimRemoveIfNoneMatchType) Enum() *ClaimRemoveIfNoneMatchType {
-	p := new(ClaimRemoveIfNoneMatchType)
-	*p = x
-	return p
-}
-
-func (x ClaimRemoveIfNoneMatchType) String() string {
-	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
-}
-
-func (ClaimRemoveIfNoneMatchType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[8].Descriptor()
-}
-
-func (ClaimRemoveIfNoneMatchType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[8]
-}
-
-func (x ClaimRemoveIfNoneMatchType) Number() protoreflect.EnumNumber {
-	return protoreflect.EnumNumber(x)
-}
-
-// Deprecated: Use ClaimRemoveIfNoneMatchType.Descriptor instead.
-func (ClaimRemoveIfNoneMatchType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{8}
-}
-
 type VariableWhereInputScalarFilterType int32
 
 const (
@@ -531,11 +485,11 @@ func (x VariableWhereInputScalarFilterType) String() string {
 }
 
 func (VariableWhereInputScalarFilterType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[9].Descriptor()
+	return file_wundernode_config_proto_enumTypes[8].Descriptor()
 }
 
 func (VariableWhereInputScalarFilterType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[9]
+	return &file_wundernode_config_proto_enumTypes[8]
 }
 
 func (x VariableWhereInputScalarFilterType) Number() protoreflect.EnumNumber {
@@ -544,7 +498,7 @@ func (x VariableWhereInputScalarFilterType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use VariableWhereInputScalarFilterType.Descriptor instead.
 func (VariableWhereInputScalarFilterType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{9}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{8}
 }
 
 type VariableWhereInputRelationFilterType int32
@@ -586,11 +540,11 @@ func (x VariableWhereInputRelationFilterType) String() string {
 }
 
 func (VariableWhereInputRelationFilterType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[10].Descriptor()
+	return file_wundernode_config_proto_enumTypes[9].Descriptor()
 }
 
 func (VariableWhereInputRelationFilterType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[10]
+	return &file_wundernode_config_proto_enumTypes[9]
 }
 
 func (x VariableWhereInputRelationFilterType) Number() protoreflect.EnumNumber {
@@ -599,7 +553,7 @@ func (x VariableWhereInputRelationFilterType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use VariableWhereInputRelationFilterType.Descriptor instead.
 func (VariableWhereInputRelationFilterType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{10}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{9}
 }
 
 type ClaimType int32
@@ -693,11 +647,11 @@ func (x ClaimType) String() string {
 }
 
 func (ClaimType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[11].Descriptor()
+	return file_wundernode_config_proto_enumTypes[10].Descriptor()
 }
 
 func (ClaimType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[11]
+	return &file_wundernode_config_proto_enumTypes[10]
 }
 
 func (x ClaimType) Number() protoreflect.EnumNumber {
@@ -706,7 +660,7 @@ func (x ClaimType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ClaimType.Descriptor instead.
 func (ClaimType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{11}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{10}
 }
 
 type ValueType int32
@@ -748,11 +702,11 @@ func (x ValueType) String() string {
 }
 
 func (ValueType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[12].Descriptor()
+	return file_wundernode_config_proto_enumTypes[11].Descriptor()
 }
 
 func (ValueType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[12]
+	return &file_wundernode_config_proto_enumTypes[11]
 }
 
 func (x ValueType) Number() protoreflect.EnumNumber {
@@ -761,7 +715,7 @@ func (x ValueType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ValueType.Descriptor instead.
 func (ValueType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{12}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{11}
 }
 
 type OperationType int32
@@ -797,11 +751,11 @@ func (x OperationType) String() string {
 }
 
 func (OperationType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[13].Descriptor()
+	return file_wundernode_config_proto_enumTypes[12].Descriptor()
 }
 
 func (OperationType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[13]
+	return &file_wundernode_config_proto_enumTypes[12]
 }
 
 func (x OperationType) Number() protoreflect.EnumNumber {
@@ -810,7 +764,7 @@ func (x OperationType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OperationType.Descriptor instead.
 func (OperationType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{13}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{12}
 }
 
 type DataSourceKind int32
@@ -867,11 +821,11 @@ func (x DataSourceKind) String() string {
 }
 
 func (DataSourceKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[14].Descriptor()
+	return file_wundernode_config_proto_enumTypes[13].Descriptor()
 }
 
 func (DataSourceKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[14]
+	return &file_wundernode_config_proto_enumTypes[13]
 }
 
 func (x DataSourceKind) Number() protoreflect.EnumNumber {
@@ -880,7 +834,7 @@ func (x DataSourceKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DataSourceKind.Descriptor instead.
 func (DataSourceKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{14}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{13}
 }
 
 type DataSourceRESTRewriterType int32
@@ -931,11 +885,11 @@ func (x DataSourceRESTRewriterType) String() string {
 }
 
 func (DataSourceRESTRewriterType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[15].Descriptor()
+	return file_wundernode_config_proto_enumTypes[14].Descriptor()
 }
 
 func (DataSourceRESTRewriterType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[15]
+	return &file_wundernode_config_proto_enumTypes[14]
 }
 
 func (x DataSourceRESTRewriterType) Number() protoreflect.EnumNumber {
@@ -944,7 +898,7 @@ func (x DataSourceRESTRewriterType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DataSourceRESTRewriterType.Descriptor instead.
 func (DataSourceRESTRewriterType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{15}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{14}
 }
 
 type UpstreamAuthenticationKind int32
@@ -977,11 +931,11 @@ func (x UpstreamAuthenticationKind) String() string {
 }
 
 func (UpstreamAuthenticationKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[16].Descriptor()
+	return file_wundernode_config_proto_enumTypes[15].Descriptor()
 }
 
 func (UpstreamAuthenticationKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[16]
+	return &file_wundernode_config_proto_enumTypes[15]
 }
 
 func (x UpstreamAuthenticationKind) Number() protoreflect.EnumNumber {
@@ -990,7 +944,7 @@ func (x UpstreamAuthenticationKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use UpstreamAuthenticationKind.Descriptor instead.
 func (UpstreamAuthenticationKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{16}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{15}
 }
 
 type SigningMethod int32
@@ -1020,11 +974,11 @@ func (x SigningMethod) String() string {
 }
 
 func (SigningMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[17].Descriptor()
+	return file_wundernode_config_proto_enumTypes[16].Descriptor()
 }
 
 func (SigningMethod) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[17]
+	return &file_wundernode_config_proto_enumTypes[16]
 }
 
 func (x SigningMethod) Number() protoreflect.EnumNumber {
@@ -1033,7 +987,7 @@ func (x SigningMethod) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SigningMethod.Descriptor instead.
 func (SigningMethod) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{17}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{16}
 }
 
 type HTTPMethod int32
@@ -1087,11 +1041,11 @@ func (x HTTPMethod) String() string {
 }
 
 func (HTTPMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[18].Descriptor()
+	return file_wundernode_config_proto_enumTypes[17].Descriptor()
 }
 
 func (HTTPMethod) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[18]
+	return &file_wundernode_config_proto_enumTypes[17]
 }
 
 func (x HTTPMethod) Number() protoreflect.EnumNumber {
@@ -1100,7 +1054,7 @@ func (x HTTPMethod) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HTTPMethod.Descriptor instead.
 func (HTTPMethod) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{18}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{17}
 }
 
 type ArgumentSource int32
@@ -1133,11 +1087,11 @@ func (x ArgumentSource) String() string {
 }
 
 func (ArgumentSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[19].Descriptor()
+	return file_wundernode_config_proto_enumTypes[18].Descriptor()
 }
 
 func (ArgumentSource) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[19]
+	return &file_wundernode_config_proto_enumTypes[18]
 }
 
 func (x ArgumentSource) Number() protoreflect.EnumNumber {
@@ -1146,7 +1100,7 @@ func (x ArgumentSource) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ArgumentSource.Descriptor instead.
 func (ArgumentSource) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{19}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{18}
 }
 
 type ArgumentRenderConfiguration int32
@@ -1185,11 +1139,11 @@ func (x ArgumentRenderConfiguration) String() string {
 }
 
 func (ArgumentRenderConfiguration) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[20].Descriptor()
+	return file_wundernode_config_proto_enumTypes[19].Descriptor()
 }
 
 func (ArgumentRenderConfiguration) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[20]
+	return &file_wundernode_config_proto_enumTypes[19]
 }
 
 func (x ArgumentRenderConfiguration) Number() protoreflect.EnumNumber {
@@ -1198,7 +1152,7 @@ func (x ArgumentRenderConfiguration) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ArgumentRenderConfiguration.Descriptor instead.
 func (ArgumentRenderConfiguration) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{20}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{19}
 }
 
 type WebhookVerifierKind int32
@@ -1228,11 +1182,11 @@ func (x WebhookVerifierKind) String() string {
 }
 
 func (WebhookVerifierKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[21].Descriptor()
+	return file_wundernode_config_proto_enumTypes[20].Descriptor()
 }
 
 func (WebhookVerifierKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[21]
+	return &file_wundernode_config_proto_enumTypes[20]
 }
 
 func (x WebhookVerifierKind) Number() protoreflect.EnumNumber {
@@ -1241,7 +1195,7 @@ func (x WebhookVerifierKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use WebhookVerifierKind.Descriptor instead.
 func (WebhookVerifierKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{21}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{20}
 }
 
 type ConfigurationVariableKind int32
@@ -1277,11 +1231,11 @@ func (x ConfigurationVariableKind) String() string {
 }
 
 func (ConfigurationVariableKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[22].Descriptor()
+	return file_wundernode_config_proto_enumTypes[21].Descriptor()
 }
 
 func (ConfigurationVariableKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[22]
+	return &file_wundernode_config_proto_enumTypes[21]
 }
 
 func (x ConfigurationVariableKind) Number() protoreflect.EnumNumber {
@@ -1290,7 +1244,7 @@ func (x ConfigurationVariableKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ConfigurationVariableKind.Descriptor instead.
 func (ConfigurationVariableKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{22}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{21}
 }
 
 type WunderNodeConfig struct {
@@ -3751,8 +3705,7 @@ type ClaimConfig struct {
 	VariablePathComponents []string  `protobuf:"bytes,1,rep,name=variablePathComponents,proto3" json:"variablePathComponents"`
 	ClaimType              ClaimType `protobuf:"varint,2,opt,name=claimType,proto3,enum=wgpb.ClaimType" json:"claimType"`
 	// Available iff claimType == CUSTOM
-	Custom            *CustomClaim            `protobuf:"bytes,3,opt,name=custom,proto3,oneof" json:"custom"`
-	RemoveIfNoneMatch *ClaimRemoveIfNoneMatch `protobuf:"bytes,4,opt,name=removeIfNoneMatch,proto3" json:"removeIfNoneMatch"`
+	Custom *CustomClaim `protobuf:"bytes,3,opt,name=custom,proto3,oneof" json:"custom"`
 }
 
 func (x *ClaimConfig) Reset() {
@@ -3808,68 +3761,6 @@ func (x *ClaimConfig) GetCustom() *CustomClaim {
 	return nil
 }
 
-func (x *ClaimConfig) GetRemoveIfNoneMatch() *ClaimRemoveIfNoneMatch {
-	if x != nil {
-		return x.RemoveIfNoneMatch
-	}
-	return nil
-}
-
-type ClaimRemoveIfNoneMatch struct {
-	state         protoimpl.MessageState
-	sizeCache     protoimpl.SizeCache
-	unknownFields protoimpl.UnknownFields
-
-	Type ClaimRemoveIfNoneMatchType `protobuf:"varint,1,opt,name=type,proto3,enum=wgpb.ClaimRemoveIfNoneMatchType" json:"type"`
-	Name string                     `protobuf:"bytes,2,opt,name=name,proto3" json:"name"`
-}
-
-func (x *ClaimRemoveIfNoneMatch) Reset() {
-	*x = ClaimRemoveIfNoneMatch{}
-	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[35]
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		ms.StoreMessageInfo(mi)
-	}
-}
-
-func (x *ClaimRemoveIfNoneMatch) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ClaimRemoveIfNoneMatch) ProtoMessage() {}
-
-func (x *ClaimRemoveIfNoneMatch) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[35]
-	if protoimpl.UnsafeEnabled && x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ClaimRemoveIfNoneMatch.ProtoReflect.Descriptor instead.
-func (*ClaimRemoveIfNoneMatch) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{35}
-}
-
-func (x *ClaimRemoveIfNoneMatch) GetType() ClaimRemoveIfNoneMatchType {
-	if x != nil {
-		return x.Type
-	}
-	return ClaimRemoveIfNoneMatchType_Header
-}
-
-func (x *ClaimRemoveIfNoneMatch) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
 type VariableWhereInputConfiguration struct {
 	state         protoimpl.MessageState
 	sizeCache     protoimpl.SizeCache
@@ -3882,7 +3773,7 @@ type VariableWhereInputConfiguration struct {
 func (x *VariableWhereInputConfiguration) Reset() {
 	*x = VariableWhereInputConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[36]
+		mi := &file_wundernode_config_proto_msgTypes[35]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3895,7 +3786,7 @@ func (x *VariableWhereInputConfiguration) String() string {
 func (*VariableWhereInputConfiguration) ProtoMessage() {}
 
 func (x *VariableWhereInputConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[36]
+	mi := &file_wundernode_config_proto_msgTypes[35]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3908,7 +3799,7 @@ func (x *VariableWhereInputConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VariableWhereInputConfiguration.ProtoReflect.Descriptor instead.
 func (*VariableWhereInputConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{36}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{35}
 }
 
 func (x *VariableWhereInputConfiguration) GetVariablePathComponents() []string {
@@ -3937,7 +3828,7 @@ type VariableWhereInput struct {
 func (x *VariableWhereInput) Reset() {
 	*x = VariableWhereInput{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[37]
+		mi := &file_wundernode_config_proto_msgTypes[36]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -3950,7 +3841,7 @@ func (x *VariableWhereInput) String() string {
 func (*VariableWhereInput) ProtoMessage() {}
 
 func (x *VariableWhereInput) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[37]
+	mi := &file_wundernode_config_proto_msgTypes[36]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3963,7 +3854,7 @@ func (x *VariableWhereInput) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VariableWhereInput.ProtoReflect.Descriptor instead.
 func (*VariableWhereInput) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{37}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{36}
 }
 
 func (x *VariableWhereInput) GetNot() *VariableWhereInput {
@@ -3993,7 +3884,7 @@ type VariableWhereInputFilter struct {
 func (x *VariableWhereInputFilter) Reset() {
 	*x = VariableWhereInputFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[38]
+		mi := &file_wundernode_config_proto_msgTypes[37]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4006,7 +3897,7 @@ func (x *VariableWhereInputFilter) String() string {
 func (*VariableWhereInputFilter) ProtoMessage() {}
 
 func (x *VariableWhereInputFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[38]
+	mi := &file_wundernode_config_proto_msgTypes[37]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4019,7 +3910,7 @@ func (x *VariableWhereInputFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VariableWhereInputFilter.ProtoReflect.Descriptor instead.
 func (*VariableWhereInputFilter) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{38}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{37}
 }
 
 func (x *VariableWhereInputFilter) GetField() string {
@@ -4055,7 +3946,7 @@ type VariableWhereInputScalarFilter struct {
 func (x *VariableWhereInputScalarFilter) Reset() {
 	*x = VariableWhereInputScalarFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[39]
+		mi := &file_wundernode_config_proto_msgTypes[38]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4068,7 +3959,7 @@ func (x *VariableWhereInputScalarFilter) String() string {
 func (*VariableWhereInputScalarFilter) ProtoMessage() {}
 
 func (x *VariableWhereInputScalarFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[39]
+	mi := &file_wundernode_config_proto_msgTypes[38]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4081,7 +3972,7 @@ func (x *VariableWhereInputScalarFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VariableWhereInputScalarFilter.ProtoReflect.Descriptor instead.
 func (*VariableWhereInputScalarFilter) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{39}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{38}
 }
 
 func (x *VariableWhereInputScalarFilter) GetType() VariableWhereInputScalarFilterType {
@@ -4110,7 +4001,7 @@ type VariableWhereInputRelationFilter struct {
 func (x *VariableWhereInputRelationFilter) Reset() {
 	*x = VariableWhereInputRelationFilter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[40]
+		mi := &file_wundernode_config_proto_msgTypes[39]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4123,7 +4014,7 @@ func (x *VariableWhereInputRelationFilter) String() string {
 func (*VariableWhereInputRelationFilter) ProtoMessage() {}
 
 func (x *VariableWhereInputRelationFilter) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[40]
+	mi := &file_wundernode_config_proto_msgTypes[39]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4136,7 +4027,7 @@ func (x *VariableWhereInputRelationFilter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VariableWhereInputRelationFilter.ProtoReflect.Descriptor instead.
 func (*VariableWhereInputRelationFilter) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{40}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{39}
 }
 
 func (x *VariableWhereInputRelationFilter) GetType() VariableWhereInputRelationFilterType {
@@ -4165,7 +4056,7 @@ type OperationLiveQueryConfig struct {
 func (x *OperationLiveQueryConfig) Reset() {
 	*x = OperationLiveQueryConfig{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[41]
+		mi := &file_wundernode_config_proto_msgTypes[40]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4178,7 +4069,7 @@ func (x *OperationLiveQueryConfig) String() string {
 func (*OperationLiveQueryConfig) ProtoMessage() {}
 
 func (x *OperationLiveQueryConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[41]
+	mi := &file_wundernode_config_proto_msgTypes[40]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4191,7 +4082,7 @@ func (x *OperationLiveQueryConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperationLiveQueryConfig.ProtoReflect.Descriptor instead.
 func (*OperationLiveQueryConfig) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{41}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{40}
 }
 
 func (x *OperationLiveQueryConfig) GetEnabled() bool {
@@ -4219,7 +4110,7 @@ type OperationAuthenticationConfig struct {
 func (x *OperationAuthenticationConfig) Reset() {
 	*x = OperationAuthenticationConfig{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[42]
+		mi := &file_wundernode_config_proto_msgTypes[41]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4232,7 +4123,7 @@ func (x *OperationAuthenticationConfig) String() string {
 func (*OperationAuthenticationConfig) ProtoMessage() {}
 
 func (x *OperationAuthenticationConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[42]
+	mi := &file_wundernode_config_proto_msgTypes[41]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4245,7 +4136,7 @@ func (x *OperationAuthenticationConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperationAuthenticationConfig.ProtoReflect.Descriptor instead.
 func (*OperationAuthenticationConfig) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{42}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{41}
 }
 
 func (x *OperationAuthenticationConfig) GetAuthRequired() bool {
@@ -4269,7 +4160,7 @@ type OperationCacheConfig struct {
 func (x *OperationCacheConfig) Reset() {
 	*x = OperationCacheConfig{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[43]
+		mi := &file_wundernode_config_proto_msgTypes[42]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4282,7 +4173,7 @@ func (x *OperationCacheConfig) String() string {
 func (*OperationCacheConfig) ProtoMessage() {}
 
 func (x *OperationCacheConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[43]
+	mi := &file_wundernode_config_proto_msgTypes[42]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4295,7 +4186,7 @@ func (x *OperationCacheConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use OperationCacheConfig.ProtoReflect.Descriptor instead.
 func (*OperationCacheConfig) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{43}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{42}
 }
 
 func (x *OperationCacheConfig) GetEnabled() bool {
@@ -4341,7 +4232,7 @@ type EngineConfiguration struct {
 func (x *EngineConfiguration) Reset() {
 	*x = EngineConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[44]
+		mi := &file_wundernode_config_proto_msgTypes[43]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4354,7 +4245,7 @@ func (x *EngineConfiguration) String() string {
 func (*EngineConfiguration) ProtoMessage() {}
 
 func (x *EngineConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[44]
+	mi := &file_wundernode_config_proto_msgTypes[43]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4367,7 +4258,7 @@ func (x *EngineConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EngineConfiguration.ProtoReflect.Descriptor instead.
 func (*EngineConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{44}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{43}
 }
 
 func (x *EngineConfiguration) GetDefaultFlushInterval() int64 {
@@ -4430,7 +4321,7 @@ type DataSourceConfiguration struct {
 func (x *DataSourceConfiguration) Reset() {
 	*x = DataSourceConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[45]
+		mi := &file_wundernode_config_proto_msgTypes[44]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4443,7 +4334,7 @@ func (x *DataSourceConfiguration) String() string {
 func (*DataSourceConfiguration) ProtoMessage() {}
 
 func (x *DataSourceConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[45]
+	mi := &file_wundernode_config_proto_msgTypes[44]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4456,7 +4347,7 @@ func (x *DataSourceConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceConfiguration.ProtoReflect.Descriptor instead.
 func (*DataSourceConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{45}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{44}
 }
 
 func (x *DataSourceConfiguration) GetKind() DataSourceKind {
@@ -4576,7 +4467,7 @@ type DirectiveConfiguration struct {
 func (x *DirectiveConfiguration) Reset() {
 	*x = DirectiveConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[46]
+		mi := &file_wundernode_config_proto_msgTypes[45]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4589,7 +4480,7 @@ func (x *DirectiveConfiguration) String() string {
 func (*DirectiveConfiguration) ProtoMessage() {}
 
 func (x *DirectiveConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[46]
+	mi := &file_wundernode_config_proto_msgTypes[45]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4602,7 +4493,7 @@ func (x *DirectiveConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DirectiveConfiguration.ProtoReflect.Descriptor instead.
 func (*DirectiveConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{46}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{45}
 }
 
 func (x *DirectiveConfiguration) GetDirectiveName() string {
@@ -4636,7 +4527,7 @@ type DataSourceCustom_REST struct {
 func (x *DataSourceCustom_REST) Reset() {
 	*x = DataSourceCustom_REST{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[47]
+		mi := &file_wundernode_config_proto_msgTypes[46]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4649,7 +4540,7 @@ func (x *DataSourceCustom_REST) String() string {
 func (*DataSourceCustom_REST) ProtoMessage() {}
 
 func (x *DataSourceCustom_REST) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[47]
+	mi := &file_wundernode_config_proto_msgTypes[46]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4662,7 +4553,7 @@ func (x *DataSourceCustom_REST) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceCustom_REST.ProtoReflect.Descriptor instead.
 func (*DataSourceCustom_REST) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{47}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{46}
 }
 
 func (x *DataSourceCustom_REST) GetFetch() *FetchConfiguration {
@@ -4727,7 +4618,7 @@ type DataSourceRESTResponseExtractor struct {
 func (x *DataSourceRESTResponseExtractor) Reset() {
 	*x = DataSourceRESTResponseExtractor{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[48]
+		mi := &file_wundernode_config_proto_msgTypes[47]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4740,7 +4631,7 @@ func (x *DataSourceRESTResponseExtractor) String() string {
 func (*DataSourceRESTResponseExtractor) ProtoMessage() {}
 
 func (x *DataSourceRESTResponseExtractor) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[48]
+	mi := &file_wundernode_config_proto_msgTypes[47]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4753,7 +4644,7 @@ func (x *DataSourceRESTResponseExtractor) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceRESTResponseExtractor.ProtoReflect.Descriptor instead.
 func (*DataSourceRESTResponseExtractor) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{48}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{47}
 }
 
 func (x *DataSourceRESTResponseExtractor) GetStatusCodeJsonpath() string {
@@ -4789,7 +4680,7 @@ type DataSourceRESTResponseStatusCodeScope struct {
 func (x *DataSourceRESTResponseStatusCodeScope) Reset() {
 	*x = DataSourceRESTResponseStatusCodeScope{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[49]
+		mi := &file_wundernode_config_proto_msgTypes[48]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4802,7 +4693,7 @@ func (x *DataSourceRESTResponseStatusCodeScope) String() string {
 func (*DataSourceRESTResponseStatusCodeScope) ProtoMessage() {}
 
 func (x *DataSourceRESTResponseStatusCodeScope) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[49]
+	mi := &file_wundernode_config_proto_msgTypes[48]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4815,7 +4706,7 @@ func (x *DataSourceRESTResponseStatusCodeScope) ProtoReflect() protoreflect.Mess
 
 // Deprecated: Use DataSourceRESTResponseStatusCodeScope.ProtoReflect.Descriptor instead.
 func (*DataSourceRESTResponseStatusCodeScope) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{49}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{48}
 }
 
 func (x *DataSourceRESTResponseStatusCodeScope) GetMin() int32 {
@@ -4843,7 +4734,7 @@ type DataSourceCustom_REST_Rewriter struct {
 func (x *DataSourceCustom_REST_Rewriter) Reset() {
 	*x = DataSourceCustom_REST_Rewriter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[50]
+		mi := &file_wundernode_config_proto_msgTypes[49]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4856,7 +4747,7 @@ func (x *DataSourceCustom_REST_Rewriter) String() string {
 func (*DataSourceCustom_REST_Rewriter) ProtoMessage() {}
 
 func (x *DataSourceCustom_REST_Rewriter) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[50]
+	mi := &file_wundernode_config_proto_msgTypes[49]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4869,7 +4760,7 @@ func (x *DataSourceCustom_REST_Rewriter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceCustom_REST_Rewriter.ProtoReflect.Descriptor instead.
 func (*DataSourceCustom_REST_Rewriter) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{50}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{49}
 }
 
 func (x *DataSourceCustom_REST_Rewriter) GetRewriters() []*DataSourceRESTRewriter {
@@ -4902,7 +4793,7 @@ type DataSourceRESTRewriter struct {
 func (x *DataSourceRESTRewriter) Reset() {
 	*x = DataSourceRESTRewriter{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[51]
+		mi := &file_wundernode_config_proto_msgTypes[50]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -4915,7 +4806,7 @@ func (x *DataSourceRESTRewriter) String() string {
 func (*DataSourceRESTRewriter) ProtoMessage() {}
 
 func (x *DataSourceRESTRewriter) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[51]
+	mi := &file_wundernode_config_proto_msgTypes[50]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -4928,7 +4819,7 @@ func (x *DataSourceRESTRewriter) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceRESTRewriter.ProtoReflect.Descriptor instead.
 func (*DataSourceRESTRewriter) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{51}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{50}
 }
 
 func (x *DataSourceRESTRewriter) GetPathComponents() []string {
@@ -5020,7 +4911,7 @@ type DataSourceRESTSubObject struct {
 func (x *DataSourceRESTSubObject) Reset() {
 	*x = DataSourceRESTSubObject{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[52]
+		mi := &file_wundernode_config_proto_msgTypes[51]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5033,7 +4924,7 @@ func (x *DataSourceRESTSubObject) String() string {
 func (*DataSourceRESTSubObject) ProtoMessage() {}
 
 func (x *DataSourceRESTSubObject) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[52]
+	mi := &file_wundernode_config_proto_msgTypes[51]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5046,7 +4937,7 @@ func (x *DataSourceRESTSubObject) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceRESTSubObject.ProtoReflect.Descriptor instead.
 func (*DataSourceRESTSubObject) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{52}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{51}
 }
 
 func (x *DataSourceRESTSubObject) GetName() string {
@@ -5075,7 +4966,7 @@ type DataSourceRESTSubfield struct {
 func (x *DataSourceRESTSubfield) Reset() {
 	*x = DataSourceRESTSubfield{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[53]
+		mi := &file_wundernode_config_proto_msgTypes[52]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5088,7 +4979,7 @@ func (x *DataSourceRESTSubfield) String() string {
 func (*DataSourceRESTSubfield) ProtoMessage() {}
 
 func (x *DataSourceRESTSubfield) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[53]
+	mi := &file_wundernode_config_proto_msgTypes[52]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5101,7 +4992,7 @@ func (x *DataSourceRESTSubfield) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceRESTSubfield.ProtoReflect.Descriptor instead.
 func (*DataSourceRESTSubfield) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{53}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{52}
 }
 
 func (x *DataSourceRESTSubfield) GetName() string {
@@ -5131,7 +5022,7 @@ type StatusCodeTypeMapping struct {
 func (x *StatusCodeTypeMapping) Reset() {
 	*x = StatusCodeTypeMapping{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[54]
+		mi := &file_wundernode_config_proto_msgTypes[53]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5144,7 +5035,7 @@ func (x *StatusCodeTypeMapping) String() string {
 func (*StatusCodeTypeMapping) ProtoMessage() {}
 
 func (x *StatusCodeTypeMapping) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[54]
+	mi := &file_wundernode_config_proto_msgTypes[53]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5157,7 +5048,7 @@ func (x *StatusCodeTypeMapping) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StatusCodeTypeMapping.ProtoReflect.Descriptor instead.
 func (*StatusCodeTypeMapping) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{54}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{53}
 }
 
 func (x *StatusCodeTypeMapping) GetStatusCode() int64 {
@@ -5197,7 +5088,7 @@ type DataSourceCustom_GraphQL struct {
 func (x *DataSourceCustom_GraphQL) Reset() {
 	*x = DataSourceCustom_GraphQL{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[55]
+		mi := &file_wundernode_config_proto_msgTypes[54]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5210,7 +5101,7 @@ func (x *DataSourceCustom_GraphQL) String() string {
 func (*DataSourceCustom_GraphQL) ProtoMessage() {}
 
 func (x *DataSourceCustom_GraphQL) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[55]
+	mi := &file_wundernode_config_proto_msgTypes[54]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5223,7 +5114,7 @@ func (x *DataSourceCustom_GraphQL) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceCustom_GraphQL.ProtoReflect.Descriptor instead.
 func (*DataSourceCustom_GraphQL) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{55}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{54}
 }
 
 func (x *DataSourceCustom_GraphQL) GetFetch() *FetchConfiguration {
@@ -5286,7 +5177,7 @@ type DataSourceCustom_Database struct {
 func (x *DataSourceCustom_Database) Reset() {
 	*x = DataSourceCustom_Database{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[56]
+		mi := &file_wundernode_config_proto_msgTypes[55]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5299,7 +5190,7 @@ func (x *DataSourceCustom_Database) String() string {
 func (*DataSourceCustom_Database) ProtoMessage() {}
 
 func (x *DataSourceCustom_Database) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[56]
+	mi := &file_wundernode_config_proto_msgTypes[55]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5312,7 +5203,7 @@ func (x *DataSourceCustom_Database) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceCustom_Database.ProtoReflect.Descriptor instead.
 func (*DataSourceCustom_Database) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{56}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{55}
 }
 
 func (x *DataSourceCustom_Database) GetDatabaseURL() *ConfigurationVariable {
@@ -5376,7 +5267,7 @@ type GraphQLFederationConfiguration struct {
 func (x *GraphQLFederationConfiguration) Reset() {
 	*x = GraphQLFederationConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[57]
+		mi := &file_wundernode_config_proto_msgTypes[56]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5389,7 +5280,7 @@ func (x *GraphQLFederationConfiguration) String() string {
 func (*GraphQLFederationConfiguration) ProtoMessage() {}
 
 func (x *GraphQLFederationConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[57]
+	mi := &file_wundernode_config_proto_msgTypes[56]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5402,7 +5293,7 @@ func (x *GraphQLFederationConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphQLFederationConfiguration.ProtoReflect.Descriptor instead.
 func (*GraphQLFederationConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{57}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{56}
 }
 
 func (x *GraphQLFederationConfiguration) GetEnabled() bool {
@@ -5430,7 +5321,7 @@ type DataSourceCustom_Static struct {
 func (x *DataSourceCustom_Static) Reset() {
 	*x = DataSourceCustom_Static{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[58]
+		mi := &file_wundernode_config_proto_msgTypes[57]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5443,7 +5334,7 @@ func (x *DataSourceCustom_Static) String() string {
 func (*DataSourceCustom_Static) ProtoMessage() {}
 
 func (x *DataSourceCustom_Static) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[58]
+	mi := &file_wundernode_config_proto_msgTypes[57]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5456,7 +5347,7 @@ func (x *DataSourceCustom_Static) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DataSourceCustom_Static.ProtoReflect.Descriptor instead.
 func (*DataSourceCustom_Static) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{58}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{57}
 }
 
 func (x *DataSourceCustom_Static) GetData() *ConfigurationVariable {
@@ -5479,7 +5370,7 @@ type GraphQLSubscriptionConfiguration struct {
 func (x *GraphQLSubscriptionConfiguration) Reset() {
 	*x = GraphQLSubscriptionConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[59]
+		mi := &file_wundernode_config_proto_msgTypes[58]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5492,7 +5383,7 @@ func (x *GraphQLSubscriptionConfiguration) String() string {
 func (*GraphQLSubscriptionConfiguration) ProtoMessage() {}
 
 func (x *GraphQLSubscriptionConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[59]
+	mi := &file_wundernode_config_proto_msgTypes[58]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5505,7 +5396,7 @@ func (x *GraphQLSubscriptionConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GraphQLSubscriptionConfiguration.ProtoReflect.Descriptor instead.
 func (*GraphQLSubscriptionConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{59}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{58}
 }
 
 func (x *GraphQLSubscriptionConfiguration) GetEnabled() bool {
@@ -5559,7 +5450,7 @@ type FetchConfiguration struct {
 func (x *FetchConfiguration) Reset() {
 	*x = FetchConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[60]
+		mi := &file_wundernode_config_proto_msgTypes[59]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5572,7 +5463,7 @@ func (x *FetchConfiguration) String() string {
 func (*FetchConfiguration) ProtoMessage() {}
 
 func (x *FetchConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[60]
+	mi := &file_wundernode_config_proto_msgTypes[59]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5585,7 +5476,7 @@ func (x *FetchConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FetchConfiguration.ProtoReflect.Descriptor instead.
 func (*FetchConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{60}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{59}
 }
 
 func (x *FetchConfiguration) GetUrl() *ConfigurationVariable {
@@ -5685,7 +5576,7 @@ type MTLSConfiguration struct {
 func (x *MTLSConfiguration) Reset() {
 	*x = MTLSConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[61]
+		mi := &file_wundernode_config_proto_msgTypes[60]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5698,7 +5589,7 @@ func (x *MTLSConfiguration) String() string {
 func (*MTLSConfiguration) ProtoMessage() {}
 
 func (x *MTLSConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[61]
+	mi := &file_wundernode_config_proto_msgTypes[60]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5711,7 +5602,7 @@ func (x *MTLSConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MTLSConfiguration.ProtoReflect.Descriptor instead.
 func (*MTLSConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{61}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{60}
 }
 
 func (x *MTLSConfiguration) GetKey() *ConfigurationVariable {
@@ -5748,7 +5639,7 @@ type UpstreamAuthentication struct {
 func (x *UpstreamAuthentication) Reset() {
 	*x = UpstreamAuthentication{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[62]
+		mi := &file_wundernode_config_proto_msgTypes[61]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5761,7 +5652,7 @@ func (x *UpstreamAuthentication) String() string {
 func (*UpstreamAuthentication) ProtoMessage() {}
 
 func (x *UpstreamAuthentication) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[62]
+	mi := &file_wundernode_config_proto_msgTypes[61]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5774,7 +5665,7 @@ func (x *UpstreamAuthentication) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UpstreamAuthentication.ProtoReflect.Descriptor instead.
 func (*UpstreamAuthentication) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{62}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{61}
 }
 
 func (x *UpstreamAuthentication) GetKind() UpstreamAuthenticationKind {
@@ -5810,7 +5701,7 @@ type JwtUpstreamAuthenticationConfig struct {
 func (x *JwtUpstreamAuthenticationConfig) Reset() {
 	*x = JwtUpstreamAuthenticationConfig{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[63]
+		mi := &file_wundernode_config_proto_msgTypes[62]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5823,7 +5714,7 @@ func (x *JwtUpstreamAuthenticationConfig) String() string {
 func (*JwtUpstreamAuthenticationConfig) ProtoMessage() {}
 
 func (x *JwtUpstreamAuthenticationConfig) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[63]
+	mi := &file_wundernode_config_proto_msgTypes[62]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5836,7 +5727,7 @@ func (x *JwtUpstreamAuthenticationConfig) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use JwtUpstreamAuthenticationConfig.ProtoReflect.Descriptor instead.
 func (*JwtUpstreamAuthenticationConfig) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{63}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{62}
 }
 
 func (x *JwtUpstreamAuthenticationConfig) GetSecret() *ConfigurationVariable {
@@ -5866,7 +5757,7 @@ type JwtUpstreamAuthenticationWithAccessTokenExchange struct {
 func (x *JwtUpstreamAuthenticationWithAccessTokenExchange) Reset() {
 	*x = JwtUpstreamAuthenticationWithAccessTokenExchange{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[64]
+		mi := &file_wundernode_config_proto_msgTypes[63]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5879,7 +5770,7 @@ func (x *JwtUpstreamAuthenticationWithAccessTokenExchange) String() string {
 func (*JwtUpstreamAuthenticationWithAccessTokenExchange) ProtoMessage() {}
 
 func (x *JwtUpstreamAuthenticationWithAccessTokenExchange) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[64]
+	mi := &file_wundernode_config_proto_msgTypes[63]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5892,7 +5783,7 @@ func (x *JwtUpstreamAuthenticationWithAccessTokenExchange) ProtoReflect() protor
 
 // Deprecated: Use JwtUpstreamAuthenticationWithAccessTokenExchange.ProtoReflect.Descriptor instead.
 func (*JwtUpstreamAuthenticationWithAccessTokenExchange) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{64}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{63}
 }
 
 func (x *JwtUpstreamAuthenticationWithAccessTokenExchange) GetSecret() *ConfigurationVariable {
@@ -5930,7 +5821,7 @@ type RESTSubscriptionConfiguration struct {
 func (x *RESTSubscriptionConfiguration) Reset() {
 	*x = RESTSubscriptionConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[65]
+		mi := &file_wundernode_config_proto_msgTypes[64]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -5943,7 +5834,7 @@ func (x *RESTSubscriptionConfiguration) String() string {
 func (*RESTSubscriptionConfiguration) ProtoMessage() {}
 
 func (x *RESTSubscriptionConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[65]
+	mi := &file_wundernode_config_proto_msgTypes[64]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -5956,7 +5847,7 @@ func (x *RESTSubscriptionConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RESTSubscriptionConfiguration.ProtoReflect.Descriptor instead.
 func (*RESTSubscriptionConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{65}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{64}
 }
 
 func (x *RESTSubscriptionConfiguration) GetEnabled() bool {
@@ -5999,7 +5890,7 @@ type URLQueryConfiguration struct {
 func (x *URLQueryConfiguration) Reset() {
 	*x = URLQueryConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[66]
+		mi := &file_wundernode_config_proto_msgTypes[65]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6012,7 +5903,7 @@ func (x *URLQueryConfiguration) String() string {
 func (*URLQueryConfiguration) ProtoMessage() {}
 
 func (x *URLQueryConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[66]
+	mi := &file_wundernode_config_proto_msgTypes[65]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6025,7 +5916,7 @@ func (x *URLQueryConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use URLQueryConfiguration.ProtoReflect.Descriptor instead.
 func (*URLQueryConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{66}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{65}
 }
 
 func (x *URLQueryConfiguration) GetName() string {
@@ -6053,7 +5944,7 @@ type HTTPHeader struct {
 func (x *HTTPHeader) Reset() {
 	*x = HTTPHeader{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[67]
+		mi := &file_wundernode_config_proto_msgTypes[66]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6066,7 +5957,7 @@ func (x *HTTPHeader) String() string {
 func (*HTTPHeader) ProtoMessage() {}
 
 func (x *HTTPHeader) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[67]
+	mi := &file_wundernode_config_proto_msgTypes[66]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6079,7 +5970,7 @@ func (x *HTTPHeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use HTTPHeader.ProtoReflect.Descriptor instead.
 func (*HTTPHeader) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{67}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{66}
 }
 
 func (x *HTTPHeader) GetValues() []*ConfigurationVariable {
@@ -6101,7 +5992,7 @@ type TypeConfiguration struct {
 func (x *TypeConfiguration) Reset() {
 	*x = TypeConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[68]
+		mi := &file_wundernode_config_proto_msgTypes[67]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6114,7 +6005,7 @@ func (x *TypeConfiguration) String() string {
 func (*TypeConfiguration) ProtoMessage() {}
 
 func (x *TypeConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[68]
+	mi := &file_wundernode_config_proto_msgTypes[67]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6127,7 +6018,7 @@ func (x *TypeConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TypeConfiguration.ProtoReflect.Descriptor instead.
 func (*TypeConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{68}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{67}
 }
 
 func (x *TypeConfiguration) GetTypeName() string {
@@ -6161,7 +6052,7 @@ type FieldConfiguration struct {
 func (x *FieldConfiguration) Reset() {
 	*x = FieldConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[69]
+		mi := &file_wundernode_config_proto_msgTypes[68]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6174,7 +6065,7 @@ func (x *FieldConfiguration) String() string {
 func (*FieldConfiguration) ProtoMessage() {}
 
 func (x *FieldConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[69]
+	mi := &file_wundernode_config_proto_msgTypes[68]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6187,7 +6078,7 @@ func (x *FieldConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FieldConfiguration.ProtoReflect.Descriptor instead.
 func (*FieldConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{69}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{68}
 }
 
 func (x *FieldConfiguration) GetTypeName() string {
@@ -6252,7 +6143,7 @@ type TypeField struct {
 func (x *TypeField) Reset() {
 	*x = TypeField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[70]
+		mi := &file_wundernode_config_proto_msgTypes[69]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6265,7 +6156,7 @@ func (x *TypeField) String() string {
 func (*TypeField) ProtoMessage() {}
 
 func (x *TypeField) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[70]
+	mi := &file_wundernode_config_proto_msgTypes[69]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6278,7 +6169,7 @@ func (x *TypeField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TypeField.ProtoReflect.Descriptor instead.
 func (*TypeField) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{70}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{69}
 }
 
 func (x *TypeField) GetTypeName() string {
@@ -6313,7 +6204,7 @@ type QuoteField struct {
 func (x *QuoteField) Reset() {
 	*x = QuoteField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[71]
+		mi := &file_wundernode_config_proto_msgTypes[70]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6326,7 +6217,7 @@ func (x *QuoteField) String() string {
 func (*QuoteField) ProtoMessage() {}
 
 func (x *QuoteField) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[71]
+	mi := &file_wundernode_config_proto_msgTypes[70]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6339,7 +6230,7 @@ func (x *QuoteField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use QuoteField.ProtoReflect.Descriptor instead.
 func (*QuoteField) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{71}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{70}
 }
 
 func (x *QuoteField) GetIndexes() []int32 {
@@ -6361,7 +6252,7 @@ type SingleTypeField struct {
 func (x *SingleTypeField) Reset() {
 	*x = SingleTypeField{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[72]
+		mi := &file_wundernode_config_proto_msgTypes[71]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6374,7 +6265,7 @@ func (x *SingleTypeField) String() string {
 func (*SingleTypeField) ProtoMessage() {}
 
 func (x *SingleTypeField) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[72]
+	mi := &file_wundernode_config_proto_msgTypes[71]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6387,7 +6278,7 @@ func (x *SingleTypeField) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use SingleTypeField.ProtoReflect.Descriptor instead.
 func (*SingleTypeField) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{72}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{71}
 }
 
 func (x *SingleTypeField) GetTypeName() string {
@@ -6419,7 +6310,7 @@ type ArgumentConfiguration struct {
 func (x *ArgumentConfiguration) Reset() {
 	*x = ArgumentConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[73]
+		mi := &file_wundernode_config_proto_msgTypes[72]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6432,7 +6323,7 @@ func (x *ArgumentConfiguration) String() string {
 func (*ArgumentConfiguration) ProtoMessage() {}
 
 func (x *ArgumentConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[73]
+	mi := &file_wundernode_config_proto_msgTypes[72]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6445,7 +6336,7 @@ func (x *ArgumentConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ArgumentConfiguration.ProtoReflect.Descriptor instead.
 func (*ArgumentConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{73}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{72}
 }
 
 func (x *ArgumentConfiguration) GetName() string {
@@ -6500,7 +6391,7 @@ type WunderGraphConfiguration struct {
 func (x *WunderGraphConfiguration) Reset() {
 	*x = WunderGraphConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[74]
+		mi := &file_wundernode_config_proto_msgTypes[73]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6513,7 +6404,7 @@ func (x *WunderGraphConfiguration) String() string {
 func (*WunderGraphConfiguration) ProtoMessage() {}
 
 func (x *WunderGraphConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[74]
+	mi := &file_wundernode_config_proto_msgTypes[73]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6526,7 +6417,7 @@ func (x *WunderGraphConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WunderGraphConfiguration.ProtoReflect.Descriptor instead.
 func (*WunderGraphConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{74}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{73}
 }
 
 func (x *WunderGraphConfiguration) GetApi() *UserDefinedApi {
@@ -6583,7 +6474,7 @@ type S3UploadProfileHooksConfiguration struct {
 func (x *S3UploadProfileHooksConfiguration) Reset() {
 	*x = S3UploadProfileHooksConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[75]
+		mi := &file_wundernode_config_proto_msgTypes[74]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6596,7 +6487,7 @@ func (x *S3UploadProfileHooksConfiguration) String() string {
 func (*S3UploadProfileHooksConfiguration) ProtoMessage() {}
 
 func (x *S3UploadProfileHooksConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[75]
+	mi := &file_wundernode_config_proto_msgTypes[74]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6609,7 +6500,7 @@ func (x *S3UploadProfileHooksConfiguration) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use S3UploadProfileHooksConfiguration.ProtoReflect.Descriptor instead.
 func (*S3UploadProfileHooksConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{75}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{74}
 }
 
 func (x *S3UploadProfileHooksConfiguration) GetPreUpload() bool {
@@ -6643,7 +6534,7 @@ type S3UploadProfile struct {
 func (x *S3UploadProfile) Reset() {
 	*x = S3UploadProfile{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[76]
+		mi := &file_wundernode_config_proto_msgTypes[75]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6656,7 +6547,7 @@ func (x *S3UploadProfile) String() string {
 func (*S3UploadProfile) ProtoMessage() {}
 
 func (x *S3UploadProfile) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[76]
+	mi := &file_wundernode_config_proto_msgTypes[75]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6669,7 +6560,7 @@ func (x *S3UploadProfile) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use S3UploadProfile.ProtoReflect.Descriptor instead.
 func (*S3UploadProfile) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{76}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{75}
 }
 
 func (x *S3UploadProfile) GetRequireAuthentication() bool {
@@ -6739,7 +6630,7 @@ type S3UploadConfiguration struct {
 func (x *S3UploadConfiguration) Reset() {
 	*x = S3UploadConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[77]
+		mi := &file_wundernode_config_proto_msgTypes[76]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6752,7 +6643,7 @@ func (x *S3UploadConfiguration) String() string {
 func (*S3UploadConfiguration) ProtoMessage() {}
 
 func (x *S3UploadConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[77]
+	mi := &file_wundernode_config_proto_msgTypes[76]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6765,7 +6656,7 @@ func (x *S3UploadConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use S3UploadConfiguration.ProtoReflect.Descriptor instead.
 func (*S3UploadConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{77}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{76}
 }
 
 func (x *S3UploadConfiguration) GetName() string {
@@ -6845,7 +6736,7 @@ type UserDefinedApi struct {
 func (x *UserDefinedApi) Reset() {
 	*x = UserDefinedApi{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[78]
+		mi := &file_wundernode_config_proto_msgTypes[77]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6858,7 +6749,7 @@ func (x *UserDefinedApi) String() string {
 func (*UserDefinedApi) ProtoMessage() {}
 
 func (x *UserDefinedApi) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[78]
+	mi := &file_wundernode_config_proto_msgTypes[77]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6871,7 +6762,7 @@ func (x *UserDefinedApi) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use UserDefinedApi.ProtoReflect.Descriptor instead.
 func (*UserDefinedApi) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{78}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{77}
 }
 
 func (x *UserDefinedApi) GetEngineConfiguration() *EngineConfiguration {
@@ -6963,7 +6854,7 @@ type ListenerOptions struct {
 func (x *ListenerOptions) Reset() {
 	*x = ListenerOptions{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[79]
+		mi := &file_wundernode_config_proto_msgTypes[78]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -6976,7 +6867,7 @@ func (x *ListenerOptions) String() string {
 func (*ListenerOptions) ProtoMessage() {}
 
 func (x *ListenerOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[79]
+	mi := &file_wundernode_config_proto_msgTypes[78]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -6989,7 +6880,7 @@ func (x *ListenerOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListenerOptions.ProtoReflect.Descriptor instead.
 func (*ListenerOptions) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{79}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{78}
 }
 
 func (x *ListenerOptions) GetHost() *ConfigurationVariable {
@@ -7017,7 +6908,7 @@ type NodeLogging struct {
 func (x *NodeLogging) Reset() {
 	*x = NodeLogging{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[80]
+		mi := &file_wundernode_config_proto_msgTypes[79]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7030,7 +6921,7 @@ func (x *NodeLogging) String() string {
 func (*NodeLogging) ProtoMessage() {}
 
 func (x *NodeLogging) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[80]
+	mi := &file_wundernode_config_proto_msgTypes[79]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7043,7 +6934,7 @@ func (x *NodeLogging) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodeLogging.ProtoReflect.Descriptor instead.
 func (*NodeLogging) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{80}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{79}
 }
 
 func (x *NodeLogging) GetLevel() *ConfigurationVariable {
@@ -7068,7 +6959,7 @@ type NodeOptions struct {
 func (x *NodeOptions) Reset() {
 	*x = NodeOptions{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[81]
+		mi := &file_wundernode_config_proto_msgTypes[80]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7081,7 +6972,7 @@ func (x *NodeOptions) String() string {
 func (*NodeOptions) ProtoMessage() {}
 
 func (x *NodeOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[81]
+	mi := &file_wundernode_config_proto_msgTypes[80]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7094,7 +6985,7 @@ func (x *NodeOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NodeOptions.ProtoReflect.Descriptor instead.
 func (*NodeOptions) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{81}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{80}
 }
 
 func (x *NodeOptions) GetNodeUrl() *ConfigurationVariable {
@@ -7143,7 +7034,7 @@ type ServerLogging struct {
 func (x *ServerLogging) Reset() {
 	*x = ServerLogging{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[82]
+		mi := &file_wundernode_config_proto_msgTypes[81]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7156,7 +7047,7 @@ func (x *ServerLogging) String() string {
 func (*ServerLogging) ProtoMessage() {}
 
 func (x *ServerLogging) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[82]
+	mi := &file_wundernode_config_proto_msgTypes[81]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7169,7 +7060,7 @@ func (x *ServerLogging) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ServerLogging.ProtoReflect.Descriptor instead.
 func (*ServerLogging) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{82}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{81}
 }
 
 func (x *ServerLogging) GetLevel() *ConfigurationVariable {
@@ -7192,7 +7083,7 @@ type ServerOptions struct {
 func (x *ServerOptions) Reset() {
 	*x = ServerOptions{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[83]
+		mi := &file_wundernode_config_proto_msgTypes[82]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7205,7 +7096,7 @@ func (x *ServerOptions) String() string {
 func (*ServerOptions) ProtoMessage() {}
 
 func (x *ServerOptions) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[83]
+	mi := &file_wundernode_config_proto_msgTypes[82]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7218,7 +7109,7 @@ func (x *ServerOptions) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ServerOptions.ProtoReflect.Descriptor instead.
 func (*ServerOptions) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{83}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{82}
 }
 
 func (x *ServerOptions) GetServerUrl() *ConfigurationVariable {
@@ -7258,7 +7149,7 @@ type WebhookConfiguration struct {
 func (x *WebhookConfiguration) Reset() {
 	*x = WebhookConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[84]
+		mi := &file_wundernode_config_proto_msgTypes[83]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7271,7 +7162,7 @@ func (x *WebhookConfiguration) String() string {
 func (*WebhookConfiguration) ProtoMessage() {}
 
 func (x *WebhookConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[84]
+	mi := &file_wundernode_config_proto_msgTypes[83]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7284,7 +7175,7 @@ func (x *WebhookConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WebhookConfiguration.ProtoReflect.Descriptor instead.
 func (*WebhookConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{84}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{83}
 }
 
 func (x *WebhookConfiguration) GetName() string {
@@ -7322,7 +7213,7 @@ type WebhookVerifier struct {
 func (x *WebhookVerifier) Reset() {
 	*x = WebhookVerifier{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[85]
+		mi := &file_wundernode_config_proto_msgTypes[84]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7335,7 +7226,7 @@ func (x *WebhookVerifier) String() string {
 func (*WebhookVerifier) ProtoMessage() {}
 
 func (x *WebhookVerifier) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[85]
+	mi := &file_wundernode_config_proto_msgTypes[84]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7348,7 +7239,7 @@ func (x *WebhookVerifier) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use WebhookVerifier.ProtoReflect.Descriptor instead.
 func (*WebhookVerifier) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{85}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{84}
 }
 
 func (x *WebhookVerifier) GetKind() WebhookVerifierKind {
@@ -7413,7 +7304,7 @@ type CorsConfiguration struct {
 func (x *CorsConfiguration) Reset() {
 	*x = CorsConfiguration{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[86]
+		mi := &file_wundernode_config_proto_msgTypes[85]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7426,7 +7317,7 @@ func (x *CorsConfiguration) String() string {
 func (*CorsConfiguration) ProtoMessage() {}
 
 func (x *CorsConfiguration) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[86]
+	mi := &file_wundernode_config_proto_msgTypes[85]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7439,7 +7330,7 @@ func (x *CorsConfiguration) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CorsConfiguration.ProtoReflect.Descriptor instead.
 func (*CorsConfiguration) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{86}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{85}
 }
 
 func (x *CorsConfiguration) GetAllowedOrigins() []*ConfigurationVariable {
@@ -7499,7 +7390,7 @@ type ConfigurationVariable struct {
 func (x *ConfigurationVariable) Reset() {
 	*x = ConfigurationVariable{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_wundernode_config_proto_msgTypes[87]
+		mi := &file_wundernode_config_proto_msgTypes[86]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -7512,7 +7403,7 @@ func (x *ConfigurationVariable) String() string {
 func (*ConfigurationVariable) ProtoMessage() {}
 
 func (x *ConfigurationVariable) ProtoReflect() protoreflect.Message {
-	mi := &file_wundernode_config_proto_msgTypes[87]
+	mi := &file_wundernode_config_proto_msgTypes[86]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -7525,7 +7416,7 @@ func (x *ConfigurationVariable) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConfigurationVariable.ProtoReflect.Descriptor instead.
 func (*ConfigurationVariable) Descriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{87}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{86}
 }
 
 func (x *ConfigurationVariable) GetKind() ConfigurationVariableKind {
@@ -8060,7 +7951,7 @@ var file_wundernode_config_proto_rawDesc = []byte{
 	0x77, 0x67, 0x70, 0x62, 0x2e, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04,
 	0x74, 0x79, 0x70, 0x65, 0x12, 0x1a, 0x0a, 0x08, 0x72, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64,
 	0x18, 0x04, 0x20, 0x01, 0x28, 0x08, 0x52, 0x08, 0x72, 0x65, 0x71, 0x75, 0x69, 0x72, 0x65, 0x64,
-	0x22, 0xfb, 0x01, 0x0a, 0x0b, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
+	0x22, 0xaf, 0x01, 0x0a, 0x0b, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67,
 	0x12, 0x36, 0x0a, 0x16, 0x76, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x50, 0x61, 0x74, 0x68,
 	0x43, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65, 0x6e, 0x74, 0x73, 0x18, 0x01, 0x20, 0x03, 0x28, 0x09,
 	0x52, 0x16, 0x76, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x50, 0x61, 0x74, 0x68, 0x43, 0x6f,
@@ -8070,19 +7961,8 @@ var file_wundernode_config_proto_rawDesc = []byte{
 	0x61, 0x69, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x12, 0x2e, 0x0a, 0x06, 0x63, 0x75, 0x73, 0x74, 0x6f,
 	0x6d, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0b, 0x32, 0x11, 0x2e, 0x77, 0x67, 0x70, 0x62, 0x2e, 0x43,
 	0x75, 0x73, 0x74, 0x6f, 0x6d, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x48, 0x00, 0x52, 0x06, 0x63, 0x75,
-	0x73, 0x74, 0x6f, 0x6d, 0x88, 0x01, 0x01, 0x12, 0x4a, 0x0a, 0x11, 0x72, 0x65, 0x6d, 0x6f, 0x76,
-	0x65, 0x49, 0x66, 0x4e, 0x6f, 0x6e, 0x65, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x18, 0x04, 0x20, 0x01,
-	0x28, 0x0b, 0x32, 0x1c, 0x2e, 0x77, 0x67, 0x70, 0x62, 0x2e, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x52,
-	0x65, 0x6d, 0x6f, 0x76, 0x65, 0x49, 0x66, 0x4e, 0x6f, 0x6e, 0x65, 0x4d, 0x61, 0x74, 0x63, 0x68,
-	0x52, 0x11, 0x72, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x49, 0x66, 0x4e, 0x6f, 0x6e, 0x65, 0x4d, 0x61,
-	0x74, 0x63, 0x68, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x63, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x22, 0x62,
-	0x0a, 0x16, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x49, 0x66, 0x4e,
-	0x6f, 0x6e, 0x65, 0x4d, 0x61, 0x74, 0x63, 0x68, 0x12, 0x34, 0x0a, 0x04, 0x74, 0x79, 0x70, 0x65,
-	0x18, 0x01, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x20, 0x2e, 0x77, 0x67, 0x70, 0x62, 0x2e, 0x43, 0x6c,
-	0x61, 0x69, 0x6d, 0x52, 0x65, 0x6d, 0x6f, 0x76, 0x65, 0x49, 0x66, 0x4e, 0x6f, 0x6e, 0x65, 0x4d,
-	0x61, 0x74, 0x63, 0x68, 0x54, 0x79, 0x70, 0x65, 0x52, 0x04, 0x74, 0x79, 0x70, 0x65, 0x12, 0x12,
-	0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61,
-	0x6d, 0x65, 0x22, 0x93, 0x01, 0x0a, 0x1f, 0x56, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x57,
+	0x73, 0x74, 0x6f, 0x6d, 0x88, 0x01, 0x01, 0x42, 0x09, 0x0a, 0x07, 0x5f, 0x63, 0x75, 0x73, 0x74,
+	0x6f, 0x6d, 0x22, 0x93, 0x01, 0x0a, 0x1f, 0x56, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x57,
 	0x68, 0x65, 0x72, 0x65, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75,
 	0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x36, 0x0a, 0x16, 0x76, 0x61, 0x72, 0x69, 0x61, 0x62,
 	0x6c, 0x65, 0x50, 0x61, 0x74, 0x68, 0x43, 0x6f, 0x6d, 0x70, 0x6f, 0x6e, 0x65, 0x6e, 0x74, 0x73,
@@ -8921,122 +8801,119 @@ var file_wundernode_config_proto_rawDesc = []byte{
 	0x12, 0x09, 0x0a, 0x05, 0x4d, 0x4f, 0x4e, 0x54, 0x48, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x44,
 	0x41, 0x59, 0x10, 0x02, 0x12, 0x08, 0x0a, 0x04, 0x48, 0x4f, 0x55, 0x52, 0x10, 0x03, 0x12, 0x0a,
 	0x0a, 0x06, 0x4d, 0x49, 0x4e, 0x55, 0x54, 0x45, 0x10, 0x04, 0x12, 0x0a, 0x0a, 0x06, 0x53, 0x45,
-	0x43, 0x4f, 0x4e, 0x44, 0x10, 0x05, 0x2a, 0x39, 0x0a, 0x1a, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x52,
-	0x65, 0x6d, 0x6f, 0x76, 0x65, 0x49, 0x66, 0x4e, 0x6f, 0x6e, 0x65, 0x4d, 0x61, 0x74, 0x63, 0x68,
-	0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x48, 0x65, 0x61, 0x64, 0x65, 0x72, 0x10, 0x00,
-	0x12, 0x0f, 0x0a, 0x0b, 0x45, 0x6e, 0x76, 0x69, 0x72, 0x6f, 0x6e, 0x6d, 0x65, 0x6e, 0x74, 0x10,
-	0x01, 0x2a, 0x91, 0x01, 0x0a, 0x22, 0x56, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x57, 0x68,
-	0x65, 0x72, 0x65, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x53, 0x63, 0x61, 0x6c, 0x61, 0x72, 0x46, 0x69,
-	0x6c, 0x74, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x65, 0x71, 0x75, 0x61,
-	0x6c, 0x73, 0x10, 0x00, 0x12, 0x06, 0x0a, 0x02, 0x69, 0x6e, 0x10, 0x01, 0x12, 0x09, 0x0a, 0x05,
-	0x6e, 0x6f, 0x74, 0x49, 0x6e, 0x10, 0x02, 0x12, 0x06, 0x0a, 0x02, 0x6c, 0x74, 0x10, 0x03, 0x12,
-	0x07, 0x0a, 0x03, 0x6c, 0x74, 0x65, 0x10, 0x04, 0x12, 0x06, 0x0a, 0x02, 0x67, 0x74, 0x10, 0x05,
-	0x12, 0x07, 0x0a, 0x03, 0x67, 0x74, 0x65, 0x10, 0x06, 0x12, 0x0c, 0x0a, 0x08, 0x63, 0x6f, 0x6e,
-	0x74, 0x61, 0x69, 0x6e, 0x73, 0x10, 0x07, 0x12, 0x0e, 0x0a, 0x0a, 0x73, 0x74, 0x61, 0x72, 0x74,
-	0x73, 0x57, 0x69, 0x74, 0x68, 0x10, 0x08, 0x12, 0x0c, 0x0a, 0x08, 0x65, 0x6e, 0x64, 0x73, 0x57,
-	0x69, 0x74, 0x68, 0x10, 0x09, 0x2a, 0x58, 0x0a, 0x24, 0x56, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c,
-	0x65, 0x57, 0x68, 0x65, 0x72, 0x65, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x52, 0x65, 0x6c, 0x61, 0x74,
-	0x69, 0x6f, 0x6e, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x06, 0x0a,
-	0x02, 0x69, 0x73, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x69, 0x73, 0x4e, 0x6f, 0x74, 0x10, 0x01,
-	0x12, 0x08, 0x0a, 0x04, 0x73, 0x6f, 0x6d, 0x65, 0x10, 0x02, 0x12, 0x09, 0x0a, 0x05, 0x65, 0x76,
-	0x65, 0x72, 0x79, 0x10, 0x03, 0x12, 0x08, 0x0a, 0x04, 0x6e, 0x6f, 0x6e, 0x65, 0x10, 0x04, 0x2a,
-	0xc7, 0x02, 0x0a, 0x09, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a,
-	0x06, 0x49, 0x53, 0x53, 0x55, 0x45, 0x52, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x50, 0x52, 0x4f,
-	0x56, 0x49, 0x44, 0x45, 0x52, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07, 0x53, 0x55, 0x42, 0x4a, 0x45,
-	0x43, 0x54, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x55, 0x53, 0x45, 0x52, 0x49, 0x44, 0x10, 0x01,
-	0x12, 0x08, 0x0a, 0x04, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x02, 0x12, 0x0e, 0x0a, 0x0a, 0x47, 0x49,
-	0x56, 0x45, 0x4e, 0x5f, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x03, 0x12, 0x0f, 0x0a, 0x0b, 0x46, 0x41,
-	0x4d, 0x49, 0x4c, 0x59, 0x5f, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x04, 0x12, 0x0f, 0x0a, 0x0b, 0x4d,
-	0x49, 0x44, 0x44, 0x4c, 0x45, 0x5f, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x05, 0x12, 0x0c, 0x0a, 0x08,
-	0x4e, 0x49, 0x43, 0x4b, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x06, 0x12, 0x16, 0x0a, 0x12, 0x50, 0x52,
-	0x45, 0x46, 0x45, 0x52, 0x52, 0x45, 0x44, 0x5f, 0x55, 0x53, 0x45, 0x52, 0x4e, 0x41, 0x4d, 0x45,
-	0x10, 0x07, 0x12, 0x0b, 0x0a, 0x07, 0x50, 0x52, 0x4f, 0x46, 0x49, 0x4c, 0x45, 0x10, 0x08, 0x12,
-	0x0b, 0x0a, 0x07, 0x50, 0x49, 0x43, 0x54, 0x55, 0x52, 0x45, 0x10, 0x09, 0x12, 0x0b, 0x0a, 0x07,
-	0x57, 0x45, 0x42, 0x53, 0x49, 0x54, 0x45, 0x10, 0x0a, 0x12, 0x09, 0x0a, 0x05, 0x45, 0x4d, 0x41,
-	0x49, 0x4c, 0x10, 0x0b, 0x12, 0x12, 0x0a, 0x0e, 0x45, 0x4d, 0x41, 0x49, 0x4c, 0x5f, 0x56, 0x45,
-	0x52, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x0c, 0x12, 0x0a, 0x0a, 0x06, 0x47, 0x45, 0x4e, 0x44,
-	0x45, 0x52, 0x10, 0x0d, 0x12, 0x0e, 0x0a, 0x0a, 0x42, 0x49, 0x52, 0x54, 0x48, 0x5f, 0x44, 0x41,
-	0x54, 0x45, 0x10, 0x0e, 0x12, 0x0d, 0x0a, 0x09, 0x5a, 0x4f, 0x4e, 0x45, 0x5f, 0x49, 0x4e, 0x46,
-	0x4f, 0x10, 0x0f, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x4f, 0x43, 0x41, 0x4c, 0x45, 0x10, 0x10, 0x12,
-	0x0c, 0x0a, 0x08, 0x4c, 0x4f, 0x43, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x11, 0x12, 0x09, 0x0a,
-	0x05, 0x52, 0x4f, 0x4c, 0x45, 0x53, 0x10, 0x12, 0x12, 0x0b, 0x0a, 0x06, 0x43, 0x55, 0x53, 0x54,
-	0x4f, 0x4d, 0x10, 0xe7, 0x07, 0x1a, 0x02, 0x10, 0x01, 0x2a, 0x43, 0x0a, 0x09, 0x56, 0x61, 0x6c,
-	0x75, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x53, 0x54, 0x52, 0x49, 0x4e, 0x47,
-	0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x49, 0x4e, 0x54, 0x10, 0x01, 0x12, 0x09, 0x0a, 0x05, 0x46,
-	0x4c, 0x4f, 0x41, 0x54, 0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x42, 0x4f, 0x4f, 0x4c, 0x45, 0x41,
-	0x4e, 0x10, 0x03, 0x12, 0x09, 0x0a, 0x05, 0x41, 0x52, 0x52, 0x41, 0x59, 0x10, 0x04, 0x2a, 0x3a,
-	0x0a, 0x0d, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x54, 0x79, 0x70, 0x65, 0x12,
-	0x09, 0x0a, 0x05, 0x51, 0x55, 0x45, 0x52, 0x59, 0x10, 0x00, 0x12, 0x0c, 0x0a, 0x08, 0x4d, 0x55,
-	0x54, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x01, 0x12, 0x10, 0x0a, 0x0c, 0x53, 0x55, 0x42, 0x53,
-	0x43, 0x52, 0x49, 0x50, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x02, 0x2a, 0x90, 0x01, 0x0a, 0x0e, 0x44,
-	0x61, 0x74, 0x61, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x4b, 0x69, 0x6e, 0x64, 0x12, 0x0a, 0x0a,
-	0x06, 0x53, 0x54, 0x41, 0x54, 0x49, 0x43, 0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x52, 0x45, 0x53,
-	0x54, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x47, 0x52, 0x41, 0x50, 0x48, 0x51, 0x4c, 0x10, 0x02,
-	0x12, 0x0e, 0x0a, 0x0a, 0x50, 0x4f, 0x53, 0x54, 0x47, 0x52, 0x45, 0x53, 0x51, 0x4c, 0x10, 0x03,
-	0x12, 0x09, 0x0a, 0x05, 0x4d, 0x59, 0x53, 0x51, 0x4c, 0x10, 0x04, 0x12, 0x0d, 0x0a, 0x09, 0x53,
-	0x51, 0x4c, 0x53, 0x45, 0x52, 0x56, 0x45, 0x52, 0x10, 0x05, 0x12, 0x0b, 0x0a, 0x07, 0x4d, 0x4f,
-	0x4e, 0x47, 0x4f, 0x44, 0x42, 0x10, 0x06, 0x12, 0x0a, 0x0a, 0x06, 0x53, 0x51, 0x4c, 0x49, 0x54,
-	0x45, 0x10, 0x07, 0x12, 0x0a, 0x0a, 0x06, 0x50, 0x52, 0x49, 0x53, 0x4d, 0x41, 0x10, 0x08, 0x12,
-	0x0c, 0x0a, 0x08, 0x41, 0x53, 0x59, 0x4e, 0x43, 0x41, 0x50, 0x49, 0x10, 0x09, 0x2a, 0xda, 0x01,
-	0x0a, 0x1a, 0x44, 0x61, 0x74, 0x61, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x52, 0x45, 0x53, 0x54,
-	0x52, 0x65, 0x77, 0x72, 0x69, 0x74, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0f, 0x0a, 0x0b,
-	0x71, 0x75, 0x6f, 0x74, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x10, 0x00, 0x12, 0x10, 0x0a,
-	0x0c, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x77, 0x72, 0x69, 0x74, 0x65, 0x10, 0x01, 0x12,
-	0x10, 0x0a, 0x0c, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x65, 0x77, 0x72, 0x69, 0x74, 0x65, 0x10,
-	0x02, 0x12, 0x16, 0x0a, 0x12, 0x65, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x41, 0x6c, 0x6c, 0x53,
-	0x75, 0x62, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x10, 0x03, 0x12, 0x1f, 0x0a, 0x1b, 0x65, 0x78, 0x74,
-	0x72, 0x61, 0x63, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x45, 0x6e, 0x75, 0x6d, 0x46, 0x69,
-	0x65, 0x6c, 0x64, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x10, 0x04, 0x12, 0x15, 0x0a, 0x11, 0x61, 0x70,
-	0x70, 0x6c, 0x79, 0x41, 0x6c, 0x6c, 0x53, 0x75, 0x62, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74, 0x10,
-	0x05, 0x12, 0x1e, 0x0a, 0x1a, 0x61, 0x70, 0x70, 0x6c, 0x79, 0x42, 0x79, 0x53, 0x75, 0x62, 0x43,
-	0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x10,
-	0x06, 0x12, 0x17, 0x0a, 0x13, 0x61, 0x70, 0x70, 0x6c, 0x79, 0x42, 0x79, 0x53, 0x75, 0x62, 0x66,
-	0x69, 0x65, 0x6c, 0x64, 0x54, 0x79, 0x70, 0x65, 0x10, 0x07, 0x2a, 0x71, 0x0a, 0x1a, 0x55, 0x70,
-	0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69, 0x63, 0x61,
-	0x74, 0x69, 0x6f, 0x6e, 0x4b, 0x69, 0x6e, 0x64, 0x12, 0x1d, 0x0a, 0x19, 0x55, 0x70, 0x73, 0x74,
-	0x72, 0x65, 0x61, 0x6d, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69, 0x63, 0x61, 0x74, 0x69,
-	0x6f, 0x6e, 0x4a, 0x57, 0x54, 0x10, 0x00, 0x12, 0x34, 0x0a, 0x30, 0x55, 0x70, 0x73, 0x74, 0x72,
-	0x65, 0x61, 0x6d, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f,
-	0x6e, 0x4a, 0x57, 0x54, 0x57, 0x69, 0x74, 0x68, 0x41, 0x63, 0x63, 0x65, 0x73, 0x73, 0x54, 0x6f,
-	0x6b, 0x65, 0x6e, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65, 0x10, 0x01, 0x2a, 0x27, 0x0a,
-	0x0d, 0x53, 0x69, 0x67, 0x6e, 0x69, 0x6e, 0x67, 0x4d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x12, 0x16,
-	0x0a, 0x12, 0x53, 0x69, 0x67, 0x6e, 0x69, 0x6e, 0x67, 0x4d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x48,
-	0x53, 0x32, 0x35, 0x36, 0x10, 0x00, 0x2a, 0x6e, 0x0a, 0x0a, 0x48, 0x54, 0x54, 0x50, 0x4d, 0x65,
-	0x74, 0x68, 0x6f, 0x64, 0x12, 0x07, 0x0a, 0x03, 0x47, 0x45, 0x54, 0x10, 0x00, 0x12, 0x08, 0x0a,
-	0x04, 0x50, 0x4f, 0x53, 0x54, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03, 0x50, 0x55, 0x54, 0x10, 0x02,
-	0x12, 0x0a, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10, 0x03, 0x12, 0x0b, 0x0a, 0x07,
-	0x4f, 0x50, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x10, 0x04, 0x12, 0x0b, 0x0a, 0x07, 0x43, 0x4f, 0x4e,
-	0x4e, 0x45, 0x43, 0x54, 0x10, 0x05, 0x12, 0x08, 0x0a, 0x04, 0x48, 0x45, 0x41, 0x44, 0x10, 0x06,
-	0x12, 0x09, 0x0a, 0x05, 0x50, 0x41, 0x54, 0x43, 0x48, 0x10, 0x07, 0x12, 0x09, 0x0a, 0x05, 0x54,
-	0x52, 0x41, 0x43, 0x45, 0x10, 0x08, 0x2a, 0x36, 0x0a, 0x0e, 0x41, 0x72, 0x67, 0x75, 0x6d, 0x65,
-	0x6e, 0x74, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x10, 0x0a, 0x0c, 0x4f, 0x42, 0x4a, 0x45,
-	0x43, 0x54, 0x5f, 0x46, 0x49, 0x45, 0x4c, 0x44, 0x10, 0x00, 0x12, 0x12, 0x0a, 0x0e, 0x46, 0x49,
-	0x45, 0x4c, 0x44, 0x5f, 0x41, 0x52, 0x47, 0x55, 0x4d, 0x45, 0x4e, 0x54, 0x10, 0x01, 0x2a, 0xa5,
-	0x01, 0x0a, 0x1b, 0x41, 0x72, 0x67, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x52, 0x65, 0x6e, 0x64, 0x65,
-	0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x12, 0x1b,
-	0x0a, 0x17, 0x52, 0x45, 0x4e, 0x44, 0x45, 0x52, 0x5f, 0x41, 0x52, 0x47, 0x55, 0x4d, 0x45, 0x4e,
-	0x54, 0x5f, 0x44, 0x45, 0x46, 0x41, 0x55, 0x4c, 0x54, 0x10, 0x00, 0x12, 0x24, 0x0a, 0x20, 0x52,
-	0x45, 0x4e, 0x44, 0x45, 0x52, 0x5f, 0x41, 0x52, 0x47, 0x55, 0x4d, 0x45, 0x4e, 0x54, 0x5f, 0x41,
-	0x53, 0x5f, 0x47, 0x52, 0x41, 0x50, 0x48, 0x51, 0x4c, 0x5f, 0x56, 0x41, 0x4c, 0x55, 0x45, 0x10,
-	0x01, 0x12, 0x20, 0x0a, 0x1c, 0x52, 0x45, 0x4e, 0x44, 0x45, 0x52, 0x5f, 0x41, 0x52, 0x47, 0x55,
-	0x4d, 0x45, 0x4e, 0x54, 0x5f, 0x41, 0x53, 0x5f, 0x41, 0x52, 0x52, 0x41, 0x59, 0x5f, 0x43, 0x53,
-	0x56, 0x10, 0x02, 0x12, 0x21, 0x0a, 0x1d, 0x52, 0x45, 0x4e, 0x44, 0x45, 0x52, 0x5f, 0x41, 0x52,
-	0x47, 0x55, 0x4d, 0x45, 0x4e, 0x54, 0x5f, 0x41, 0x53, 0x5f, 0x4a, 0x53, 0x4f, 0x4e, 0x5f, 0x56,
-	0x41, 0x4c, 0x55, 0x45, 0x10, 0x03, 0x2a, 0x26, 0x0a, 0x13, 0x57, 0x65, 0x62, 0x68, 0x6f, 0x6f,
-	0x6b, 0x56, 0x65, 0x72, 0x69, 0x66, 0x69, 0x65, 0x72, 0x4b, 0x69, 0x6e, 0x64, 0x12, 0x0f, 0x0a,
-	0x0b, 0x48, 0x4d, 0x41, 0x43, 0x5f, 0x53, 0x48, 0x41, 0x32, 0x35, 0x36, 0x10, 0x00, 0x2a, 0x86,
-	0x01, 0x0a, 0x19, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
-	0x56, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x4b, 0x69, 0x6e, 0x64, 0x12, 0x21, 0x0a, 0x1d,
-	0x53, 0x54, 0x41, 0x54, 0x49, 0x43, 0x5f, 0x43, 0x4f, 0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41,
-	0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x56, 0x41, 0x52, 0x49, 0x41, 0x42, 0x4c, 0x45, 0x10, 0x00, 0x12,
-	0x1e, 0x0a, 0x1a, 0x45, 0x4e, 0x56, 0x5f, 0x43, 0x4f, 0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41,
-	0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x56, 0x41, 0x52, 0x49, 0x41, 0x42, 0x4c, 0x45, 0x10, 0x01, 0x12,
-	0x26, 0x0a, 0x22, 0x50, 0x4c, 0x41, 0x43, 0x45, 0x48, 0x4f, 0x4c, 0x44, 0x45, 0x52, 0x5f, 0x43,
-	0x4f, 0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x56, 0x41, 0x52,
-	0x49, 0x41, 0x42, 0x4c, 0x45, 0x10, 0x02, 0x42, 0x2d, 0x5a, 0x2b, 0x67, 0x69, 0x74, 0x68, 0x75,
-	0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x77, 0x75, 0x6e, 0x64, 0x65, 0x72, 0x67, 0x72, 0x61, 0x70,
-	0x68, 0x2f, 0x77, 0x75, 0x6e, 0x64, 0x65, 0x72, 0x67, 0x72, 0x61, 0x70, 0x68, 0x2f, 0x70, 0x6b,
-	0x67, 0x2f, 0x77, 0x67, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
+	0x43, 0x4f, 0x4e, 0x44, 0x10, 0x05, 0x2a, 0x91, 0x01, 0x0a, 0x22, 0x56, 0x61, 0x72, 0x69, 0x61,
+	0x62, 0x6c, 0x65, 0x57, 0x68, 0x65, 0x72, 0x65, 0x49, 0x6e, 0x70, 0x75, 0x74, 0x53, 0x63, 0x61,
+	0x6c, 0x61, 0x72, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a,
+	0x06, 0x65, 0x71, 0x75, 0x61, 0x6c, 0x73, 0x10, 0x00, 0x12, 0x06, 0x0a, 0x02, 0x69, 0x6e, 0x10,
+	0x01, 0x12, 0x09, 0x0a, 0x05, 0x6e, 0x6f, 0x74, 0x49, 0x6e, 0x10, 0x02, 0x12, 0x06, 0x0a, 0x02,
+	0x6c, 0x74, 0x10, 0x03, 0x12, 0x07, 0x0a, 0x03, 0x6c, 0x74, 0x65, 0x10, 0x04, 0x12, 0x06, 0x0a,
+	0x02, 0x67, 0x74, 0x10, 0x05, 0x12, 0x07, 0x0a, 0x03, 0x67, 0x74, 0x65, 0x10, 0x06, 0x12, 0x0c,
+	0x0a, 0x08, 0x63, 0x6f, 0x6e, 0x74, 0x61, 0x69, 0x6e, 0x73, 0x10, 0x07, 0x12, 0x0e, 0x0a, 0x0a,
+	0x73, 0x74, 0x61, 0x72, 0x74, 0x73, 0x57, 0x69, 0x74, 0x68, 0x10, 0x08, 0x12, 0x0c, 0x0a, 0x08,
+	0x65, 0x6e, 0x64, 0x73, 0x57, 0x69, 0x74, 0x68, 0x10, 0x09, 0x2a, 0x58, 0x0a, 0x24, 0x56, 0x61,
+	0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x57, 0x68, 0x65, 0x72, 0x65, 0x49, 0x6e, 0x70, 0x75, 0x74,
+	0x52, 0x65, 0x6c, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x46, 0x69, 0x6c, 0x74, 0x65, 0x72, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x06, 0x0a, 0x02, 0x69, 0x73, 0x10, 0x00, 0x12, 0x09, 0x0a, 0x05, 0x69, 0x73,
+	0x4e, 0x6f, 0x74, 0x10, 0x01, 0x12, 0x08, 0x0a, 0x04, 0x73, 0x6f, 0x6d, 0x65, 0x10, 0x02, 0x12,
+	0x09, 0x0a, 0x05, 0x65, 0x76, 0x65, 0x72, 0x79, 0x10, 0x03, 0x12, 0x08, 0x0a, 0x04, 0x6e, 0x6f,
+	0x6e, 0x65, 0x10, 0x04, 0x2a, 0xc7, 0x02, 0x0a, 0x09, 0x43, 0x6c, 0x61, 0x69, 0x6d, 0x54, 0x79,
+	0x70, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x49, 0x53, 0x53, 0x55, 0x45, 0x52, 0x10, 0x00, 0x12, 0x0c,
+	0x0a, 0x08, 0x50, 0x52, 0x4f, 0x56, 0x49, 0x44, 0x45, 0x52, 0x10, 0x00, 0x12, 0x0b, 0x0a, 0x07,
+	0x53, 0x55, 0x42, 0x4a, 0x45, 0x43, 0x54, 0x10, 0x01, 0x12, 0x0a, 0x0a, 0x06, 0x55, 0x53, 0x45,
+	0x52, 0x49, 0x44, 0x10, 0x01, 0x12, 0x08, 0x0a, 0x04, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x02, 0x12,
+	0x0e, 0x0a, 0x0a, 0x47, 0x49, 0x56, 0x45, 0x4e, 0x5f, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x03, 0x12,
+	0x0f, 0x0a, 0x0b, 0x46, 0x41, 0x4d, 0x49, 0x4c, 0x59, 0x5f, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x04,
+	0x12, 0x0f, 0x0a, 0x0b, 0x4d, 0x49, 0x44, 0x44, 0x4c, 0x45, 0x5f, 0x4e, 0x41, 0x4d, 0x45, 0x10,
+	0x05, 0x12, 0x0c, 0x0a, 0x08, 0x4e, 0x49, 0x43, 0x4b, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x06, 0x12,
+	0x16, 0x0a, 0x12, 0x50, 0x52, 0x45, 0x46, 0x45, 0x52, 0x52, 0x45, 0x44, 0x5f, 0x55, 0x53, 0x45,
+	0x52, 0x4e, 0x41, 0x4d, 0x45, 0x10, 0x07, 0x12, 0x0b, 0x0a, 0x07, 0x50, 0x52, 0x4f, 0x46, 0x49,
+	0x4c, 0x45, 0x10, 0x08, 0x12, 0x0b, 0x0a, 0x07, 0x50, 0x49, 0x43, 0x54, 0x55, 0x52, 0x45, 0x10,
+	0x09, 0x12, 0x0b, 0x0a, 0x07, 0x57, 0x45, 0x42, 0x53, 0x49, 0x54, 0x45, 0x10, 0x0a, 0x12, 0x09,
+	0x0a, 0x05, 0x45, 0x4d, 0x41, 0x49, 0x4c, 0x10, 0x0b, 0x12, 0x12, 0x0a, 0x0e, 0x45, 0x4d, 0x41,
+	0x49, 0x4c, 0x5f, 0x56, 0x45, 0x52, 0x49, 0x46, 0x49, 0x45, 0x44, 0x10, 0x0c, 0x12, 0x0a, 0x0a,
+	0x06, 0x47, 0x45, 0x4e, 0x44, 0x45, 0x52, 0x10, 0x0d, 0x12, 0x0e, 0x0a, 0x0a, 0x42, 0x49, 0x52,
+	0x54, 0x48, 0x5f, 0x44, 0x41, 0x54, 0x45, 0x10, 0x0e, 0x12, 0x0d, 0x0a, 0x09, 0x5a, 0x4f, 0x4e,
+	0x45, 0x5f, 0x49, 0x4e, 0x46, 0x4f, 0x10, 0x0f, 0x12, 0x0a, 0x0a, 0x06, 0x4c, 0x4f, 0x43, 0x41,
+	0x4c, 0x45, 0x10, 0x10, 0x12, 0x0c, 0x0a, 0x08, 0x4c, 0x4f, 0x43, 0x41, 0x54, 0x49, 0x4f, 0x4e,
+	0x10, 0x11, 0x12, 0x09, 0x0a, 0x05, 0x52, 0x4f, 0x4c, 0x45, 0x53, 0x10, 0x12, 0x12, 0x0b, 0x0a,
+	0x06, 0x43, 0x55, 0x53, 0x54, 0x4f, 0x4d, 0x10, 0xe7, 0x07, 0x1a, 0x02, 0x10, 0x01, 0x2a, 0x43,
+	0x0a, 0x09, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x54, 0x79, 0x70, 0x65, 0x12, 0x0a, 0x0a, 0x06, 0x53,
+	0x54, 0x52, 0x49, 0x4e, 0x47, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x49, 0x4e, 0x54, 0x10, 0x01,
+	0x12, 0x09, 0x0a, 0x05, 0x46, 0x4c, 0x4f, 0x41, 0x54, 0x10, 0x02, 0x12, 0x0b, 0x0a, 0x07, 0x42,
+	0x4f, 0x4f, 0x4c, 0x45, 0x41, 0x4e, 0x10, 0x03, 0x12, 0x09, 0x0a, 0x05, 0x41, 0x52, 0x52, 0x41,
+	0x59, 0x10, 0x04, 0x2a, 0x3a, 0x0a, 0x0d, 0x4f, 0x70, 0x65, 0x72, 0x61, 0x74, 0x69, 0x6f, 0x6e,
+	0x54, 0x79, 0x70, 0x65, 0x12, 0x09, 0x0a, 0x05, 0x51, 0x55, 0x45, 0x52, 0x59, 0x10, 0x00, 0x12,
+	0x0c, 0x0a, 0x08, 0x4d, 0x55, 0x54, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x01, 0x12, 0x10, 0x0a,
+	0x0c, 0x53, 0x55, 0x42, 0x53, 0x43, 0x52, 0x49, 0x50, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x02, 0x2a,
+	0x90, 0x01, 0x0a, 0x0e, 0x44, 0x61, 0x74, 0x61, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x4b, 0x69,
+	0x6e, 0x64, 0x12, 0x0a, 0x0a, 0x06, 0x53, 0x54, 0x41, 0x54, 0x49, 0x43, 0x10, 0x00, 0x12, 0x08,
+	0x0a, 0x04, 0x52, 0x45, 0x53, 0x54, 0x10, 0x01, 0x12, 0x0b, 0x0a, 0x07, 0x47, 0x52, 0x41, 0x50,
+	0x48, 0x51, 0x4c, 0x10, 0x02, 0x12, 0x0e, 0x0a, 0x0a, 0x50, 0x4f, 0x53, 0x54, 0x47, 0x52, 0x45,
+	0x53, 0x51, 0x4c, 0x10, 0x03, 0x12, 0x09, 0x0a, 0x05, 0x4d, 0x59, 0x53, 0x51, 0x4c, 0x10, 0x04,
+	0x12, 0x0d, 0x0a, 0x09, 0x53, 0x51, 0x4c, 0x53, 0x45, 0x52, 0x56, 0x45, 0x52, 0x10, 0x05, 0x12,
+	0x0b, 0x0a, 0x07, 0x4d, 0x4f, 0x4e, 0x47, 0x4f, 0x44, 0x42, 0x10, 0x06, 0x12, 0x0a, 0x0a, 0x06,
+	0x53, 0x51, 0x4c, 0x49, 0x54, 0x45, 0x10, 0x07, 0x12, 0x0a, 0x0a, 0x06, 0x50, 0x52, 0x49, 0x53,
+	0x4d, 0x41, 0x10, 0x08, 0x12, 0x0c, 0x0a, 0x08, 0x41, 0x53, 0x59, 0x4e, 0x43, 0x41, 0x50, 0x49,
+	0x10, 0x09, 0x2a, 0xda, 0x01, 0x0a, 0x1a, 0x44, 0x61, 0x74, 0x61, 0x53, 0x6f, 0x75, 0x72, 0x63,
+	0x65, 0x52, 0x45, 0x53, 0x54, 0x52, 0x65, 0x77, 0x72, 0x69, 0x74, 0x65, 0x72, 0x54, 0x79, 0x70,
+	0x65, 0x12, 0x0f, 0x0a, 0x0b, 0x71, 0x75, 0x6f, 0x74, 0x65, 0x4f, 0x62, 0x6a, 0x65, 0x63, 0x74,
+	0x10, 0x00, 0x12, 0x10, 0x0a, 0x0c, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x52, 0x65, 0x77, 0x72, 0x69,
+	0x74, 0x65, 0x10, 0x01, 0x12, 0x10, 0x0a, 0x0c, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x52, 0x65, 0x77,
+	0x72, 0x69, 0x74, 0x65, 0x10, 0x02, 0x12, 0x16, 0x0a, 0x12, 0x65, 0x78, 0x74, 0x72, 0x61, 0x63,
+	0x74, 0x41, 0x6c, 0x6c, 0x53, 0x75, 0x62, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x10, 0x03, 0x12, 0x1f,
+	0x0a, 0x1b, 0x65, 0x78, 0x74, 0x72, 0x61, 0x63, 0x74, 0x43, 0x75, 0x73, 0x74, 0x6f, 0x6d, 0x45,
+	0x6e, 0x75, 0x6d, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x56, 0x61, 0x6c, 0x75, 0x65, 0x10, 0x04, 0x12,
+	0x15, 0x0a, 0x11, 0x61, 0x70, 0x70, 0x6c, 0x79, 0x41, 0x6c, 0x6c, 0x53, 0x75, 0x62, 0x4f, 0x62,
+	0x6a, 0x65, 0x63, 0x74, 0x10, 0x05, 0x12, 0x1e, 0x0a, 0x1a, 0x61, 0x70, 0x70, 0x6c, 0x79, 0x42,
+	0x79, 0x53, 0x75, 0x62, 0x43, 0x6f, 0x6d, 0x6d, 0x6f, 0x6e, 0x46, 0x69, 0x65, 0x6c, 0x64, 0x56,
+	0x61, 0x6c, 0x75, 0x65, 0x10, 0x06, 0x12, 0x17, 0x0a, 0x13, 0x61, 0x70, 0x70, 0x6c, 0x79, 0x42,
+	0x79, 0x53, 0x75, 0x62, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x54, 0x79, 0x70, 0x65, 0x10, 0x07, 0x2a,
+	0x71, 0x0a, 0x1a, 0x55, 0x70, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x41, 0x75, 0x74, 0x68, 0x65,
+	0x6e, 0x74, 0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4b, 0x69, 0x6e, 0x64, 0x12, 0x1d, 0x0a,
+	0x19, 0x55, 0x70, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74,
+	0x69, 0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4a, 0x57, 0x54, 0x10, 0x00, 0x12, 0x34, 0x0a, 0x30,
+	0x55, 0x70, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6d, 0x41, 0x75, 0x74, 0x68, 0x65, 0x6e, 0x74, 0x69,
+	0x63, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4a, 0x57, 0x54, 0x57, 0x69, 0x74, 0x68, 0x41, 0x63, 0x63,
+	0x65, 0x73, 0x73, 0x54, 0x6f, 0x6b, 0x65, 0x6e, 0x45, 0x78, 0x63, 0x68, 0x61, 0x6e, 0x67, 0x65,
+	0x10, 0x01, 0x2a, 0x27, 0x0a, 0x0d, 0x53, 0x69, 0x67, 0x6e, 0x69, 0x6e, 0x67, 0x4d, 0x65, 0x74,
+	0x68, 0x6f, 0x64, 0x12, 0x16, 0x0a, 0x12, 0x53, 0x69, 0x67, 0x6e, 0x69, 0x6e, 0x67, 0x4d, 0x65,
+	0x74, 0x68, 0x6f, 0x64, 0x48, 0x53, 0x32, 0x35, 0x36, 0x10, 0x00, 0x2a, 0x6e, 0x0a, 0x0a, 0x48,
+	0x54, 0x54, 0x50, 0x4d, 0x65, 0x74, 0x68, 0x6f, 0x64, 0x12, 0x07, 0x0a, 0x03, 0x47, 0x45, 0x54,
+	0x10, 0x00, 0x12, 0x08, 0x0a, 0x04, 0x50, 0x4f, 0x53, 0x54, 0x10, 0x01, 0x12, 0x07, 0x0a, 0x03,
+	0x50, 0x55, 0x54, 0x10, 0x02, 0x12, 0x0a, 0x0a, 0x06, 0x44, 0x45, 0x4c, 0x45, 0x54, 0x45, 0x10,
+	0x03, 0x12, 0x0b, 0x0a, 0x07, 0x4f, 0x50, 0x54, 0x49, 0x4f, 0x4e, 0x53, 0x10, 0x04, 0x12, 0x0b,
+	0x0a, 0x07, 0x43, 0x4f, 0x4e, 0x4e, 0x45, 0x43, 0x54, 0x10, 0x05, 0x12, 0x08, 0x0a, 0x04, 0x48,
+	0x45, 0x41, 0x44, 0x10, 0x06, 0x12, 0x09, 0x0a, 0x05, 0x50, 0x41, 0x54, 0x43, 0x48, 0x10, 0x07,
+	0x12, 0x09, 0x0a, 0x05, 0x54, 0x52, 0x41, 0x43, 0x45, 0x10, 0x08, 0x2a, 0x36, 0x0a, 0x0e, 0x41,
+	0x72, 0x67, 0x75, 0x6d, 0x65, 0x6e, 0x74, 0x53, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x12, 0x10, 0x0a,
+	0x0c, 0x4f, 0x42, 0x4a, 0x45, 0x43, 0x54, 0x5f, 0x46, 0x49, 0x45, 0x4c, 0x44, 0x10, 0x00, 0x12,
+	0x12, 0x0a, 0x0e, 0x46, 0x49, 0x45, 0x4c, 0x44, 0x5f, 0x41, 0x52, 0x47, 0x55, 0x4d, 0x45, 0x4e,
+	0x54, 0x10, 0x01, 0x2a, 0xa5, 0x01, 0x0a, 0x1b, 0x41, 0x72, 0x67, 0x75, 0x6d, 0x65, 0x6e, 0x74,
+	0x52, 0x65, 0x6e, 0x64, 0x65, 0x72, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72, 0x61, 0x74,
+	0x69, 0x6f, 0x6e, 0x12, 0x1b, 0x0a, 0x17, 0x52, 0x45, 0x4e, 0x44, 0x45, 0x52, 0x5f, 0x41, 0x52,
+	0x47, 0x55, 0x4d, 0x45, 0x4e, 0x54, 0x5f, 0x44, 0x45, 0x46, 0x41, 0x55, 0x4c, 0x54, 0x10, 0x00,
+	0x12, 0x24, 0x0a, 0x20, 0x52, 0x45, 0x4e, 0x44, 0x45, 0x52, 0x5f, 0x41, 0x52, 0x47, 0x55, 0x4d,
+	0x45, 0x4e, 0x54, 0x5f, 0x41, 0x53, 0x5f, 0x47, 0x52, 0x41, 0x50, 0x48, 0x51, 0x4c, 0x5f, 0x56,
+	0x41, 0x4c, 0x55, 0x45, 0x10, 0x01, 0x12, 0x20, 0x0a, 0x1c, 0x52, 0x45, 0x4e, 0x44, 0x45, 0x52,
+	0x5f, 0x41, 0x52, 0x47, 0x55, 0x4d, 0x45, 0x4e, 0x54, 0x5f, 0x41, 0x53, 0x5f, 0x41, 0x52, 0x52,
+	0x41, 0x59, 0x5f, 0x43, 0x53, 0x56, 0x10, 0x02, 0x12, 0x21, 0x0a, 0x1d, 0x52, 0x45, 0x4e, 0x44,
+	0x45, 0x52, 0x5f, 0x41, 0x52, 0x47, 0x55, 0x4d, 0x45, 0x4e, 0x54, 0x5f, 0x41, 0x53, 0x5f, 0x4a,
+	0x53, 0x4f, 0x4e, 0x5f, 0x56, 0x41, 0x4c, 0x55, 0x45, 0x10, 0x03, 0x2a, 0x26, 0x0a, 0x13, 0x57,
+	0x65, 0x62, 0x68, 0x6f, 0x6f, 0x6b, 0x56, 0x65, 0x72, 0x69, 0x66, 0x69, 0x65, 0x72, 0x4b, 0x69,
+	0x6e, 0x64, 0x12, 0x0f, 0x0a, 0x0b, 0x48, 0x4d, 0x41, 0x43, 0x5f, 0x53, 0x48, 0x41, 0x32, 0x35,
+	0x36, 0x10, 0x00, 0x2a, 0x86, 0x01, 0x0a, 0x19, 0x43, 0x6f, 0x6e, 0x66, 0x69, 0x67, 0x75, 0x72,
+	0x61, 0x74, 0x69, 0x6f, 0x6e, 0x56, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x4b, 0x69, 0x6e,
+	0x64, 0x12, 0x21, 0x0a, 0x1d, 0x53, 0x54, 0x41, 0x54, 0x49, 0x43, 0x5f, 0x43, 0x4f, 0x4e, 0x46,
+	0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x56, 0x41, 0x52, 0x49, 0x41, 0x42,
+	0x4c, 0x45, 0x10, 0x00, 0x12, 0x1e, 0x0a, 0x1a, 0x45, 0x4e, 0x56, 0x5f, 0x43, 0x4f, 0x4e, 0x46,
+	0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x5f, 0x56, 0x41, 0x52, 0x49, 0x41, 0x42,
+	0x4c, 0x45, 0x10, 0x01, 0x12, 0x26, 0x0a, 0x22, 0x50, 0x4c, 0x41, 0x43, 0x45, 0x48, 0x4f, 0x4c,
+	0x44, 0x45, 0x52, 0x5f, 0x43, 0x4f, 0x4e, 0x46, 0x49, 0x47, 0x55, 0x52, 0x41, 0x54, 0x49, 0x4f,
+	0x4e, 0x5f, 0x56, 0x41, 0x52, 0x49, 0x41, 0x42, 0x4c, 0x45, 0x10, 0x02, 0x42, 0x2d, 0x5a, 0x2b,
+	0x67, 0x69, 0x74, 0x68, 0x75, 0x62, 0x2e, 0x63, 0x6f, 0x6d, 0x2f, 0x77, 0x75, 0x6e, 0x64, 0x65,
+	0x72, 0x67, 0x72, 0x61, 0x70, 0x68, 0x2f, 0x77, 0x75, 0x6e, 0x64, 0x65, 0x72, 0x67, 0x72, 0x61,
+	0x70, 0x68, 0x2f, 0x70, 0x6b, 0x67, 0x2f, 0x77, 0x67, 0x70, 0x62, 0x62, 0x06, 0x70, 0x72, 0x6f,
+	0x74, 0x6f, 0x33,
 }
 
 var (
@@ -9051,8 +8928,8 @@ func file_wundernode_config_proto_rawDescGZIP() []byte {
 	return file_wundernode_config_proto_rawDescData
 }
 
-var file_wundernode_config_proto_enumTypes = make([]protoimpl.EnumInfo, 23)
-var file_wundernode_config_proto_msgTypes = make([]protoimpl.MessageInfo, 97)
+var file_wundernode_config_proto_enumTypes = make([]protoimpl.EnumInfo, 22)
+var file_wundernode_config_proto_msgTypes = make([]protoimpl.MessageInfo, 96)
 var file_wundernode_config_proto_goTypes = []interface{}{
 	(LogLevel)(0),                                            // 0: wgpb.LogLevel
 	(AuthProviderKind)(0),                                    // 1: wgpb.AuthProviderKind
@@ -9062,303 +8939,299 @@ var file_wundernode_config_proto_goTypes = []interface{}{
 	(PostResolveTransformationKind)(0),                       // 5: wgpb.PostResolveTransformationKind
 	(InjectVariableKind)(0),                                  // 6: wgpb.InjectVariableKind
 	(DateOffsetUnit)(0),                                      // 7: wgpb.DateOffsetUnit
-	(ClaimRemoveIfNoneMatchType)(0),                          // 8: wgpb.ClaimRemoveIfNoneMatchType
-	(VariableWhereInputScalarFilterType)(0),                  // 9: wgpb.VariableWhereInputScalarFilterType
-	(VariableWhereInputRelationFilterType)(0),                // 10: wgpb.VariableWhereInputRelationFilterType
-	(ClaimType)(0),                                           // 11: wgpb.ClaimType
-	(ValueType)(0),                                           // 12: wgpb.ValueType
-	(OperationType)(0),                                       // 13: wgpb.OperationType
-	(DataSourceKind)(0),                                      // 14: wgpb.DataSourceKind
-	(DataSourceRESTRewriterType)(0),                          // 15: wgpb.DataSourceRESTRewriterType
-	(UpstreamAuthenticationKind)(0),                          // 16: wgpb.UpstreamAuthenticationKind
-	(SigningMethod)(0),                                       // 17: wgpb.SigningMethod
-	(HTTPMethod)(0),                                          // 18: wgpb.HTTPMethod
-	(ArgumentSource)(0),                                      // 19: wgpb.ArgumentSource
-	(ArgumentRenderConfiguration)(0),                         // 20: wgpb.ArgumentRenderConfiguration
-	(WebhookVerifierKind)(0),                                 // 21: wgpb.WebhookVerifierKind
-	(ConfigurationVariableKind)(0),                           // 22: wgpb.ConfigurationVariableKind
-	(*WunderNodeConfig)(nil),                                 // 23: wgpb.WunderNodeConfig
-	(*Server)(nil),                                           // 24: wgpb.Server
-	(*Certificate)(nil),                                      // 25: wgpb.Certificate
-	(*Logging)(nil),                                          // 26: wgpb.Logging
-	(*Api)(nil),                                              // 27: wgpb.Api
-	(*ApiAuthenticationConfig)(nil),                          // 28: wgpb.ApiAuthenticationConfig
-	(*JwksBasedAuthentication)(nil),                          // 29: wgpb.JwksBasedAuthentication
-	(*JwksAuthProvider)(nil),                                 // 30: wgpb.JwksAuthProvider
-	(*ApiAuthenticationHooks)(nil),                           // 31: wgpb.ApiAuthenticationHooks
-	(*CookieBasedAuthentication)(nil),                        // 32: wgpb.CookieBasedAuthentication
-	(*AuthProvider)(nil),                                     // 33: wgpb.AuthProvider
-	(*GithubAuthProviderConfig)(nil),                         // 34: wgpb.GithubAuthProviderConfig
-	(*OpenIDConnectQueryParameter)(nil),                      // 35: wgpb.OpenIDConnectQueryParameter
-	(*OpenIDConnectAuthProviderConfig)(nil),                  // 36: wgpb.OpenIDConnectAuthProviderConfig
-	(*ApiCacheConfig)(nil),                                   // 37: wgpb.ApiCacheConfig
-	(*InMemoryCacheConfig)(nil),                              // 38: wgpb.InMemoryCacheConfig
-	(*RedisCacheConfig)(nil),                                 // 39: wgpb.RedisCacheConfig
-	(*Operation)(nil),                                        // 40: wgpb.Operation
-	(*OperationSemaphore)(nil),                               // 41: wgpb.OperationSemaphore
-	(*OperationTransaction)(nil),                             // 42: wgpb.OperationTransaction
-	(*OperationMultipartForm)(nil),                           // 43: wgpb.OperationMultipartForm
-	(*OperationRateLimit)(nil),                               // 44: wgpb.OperationRateLimit
-	(*DatasourceQuote)(nil),                                  // 45: wgpb.DatasourceQuote
-	(*PostResolveTransformation)(nil),                        // 46: wgpb.PostResolveTransformation
-	(*PostResolveGetTransformation)(nil),                     // 47: wgpb.PostResolveGetTransformation
-	(*OperationVariablesConfiguration)(nil),                  // 48: wgpb.OperationVariablesConfiguration
-	(*VariableInjectionConfiguration)(nil),                   // 49: wgpb.VariableInjectionConfiguration
-	(*DateOffset)(nil),                                       // 50: wgpb.DateOffset
-	(*GraphQLDataSourceHooksConfiguration)(nil),              // 51: wgpb.GraphQLDataSourceHooksConfiguration
-	(*OperationHooksConfiguration)(nil),                      // 52: wgpb.OperationHooksConfiguration
-	(*MockResolveHookConfiguration)(nil),                     // 53: wgpb.MockResolveHookConfiguration
-	(*OperationAuthorizationConfig)(nil),                     // 54: wgpb.OperationAuthorizationConfig
-	(*OperationRoleConfig)(nil),                              // 55: wgpb.OperationRoleConfig
-	(*CustomClaim)(nil),                                      // 56: wgpb.CustomClaim
-	(*ClaimConfig)(nil),                                      // 57: wgpb.ClaimConfig
-	(*ClaimRemoveIfNoneMatch)(nil),                           // 58: wgpb.ClaimRemoveIfNoneMatch
-	(*VariableWhereInputConfiguration)(nil),                  // 59: wgpb.VariableWhereInputConfiguration
-	(*VariableWhereInput)(nil),                               // 60: wgpb.VariableWhereInput
-	(*VariableWhereInputFilter)(nil),                         // 61: wgpb.VariableWhereInputFilter
-	(*VariableWhereInputScalarFilter)(nil),                   // 62: wgpb.VariableWhereInputScalarFilter
-	(*VariableWhereInputRelationFilter)(nil),                 // 63: wgpb.VariableWhereInputRelationFilter
-	(*OperationLiveQueryConfig)(nil),                         // 64: wgpb.OperationLiveQueryConfig
-	(*OperationAuthenticationConfig)(nil),                    // 65: wgpb.OperationAuthenticationConfig
-	(*OperationCacheConfig)(nil),                             // 66: wgpb.OperationCacheConfig
-	(*EngineConfiguration)(nil),                              // 67: wgpb.EngineConfiguration
-	(*DataSourceConfiguration)(nil),                          // 68: wgpb.DataSourceConfiguration
-	(*DirectiveConfiguration)(nil),                           // 69: wgpb.DirectiveConfiguration
-	(*DataSourceCustom_REST)(nil),                            // 70: wgpb.DataSourceCustom_REST
-	(*DataSourceRESTResponseExtractor)(nil),                  // 71: wgpb.DataSourceRESTResponseExtractor
-	(*DataSourceRESTResponseStatusCodeScope)(nil),            // 72: wgpb.DataSourceRESTResponseStatusCodeScope
-	(*DataSourceCustom_REST_Rewriter)(nil),                   // 73: wgpb.DataSourceCustom_REST_Rewriter
-	(*DataSourceRESTRewriter)(nil),                           // 74: wgpb.DataSourceRESTRewriter
-	(*DataSourceRESTSubObject)(nil),                          // 75: wgpb.DataSourceRESTSubObject
-	(*DataSourceRESTSubfield)(nil),                           // 76: wgpb.DataSourceRESTSubfield
-	(*StatusCodeTypeMapping)(nil),                            // 77: wgpb.StatusCodeTypeMapping
-	(*DataSourceCustom_GraphQL)(nil),                         // 78: wgpb.DataSourceCustom_GraphQL
-	(*DataSourceCustom_Database)(nil),                        // 79: wgpb.DataSourceCustom_Database
-	(*GraphQLFederationConfiguration)(nil),                   // 80: wgpb.GraphQLFederationConfiguration
-	(*DataSourceCustom_Static)(nil),                          // 81: wgpb.DataSourceCustom_Static
-	(*GraphQLSubscriptionConfiguration)(nil),                 // 82: wgpb.GraphQLSubscriptionConfiguration
-	(*FetchConfiguration)(nil),                               // 83: wgpb.FetchConfiguration
-	(*MTLSConfiguration)(nil),                                // 84: wgpb.MTLSConfiguration
-	(*UpstreamAuthentication)(nil),                           // 85: wgpb.UpstreamAuthentication
-	(*JwtUpstreamAuthenticationConfig)(nil),                  // 86: wgpb.JwtUpstreamAuthenticationConfig
-	(*JwtUpstreamAuthenticationWithAccessTokenExchange)(nil), // 87: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange
-	(*RESTSubscriptionConfiguration)(nil),                    // 88: wgpb.RESTSubscriptionConfiguration
-	(*URLQueryConfiguration)(nil),                            // 89: wgpb.URLQueryConfiguration
-	(*HTTPHeader)(nil),                                       // 90: wgpb.HTTPHeader
-	(*TypeConfiguration)(nil),                                // 91: wgpb.TypeConfiguration
-	(*FieldConfiguration)(nil),                               // 92: wgpb.FieldConfiguration
-	(*TypeField)(nil),                                        // 93: wgpb.TypeField
-	(*QuoteField)(nil),                                       // 94: wgpb.QuoteField
-	(*SingleTypeField)(nil),                                  // 95: wgpb.SingleTypeField
-	(*ArgumentConfiguration)(nil),                            // 96: wgpb.ArgumentConfiguration
-	(*WunderGraphConfiguration)(nil),                         // 97: wgpb.WunderGraphConfiguration
-	(*S3UploadProfileHooksConfiguration)(nil),                // 98: wgpb.S3UploadProfileHooksConfiguration
-	(*S3UploadProfile)(nil),                                  // 99: wgpb.S3UploadProfile
-	(*S3UploadConfiguration)(nil),                            // 100: wgpb.S3UploadConfiguration
-	(*UserDefinedApi)(nil),                                   // 101: wgpb.UserDefinedApi
-	(*ListenerOptions)(nil),                                  // 102: wgpb.ListenerOptions
-	(*NodeLogging)(nil),                                      // 103: wgpb.NodeLogging
-	(*NodeOptions)(nil),                                      // 104: wgpb.NodeOptions
-	(*ServerLogging)(nil),                                    // 105: wgpb.ServerLogging
-	(*ServerOptions)(nil),                                    // 106: wgpb.ServerOptions
-	(*WebhookConfiguration)(nil),                             // 107: wgpb.WebhookConfiguration
-	(*WebhookVerifier)(nil),                                  // 108: wgpb.WebhookVerifier
-	(*CorsConfiguration)(nil),                                // 109: wgpb.CorsConfiguration
-	(*ConfigurationVariable)(nil),                            // 110: wgpb.ConfigurationVariable
-	nil,                                                      // 111: wgpb.Operation.DatasourceQuotesEntry
-	nil,                                                      // 112: wgpb.DataSourceConfiguration.CustomRestMapEntry
-	nil,                                                      // 113: wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry
-	nil,                                                      // 114: wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry
-	nil,                                                      // 115: wgpb.DataSourceRESTRewriter.ValueRewritesEntry
-	nil,                                                      // 116: wgpb.DataSourceRESTRewriter.ApplySubCommonFieldValuesEntry
-	nil,                                                      // 117: wgpb.FetchConfiguration.HeaderEntry
-	nil,                                                      // 118: wgpb.TypeField.QuotesEntry
-	nil,                                                      // 119: wgpb.S3UploadConfiguration.UploadProfilesEntry
+	(VariableWhereInputScalarFilterType)(0),                  // 8: wgpb.VariableWhereInputScalarFilterType
+	(VariableWhereInputRelationFilterType)(0),                // 9: wgpb.VariableWhereInputRelationFilterType
+	(ClaimType)(0),                                           // 10: wgpb.ClaimType
+	(ValueType)(0),                                           // 11: wgpb.ValueType
+	(OperationType)(0),                                       // 12: wgpb.OperationType
+	(DataSourceKind)(0),                                      // 13: wgpb.DataSourceKind
+	(DataSourceRESTRewriterType)(0),                          // 14: wgpb.DataSourceRESTRewriterType
+	(UpstreamAuthenticationKind)(0),                          // 15: wgpb.UpstreamAuthenticationKind
+	(SigningMethod)(0),                                       // 16: wgpb.SigningMethod
+	(HTTPMethod)(0),                                          // 17: wgpb.HTTPMethod
+	(ArgumentSource)(0),                                      // 18: wgpb.ArgumentSource
+	(ArgumentRenderConfiguration)(0),                         // 19: wgpb.ArgumentRenderConfiguration
+	(WebhookVerifierKind)(0),                                 // 20: wgpb.WebhookVerifierKind
+	(ConfigurationVariableKind)(0),                           // 21: wgpb.ConfigurationVariableKind
+	(*WunderNodeConfig)(nil),                                 // 22: wgpb.WunderNodeConfig
+	(*Server)(nil),                                           // 23: wgpb.Server
+	(*Certificate)(nil),                                      // 24: wgpb.Certificate
+	(*Logging)(nil),                                          // 25: wgpb.Logging
+	(*Api)(nil),                                              // 26: wgpb.Api
+	(*ApiAuthenticationConfig)(nil),                          // 27: wgpb.ApiAuthenticationConfig
+	(*JwksBasedAuthentication)(nil),                          // 28: wgpb.JwksBasedAuthentication
+	(*JwksAuthProvider)(nil),                                 // 29: wgpb.JwksAuthProvider
+	(*ApiAuthenticationHooks)(nil),                           // 30: wgpb.ApiAuthenticationHooks
+	(*CookieBasedAuthentication)(nil),                        // 31: wgpb.CookieBasedAuthentication
+	(*AuthProvider)(nil),                                     // 32: wgpb.AuthProvider
+	(*GithubAuthProviderConfig)(nil),                         // 33: wgpb.GithubAuthProviderConfig
+	(*OpenIDConnectQueryParameter)(nil),                      // 34: wgpb.OpenIDConnectQueryParameter
+	(*OpenIDConnectAuthProviderConfig)(nil),                  // 35: wgpb.OpenIDConnectAuthProviderConfig
+	(*ApiCacheConfig)(nil),                                   // 36: wgpb.ApiCacheConfig
+	(*InMemoryCacheConfig)(nil),                              // 37: wgpb.InMemoryCacheConfig
+	(*RedisCacheConfig)(nil),                                 // 38: wgpb.RedisCacheConfig
+	(*Operation)(nil),                                        // 39: wgpb.Operation
+	(*OperationSemaphore)(nil),                               // 40: wgpb.OperationSemaphore
+	(*OperationTransaction)(nil),                             // 41: wgpb.OperationTransaction
+	(*OperationMultipartForm)(nil),                           // 42: wgpb.OperationMultipartForm
+	(*OperationRateLimit)(nil),                               // 43: wgpb.OperationRateLimit
+	(*DatasourceQuote)(nil),                                  // 44: wgpb.DatasourceQuote
+	(*PostResolveTransformation)(nil),                        // 45: wgpb.PostResolveTransformation
+	(*PostResolveGetTransformation)(nil),                     // 46: wgpb.PostResolveGetTransformation
+	(*OperationVariablesConfiguration)(nil),                  // 47: wgpb.OperationVariablesConfiguration
+	(*VariableInjectionConfiguration)(nil),                   // 48: wgpb.VariableInjectionConfiguration
+	(*DateOffset)(nil),                                       // 49: wgpb.DateOffset
+	(*GraphQLDataSourceHooksConfiguration)(nil),              // 50: wgpb.GraphQLDataSourceHooksConfiguration
+	(*OperationHooksConfiguration)(nil),                      // 51: wgpb.OperationHooksConfiguration
+	(*MockResolveHookConfiguration)(nil),                     // 52: wgpb.MockResolveHookConfiguration
+	(*OperationAuthorizationConfig)(nil),                     // 53: wgpb.OperationAuthorizationConfig
+	(*OperationRoleConfig)(nil),                              // 54: wgpb.OperationRoleConfig
+	(*CustomClaim)(nil),                                      // 55: wgpb.CustomClaim
+	(*ClaimConfig)(nil),                                      // 56: wgpb.ClaimConfig
+	(*VariableWhereInputConfiguration)(nil),                  // 57: wgpb.VariableWhereInputConfiguration
+	(*VariableWhereInput)(nil),                               // 58: wgpb.VariableWhereInput
+	(*VariableWhereInputFilter)(nil),                         // 59: wgpb.VariableWhereInputFilter
+	(*VariableWhereInputScalarFilter)(nil),                   // 60: wgpb.VariableWhereInputScalarFilter
+	(*VariableWhereInputRelationFilter)(nil),                 // 61: wgpb.VariableWhereInputRelationFilter
+	(*OperationLiveQueryConfig)(nil),                         // 62: wgpb.OperationLiveQueryConfig
+	(*OperationAuthenticationConfig)(nil),                    // 63: wgpb.OperationAuthenticationConfig
+	(*OperationCacheConfig)(nil),                             // 64: wgpb.OperationCacheConfig
+	(*EngineConfiguration)(nil),                              // 65: wgpb.EngineConfiguration
+	(*DataSourceConfiguration)(nil),                          // 66: wgpb.DataSourceConfiguration
+	(*DirectiveConfiguration)(nil),                           // 67: wgpb.DirectiveConfiguration
+	(*DataSourceCustom_REST)(nil),                            // 68: wgpb.DataSourceCustom_REST
+	(*DataSourceRESTResponseExtractor)(nil),                  // 69: wgpb.DataSourceRESTResponseExtractor
+	(*DataSourceRESTResponseStatusCodeScope)(nil),            // 70: wgpb.DataSourceRESTResponseStatusCodeScope
+	(*DataSourceCustom_REST_Rewriter)(nil),                   // 71: wgpb.DataSourceCustom_REST_Rewriter
+	(*DataSourceRESTRewriter)(nil),                           // 72: wgpb.DataSourceRESTRewriter
+	(*DataSourceRESTSubObject)(nil),                          // 73: wgpb.DataSourceRESTSubObject
+	(*DataSourceRESTSubfield)(nil),                           // 74: wgpb.DataSourceRESTSubfield
+	(*StatusCodeTypeMapping)(nil),                            // 75: wgpb.StatusCodeTypeMapping
+	(*DataSourceCustom_GraphQL)(nil),                         // 76: wgpb.DataSourceCustom_GraphQL
+	(*DataSourceCustom_Database)(nil),                        // 77: wgpb.DataSourceCustom_Database
+	(*GraphQLFederationConfiguration)(nil),                   // 78: wgpb.GraphQLFederationConfiguration
+	(*DataSourceCustom_Static)(nil),                          // 79: wgpb.DataSourceCustom_Static
+	(*GraphQLSubscriptionConfiguration)(nil),                 // 80: wgpb.GraphQLSubscriptionConfiguration
+	(*FetchConfiguration)(nil),                               // 81: wgpb.FetchConfiguration
+	(*MTLSConfiguration)(nil),                                // 82: wgpb.MTLSConfiguration
+	(*UpstreamAuthentication)(nil),                           // 83: wgpb.UpstreamAuthentication
+	(*JwtUpstreamAuthenticationConfig)(nil),                  // 84: wgpb.JwtUpstreamAuthenticationConfig
+	(*JwtUpstreamAuthenticationWithAccessTokenExchange)(nil), // 85: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange
+	(*RESTSubscriptionConfiguration)(nil),                    // 86: wgpb.RESTSubscriptionConfiguration
+	(*URLQueryConfiguration)(nil),                            // 87: wgpb.URLQueryConfiguration
+	(*HTTPHeader)(nil),                                       // 88: wgpb.HTTPHeader
+	(*TypeConfiguration)(nil),                                // 89: wgpb.TypeConfiguration
+	(*FieldConfiguration)(nil),                               // 90: wgpb.FieldConfiguration
+	(*TypeField)(nil),                                        // 91: wgpb.TypeField
+	(*QuoteField)(nil),                                       // 92: wgpb.QuoteField
+	(*SingleTypeField)(nil),                                  // 93: wgpb.SingleTypeField
+	(*ArgumentConfiguration)(nil),                            // 94: wgpb.ArgumentConfiguration
+	(*WunderGraphConfiguration)(nil),                         // 95: wgpb.WunderGraphConfiguration
+	(*S3UploadProfileHooksConfiguration)(nil),                // 96: wgpb.S3UploadProfileHooksConfiguration
+	(*S3UploadProfile)(nil),                                  // 97: wgpb.S3UploadProfile
+	(*S3UploadConfiguration)(nil),                            // 98: wgpb.S3UploadConfiguration
+	(*UserDefinedApi)(nil),                                   // 99: wgpb.UserDefinedApi
+	(*ListenerOptions)(nil),                                  // 100: wgpb.ListenerOptions
+	(*NodeLogging)(nil),                                      // 101: wgpb.NodeLogging
+	(*NodeOptions)(nil),                                      // 102: wgpb.NodeOptions
+	(*ServerLogging)(nil),                                    // 103: wgpb.ServerLogging
+	(*ServerOptions)(nil),                                    // 104: wgpb.ServerOptions
+	(*WebhookConfiguration)(nil),                             // 105: wgpb.WebhookConfiguration
+	(*WebhookVerifier)(nil),                                  // 106: wgpb.WebhookVerifier
+	(*CorsConfiguration)(nil),                                // 107: wgpb.CorsConfiguration
+	(*ConfigurationVariable)(nil),                            // 108: wgpb.ConfigurationVariable
+	nil,                                                      // 109: wgpb.Operation.DatasourceQuotesEntry
+	nil,                                                      // 110: wgpb.DataSourceConfiguration.CustomRestMapEntry
+	nil,                                                      // 111: wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry
+	nil,                                                      // 112: wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry
+	nil,                                                      // 113: wgpb.DataSourceRESTRewriter.ValueRewritesEntry
+	nil,                                                      // 114: wgpb.DataSourceRESTRewriter.ApplySubCommonFieldValuesEntry
+	nil,                                                      // 115: wgpb.FetchConfiguration.HeaderEntry
+	nil,                                                      // 116: wgpb.TypeField.QuotesEntry
+	nil,                                                      // 117: wgpb.S3UploadConfiguration.UploadProfilesEntry
 }
 var file_wundernode_config_proto_depIdxs = []int32{
-	24,  // 0: wgpb.WunderNodeConfig.server:type_name -> wgpb.Server
-	26,  // 1: wgpb.WunderNodeConfig.logging:type_name -> wgpb.Logging
-	27,  // 2: wgpb.WunderNodeConfig.apis:type_name -> wgpb.Api
-	25,  // 3: wgpb.Server.certificates:type_name -> wgpb.Certificate
+	23,  // 0: wgpb.WunderNodeConfig.server:type_name -> wgpb.Server
+	25,  // 1: wgpb.WunderNodeConfig.logging:type_name -> wgpb.Logging
+	26,  // 2: wgpb.WunderNodeConfig.apis:type_name -> wgpb.Api
+	24,  // 3: wgpb.Server.certificates:type_name -> wgpb.Certificate
 	0,   // 4: wgpb.Logging.level:type_name -> wgpb.LogLevel
-	67,  // 5: wgpb.Api.engineConfiguration:type_name -> wgpb.EngineConfiguration
-	40,  // 6: wgpb.Api.operations:type_name -> wgpb.Operation
-	109, // 7: wgpb.Api.corsConfiguration:type_name -> wgpb.CorsConfiguration
-	37,  // 8: wgpb.Api.cacheConfig:type_name -> wgpb.ApiCacheConfig
-	28,  // 9: wgpb.Api.authenticationConfig:type_name -> wgpb.ApiAuthenticationConfig
-	100, // 10: wgpb.Api.s3UploadConfiguration:type_name -> wgpb.S3UploadConfiguration
-	107, // 11: wgpb.Api.webhooks:type_name -> wgpb.WebhookConfiguration
-	32,  // 12: wgpb.ApiAuthenticationConfig.cookieBased:type_name -> wgpb.CookieBasedAuthentication
-	31,  // 13: wgpb.ApiAuthenticationConfig.hooks:type_name -> wgpb.ApiAuthenticationHooks
-	29,  // 14: wgpb.ApiAuthenticationConfig.jwksBased:type_name -> wgpb.JwksBasedAuthentication
-	30,  // 15: wgpb.JwksBasedAuthentication.providers:type_name -> wgpb.JwksAuthProvider
-	110, // 16: wgpb.JwksAuthProvider.issuer:type_name -> wgpb.ConfigurationVariable
-	110, // 17: wgpb.JwksAuthProvider.jwksJson:type_name -> wgpb.ConfigurationVariable
-	33,  // 18: wgpb.CookieBasedAuthentication.providers:type_name -> wgpb.AuthProvider
-	110, // 19: wgpb.CookieBasedAuthentication.authorizedRedirectUris:type_name -> wgpb.ConfigurationVariable
-	110, // 20: wgpb.CookieBasedAuthentication.authorizedRedirectUriRegexes:type_name -> wgpb.ConfigurationVariable
-	110, // 21: wgpb.CookieBasedAuthentication.hashKey:type_name -> wgpb.ConfigurationVariable
-	110, // 22: wgpb.CookieBasedAuthentication.blockKey:type_name -> wgpb.ConfigurationVariable
-	110, // 23: wgpb.CookieBasedAuthentication.csrfSecret:type_name -> wgpb.ConfigurationVariable
+	65,  // 5: wgpb.Api.engineConfiguration:type_name -> wgpb.EngineConfiguration
+	39,  // 6: wgpb.Api.operations:type_name -> wgpb.Operation
+	107, // 7: wgpb.Api.corsConfiguration:type_name -> wgpb.CorsConfiguration
+	36,  // 8: wgpb.Api.cacheConfig:type_name -> wgpb.ApiCacheConfig
+	27,  // 9: wgpb.Api.authenticationConfig:type_name -> wgpb.ApiAuthenticationConfig
+	98,  // 10: wgpb.Api.s3UploadConfiguration:type_name -> wgpb.S3UploadConfiguration
+	105, // 11: wgpb.Api.webhooks:type_name -> wgpb.WebhookConfiguration
+	31,  // 12: wgpb.ApiAuthenticationConfig.cookieBased:type_name -> wgpb.CookieBasedAuthentication
+	30,  // 13: wgpb.ApiAuthenticationConfig.hooks:type_name -> wgpb.ApiAuthenticationHooks
+	28,  // 14: wgpb.ApiAuthenticationConfig.jwksBased:type_name -> wgpb.JwksBasedAuthentication
+	29,  // 15: wgpb.JwksBasedAuthentication.providers:type_name -> wgpb.JwksAuthProvider
+	108, // 16: wgpb.JwksAuthProvider.issuer:type_name -> wgpb.ConfigurationVariable
+	108, // 17: wgpb.JwksAuthProvider.jwksJson:type_name -> wgpb.ConfigurationVariable
+	32,  // 18: wgpb.CookieBasedAuthentication.providers:type_name -> wgpb.AuthProvider
+	108, // 19: wgpb.CookieBasedAuthentication.authorizedRedirectUris:type_name -> wgpb.ConfigurationVariable
+	108, // 20: wgpb.CookieBasedAuthentication.authorizedRedirectUriRegexes:type_name -> wgpb.ConfigurationVariable
+	108, // 21: wgpb.CookieBasedAuthentication.hashKey:type_name -> wgpb.ConfigurationVariable
+	108, // 22: wgpb.CookieBasedAuthentication.blockKey:type_name -> wgpb.ConfigurationVariable
+	108, // 23: wgpb.CookieBasedAuthentication.csrfSecret:type_name -> wgpb.ConfigurationVariable
 	1,   // 24: wgpb.AuthProvider.kind:type_name -> wgpb.AuthProviderKind
-	34,  // 25: wgpb.AuthProvider.githubConfig:type_name -> wgpb.GithubAuthProviderConfig
-	36,  // 26: wgpb.AuthProvider.oidcConfig:type_name -> wgpb.OpenIDConnectAuthProviderConfig
-	110, // 27: wgpb.GithubAuthProviderConfig.clientId:type_name -> wgpb.ConfigurationVariable
-	110, // 28: wgpb.GithubAuthProviderConfig.clientSecret:type_name -> wgpb.ConfigurationVariable
-	110, // 29: wgpb.OpenIDConnectQueryParameter.name:type_name -> wgpb.ConfigurationVariable
-	110, // 30: wgpb.OpenIDConnectQueryParameter.value:type_name -> wgpb.ConfigurationVariable
-	110, // 31: wgpb.OpenIDConnectAuthProviderConfig.issuer:type_name -> wgpb.ConfigurationVariable
-	110, // 32: wgpb.OpenIDConnectAuthProviderConfig.clientId:type_name -> wgpb.ConfigurationVariable
-	110, // 33: wgpb.OpenIDConnectAuthProviderConfig.clientSecret:type_name -> wgpb.ConfigurationVariable
-	35,  // 34: wgpb.OpenIDConnectAuthProviderConfig.queryParameters:type_name -> wgpb.OpenIDConnectQueryParameter
+	33,  // 25: wgpb.AuthProvider.githubConfig:type_name -> wgpb.GithubAuthProviderConfig
+	35,  // 26: wgpb.AuthProvider.oidcConfig:type_name -> wgpb.OpenIDConnectAuthProviderConfig
+	108, // 27: wgpb.GithubAuthProviderConfig.clientId:type_name -> wgpb.ConfigurationVariable
+	108, // 28: wgpb.GithubAuthProviderConfig.clientSecret:type_name -> wgpb.ConfigurationVariable
+	108, // 29: wgpb.OpenIDConnectQueryParameter.name:type_name -> wgpb.ConfigurationVariable
+	108, // 30: wgpb.OpenIDConnectQueryParameter.value:type_name -> wgpb.ConfigurationVariable
+	108, // 31: wgpb.OpenIDConnectAuthProviderConfig.issuer:type_name -> wgpb.ConfigurationVariable
+	108, // 32: wgpb.OpenIDConnectAuthProviderConfig.clientId:type_name -> wgpb.ConfigurationVariable
+	108, // 33: wgpb.OpenIDConnectAuthProviderConfig.clientSecret:type_name -> wgpb.ConfigurationVariable
+	34,  // 34: wgpb.OpenIDConnectAuthProviderConfig.queryParameters:type_name -> wgpb.OpenIDConnectQueryParameter
 	2,   // 35: wgpb.ApiCacheConfig.kind:type_name -> wgpb.ApiCacheKind
-	38,  // 36: wgpb.ApiCacheConfig.inMemoryConfig:type_name -> wgpb.InMemoryCacheConfig
-	39,  // 37: wgpb.ApiCacheConfig.redisConfig:type_name -> wgpb.RedisCacheConfig
-	13,  // 38: wgpb.Operation.operationType:type_name -> wgpb.OperationType
+	37,  // 36: wgpb.ApiCacheConfig.inMemoryConfig:type_name -> wgpb.InMemoryCacheConfig
+	38,  // 37: wgpb.ApiCacheConfig.redisConfig:type_name -> wgpb.RedisCacheConfig
+	12,  // 38: wgpb.Operation.operationType:type_name -> wgpb.OperationType
 	4,   // 39: wgpb.Operation.engine:type_name -> wgpb.OperationExecutionEngine
-	66,  // 40: wgpb.Operation.cacheConfig:type_name -> wgpb.OperationCacheConfig
-	65,  // 41: wgpb.Operation.authenticationConfig:type_name -> wgpb.OperationAuthenticationConfig
-	64,  // 42: wgpb.Operation.liveQueryConfig:type_name -> wgpb.OperationLiveQueryConfig
-	54,  // 43: wgpb.Operation.authorizationConfig:type_name -> wgpb.OperationAuthorizationConfig
-	52,  // 44: wgpb.Operation.hooksConfiguration:type_name -> wgpb.OperationHooksConfiguration
-	48,  // 45: wgpb.Operation.variablesConfiguration:type_name -> wgpb.OperationVariablesConfiguration
-	46,  // 46: wgpb.Operation.postResolveTransformations:type_name -> wgpb.PostResolveTransformation
-	111, // 47: wgpb.Operation.datasourceQuotes:type_name -> wgpb.Operation.DatasourceQuotesEntry
-	42,  // 48: wgpb.Operation.transaction:type_name -> wgpb.OperationTransaction
-	44,  // 49: wgpb.Operation.rateLimit:type_name -> wgpb.OperationRateLimit
-	41,  // 50: wgpb.Operation.semaphore:type_name -> wgpb.OperationSemaphore
-	43,  // 51: wgpb.Operation.multipartForms:type_name -> wgpb.OperationMultipartForm
+	64,  // 40: wgpb.Operation.cacheConfig:type_name -> wgpb.OperationCacheConfig
+	63,  // 41: wgpb.Operation.authenticationConfig:type_name -> wgpb.OperationAuthenticationConfig
+	62,  // 42: wgpb.Operation.liveQueryConfig:type_name -> wgpb.OperationLiveQueryConfig
+	53,  // 43: wgpb.Operation.authorizationConfig:type_name -> wgpb.OperationAuthorizationConfig
+	51,  // 44: wgpb.Operation.hooksConfiguration:type_name -> wgpb.OperationHooksConfiguration
+	47,  // 45: wgpb.Operation.variablesConfiguration:type_name -> wgpb.OperationVariablesConfiguration
+	45,  // 46: wgpb.Operation.postResolveTransformations:type_name -> wgpb.PostResolveTransformation
+	109, // 47: wgpb.Operation.datasourceQuotes:type_name -> wgpb.Operation.DatasourceQuotesEntry
+	41,  // 48: wgpb.Operation.transaction:type_name -> wgpb.OperationTransaction
+	43,  // 49: wgpb.Operation.rateLimit:type_name -> wgpb.OperationRateLimit
+	40,  // 50: wgpb.Operation.semaphore:type_name -> wgpb.OperationSemaphore
+	42,  // 51: wgpb.Operation.multipartForms:type_name -> wgpb.OperationMultipartForm
 	3,   // 52: wgpb.OperationTransaction.isolationLevel:type_name -> wgpb.OperationTransactionIsolationLevel
 	5,   // 53: wgpb.PostResolveTransformation.kind:type_name -> wgpb.PostResolveTransformationKind
-	47,  // 54: wgpb.PostResolveTransformation.get:type_name -> wgpb.PostResolveGetTransformation
-	49,  // 55: wgpb.OperationVariablesConfiguration.injectVariables:type_name -> wgpb.VariableInjectionConfiguration
-	59,  // 56: wgpb.OperationVariablesConfiguration.whereInputs:type_name -> wgpb.VariableWhereInputConfiguration
+	46,  // 54: wgpb.PostResolveTransformation.get:type_name -> wgpb.PostResolveGetTransformation
+	48,  // 55: wgpb.OperationVariablesConfiguration.injectVariables:type_name -> wgpb.VariableInjectionConfiguration
+	57,  // 56: wgpb.OperationVariablesConfiguration.whereInputs:type_name -> wgpb.VariableWhereInputConfiguration
 	6,   // 57: wgpb.VariableInjectionConfiguration.variableKind:type_name -> wgpb.InjectVariableKind
-	50,  // 58: wgpb.VariableInjectionConfiguration.dateOffset:type_name -> wgpb.DateOffset
+	49,  // 58: wgpb.VariableInjectionConfiguration.dateOffset:type_name -> wgpb.DateOffset
 	7,   // 59: wgpb.DateOffset.unit:type_name -> wgpb.DateOffsetUnit
-	53,  // 60: wgpb.OperationHooksConfiguration.mockResolve:type_name -> wgpb.MockResolveHookConfiguration
-	57,  // 61: wgpb.OperationAuthorizationConfig.claims:type_name -> wgpb.ClaimConfig
-	55,  // 62: wgpb.OperationAuthorizationConfig.roleConfig:type_name -> wgpb.OperationRoleConfig
-	12,  // 63: wgpb.CustomClaim.type:type_name -> wgpb.ValueType
-	11,  // 64: wgpb.ClaimConfig.claimType:type_name -> wgpb.ClaimType
-	56,  // 65: wgpb.ClaimConfig.custom:type_name -> wgpb.CustomClaim
-	58,  // 66: wgpb.ClaimConfig.removeIfNoneMatch:type_name -> wgpb.ClaimRemoveIfNoneMatch
-	8,   // 67: wgpb.ClaimRemoveIfNoneMatch.type:type_name -> wgpb.ClaimRemoveIfNoneMatchType
-	60,  // 68: wgpb.VariableWhereInputConfiguration.whereInput:type_name -> wgpb.VariableWhereInput
-	60,  // 69: wgpb.VariableWhereInput.not:type_name -> wgpb.VariableWhereInput
-	61,  // 70: wgpb.VariableWhereInput.filter:type_name -> wgpb.VariableWhereInputFilter
-	62,  // 71: wgpb.VariableWhereInputFilter.scalar:type_name -> wgpb.VariableWhereInputScalarFilter
-	63,  // 72: wgpb.VariableWhereInputFilter.relation:type_name -> wgpb.VariableWhereInputRelationFilter
-	9,   // 73: wgpb.VariableWhereInputScalarFilter.type:type_name -> wgpb.VariableWhereInputScalarFilterType
-	10,  // 74: wgpb.VariableWhereInputRelationFilter.type:type_name -> wgpb.VariableWhereInputRelationFilterType
-	60,  // 75: wgpb.VariableWhereInputRelationFilter.where:type_name -> wgpb.VariableWhereInput
-	68,  // 76: wgpb.EngineConfiguration.datasourceConfigurations:type_name -> wgpb.DataSourceConfiguration
-	92,  // 77: wgpb.EngineConfiguration.fieldConfigurations:type_name -> wgpb.FieldConfiguration
-	91,  // 78: wgpb.EngineConfiguration.typeConfigurations:type_name -> wgpb.TypeConfiguration
-	14,  // 79: wgpb.DataSourceConfiguration.kind:type_name -> wgpb.DataSourceKind
-	14,  // 80: wgpb.DataSourceConfiguration.kindForPrisma:type_name -> wgpb.DataSourceKind
-	93,  // 81: wgpb.DataSourceConfiguration.rootNodes:type_name -> wgpb.TypeField
-	93,  // 82: wgpb.DataSourceConfiguration.childNodes:type_name -> wgpb.TypeField
-	112, // 83: wgpb.DataSourceConfiguration.customRestMap:type_name -> wgpb.DataSourceConfiguration.CustomRestMapEntry
-	113, // 84: wgpb.DataSourceConfiguration.customRestRequestRewriterMap:type_name -> wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry
-	114, // 85: wgpb.DataSourceConfiguration.customRestResponseRewriterMap:type_name -> wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry
-	70,  // 86: wgpb.DataSourceConfiguration.customRest:type_name -> wgpb.DataSourceCustom_REST
-	78,  // 87: wgpb.DataSourceConfiguration.customGraphql:type_name -> wgpb.DataSourceCustom_GraphQL
-	81,  // 88: wgpb.DataSourceConfiguration.customStatic:type_name -> wgpb.DataSourceCustom_Static
-	79,  // 89: wgpb.DataSourceConfiguration.customDatabase:type_name -> wgpb.DataSourceCustom_Database
-	69,  // 90: wgpb.DataSourceConfiguration.directives:type_name -> wgpb.DirectiveConfiguration
-	83,  // 91: wgpb.DataSourceCustom_REST.fetch:type_name -> wgpb.FetchConfiguration
-	88,  // 92: wgpb.DataSourceCustom_REST.subscription:type_name -> wgpb.RESTSubscriptionConfiguration
-	77,  // 93: wgpb.DataSourceCustom_REST.statusCodeTypeMappings:type_name -> wgpb.StatusCodeTypeMapping
-	74,  // 94: wgpb.DataSourceCustom_REST.requestRewriters:type_name -> wgpb.DataSourceRESTRewriter
-	74,  // 95: wgpb.DataSourceCustom_REST.responseRewriters:type_name -> wgpb.DataSourceRESTRewriter
-	71,  // 96: wgpb.DataSourceCustom_REST.responseExtractor:type_name -> wgpb.DataSourceRESTResponseExtractor
-	72,  // 97: wgpb.DataSourceRESTResponseExtractor.statusCodeScopes:type_name -> wgpb.DataSourceRESTResponseStatusCodeScope
-	74,  // 98: wgpb.DataSourceCustom_REST_Rewriter.rewriters:type_name -> wgpb.DataSourceRESTRewriter
-	15,  // 99: wgpb.DataSourceRESTRewriter.type:type_name -> wgpb.DataSourceRESTRewriterType
-	115, // 100: wgpb.DataSourceRESTRewriter.valueRewrites:type_name -> wgpb.DataSourceRESTRewriter.ValueRewritesEntry
-	116, // 101: wgpb.DataSourceRESTRewriter.applySubCommonFieldValues:type_name -> wgpb.DataSourceRESTRewriter.ApplySubCommonFieldValuesEntry
-	75,  // 102: wgpb.DataSourceRESTRewriter.applySubObjects:type_name -> wgpb.DataSourceRESTSubObject
-	76,  // 103: wgpb.DataSourceRESTRewriter.applySubFieldTypes:type_name -> wgpb.DataSourceRESTSubfield
-	76,  // 104: wgpb.DataSourceRESTSubObject.fields:type_name -> wgpb.DataSourceRESTSubfield
-	83,  // 105: wgpb.DataSourceCustom_GraphQL.fetch:type_name -> wgpb.FetchConfiguration
-	82,  // 106: wgpb.DataSourceCustom_GraphQL.subscription:type_name -> wgpb.GraphQLSubscriptionConfiguration
-	80,  // 107: wgpb.DataSourceCustom_GraphQL.federation:type_name -> wgpb.GraphQLFederationConfiguration
-	51,  // 108: wgpb.DataSourceCustom_GraphQL.hooksConfiguration:type_name -> wgpb.GraphQLDataSourceHooksConfiguration
-	95,  // 109: wgpb.DataSourceCustom_GraphQL.customScalarTypeFields:type_name -> wgpb.SingleTypeField
-	110, // 110: wgpb.DataSourceCustom_Database.databaseURL:type_name -> wgpb.ConfigurationVariable
-	95,  // 111: wgpb.DataSourceCustom_Database.jsonTypeFields:type_name -> wgpb.SingleTypeField
-	110, // 112: wgpb.DataSourceCustom_Static.data:type_name -> wgpb.ConfigurationVariable
-	110, // 113: wgpb.GraphQLSubscriptionConfiguration.url:type_name -> wgpb.ConfigurationVariable
-	110, // 114: wgpb.FetchConfiguration.url:type_name -> wgpb.ConfigurationVariable
-	18,  // 115: wgpb.FetchConfiguration.method:type_name -> wgpb.HTTPMethod
-	117, // 116: wgpb.FetchConfiguration.header:type_name -> wgpb.FetchConfiguration.HeaderEntry
-	110, // 117: wgpb.FetchConfiguration.body:type_name -> wgpb.ConfigurationVariable
-	89,  // 118: wgpb.FetchConfiguration.query:type_name -> wgpb.URLQueryConfiguration
-	85,  // 119: wgpb.FetchConfiguration.upstreamAuthentication:type_name -> wgpb.UpstreamAuthentication
-	84,  // 120: wgpb.FetchConfiguration.mTLS:type_name -> wgpb.MTLSConfiguration
-	110, // 121: wgpb.FetchConfiguration.baseUrl:type_name -> wgpb.ConfigurationVariable
-	110, // 122: wgpb.FetchConfiguration.path:type_name -> wgpb.ConfigurationVariable
-	110, // 123: wgpb.MTLSConfiguration.key:type_name -> wgpb.ConfigurationVariable
-	110, // 124: wgpb.MTLSConfiguration.cert:type_name -> wgpb.ConfigurationVariable
-	16,  // 125: wgpb.UpstreamAuthentication.kind:type_name -> wgpb.UpstreamAuthenticationKind
-	86,  // 126: wgpb.UpstreamAuthentication.jwtConfig:type_name -> wgpb.JwtUpstreamAuthenticationConfig
-	87,  // 127: wgpb.UpstreamAuthentication.jwtWithAccessTokenExchangeConfig:type_name -> wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange
-	110, // 128: wgpb.JwtUpstreamAuthenticationConfig.secret:type_name -> wgpb.ConfigurationVariable
-	17,  // 129: wgpb.JwtUpstreamAuthenticationConfig.signingMethod:type_name -> wgpb.SigningMethod
-	110, // 130: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.secret:type_name -> wgpb.ConfigurationVariable
-	17,  // 131: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.signingMethod:type_name -> wgpb.SigningMethod
-	110, // 132: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.accessTokenExchangeEndpoint:type_name -> wgpb.ConfigurationVariable
-	110, // 133: wgpb.HTTPHeader.values:type_name -> wgpb.ConfigurationVariable
-	96,  // 134: wgpb.FieldConfiguration.argumentsConfiguration:type_name -> wgpb.ArgumentConfiguration
-	118, // 135: wgpb.TypeField.quotes:type_name -> wgpb.TypeField.QuotesEntry
-	19,  // 136: wgpb.ArgumentConfiguration.sourceType:type_name -> wgpb.ArgumentSource
-	20,  // 137: wgpb.ArgumentConfiguration.renderConfiguration:type_name -> wgpb.ArgumentRenderConfiguration
-	101, // 138: wgpb.WunderGraphConfiguration.api:type_name -> wgpb.UserDefinedApi
-	98,  // 139: wgpb.S3UploadProfile.hooks:type_name -> wgpb.S3UploadProfileHooksConfiguration
-	110, // 140: wgpb.S3UploadConfiguration.endpoint:type_name -> wgpb.ConfigurationVariable
-	110, // 141: wgpb.S3UploadConfiguration.accessKeyID:type_name -> wgpb.ConfigurationVariable
-	110, // 142: wgpb.S3UploadConfiguration.secretAccessKey:type_name -> wgpb.ConfigurationVariable
-	110, // 143: wgpb.S3UploadConfiguration.bucketName:type_name -> wgpb.ConfigurationVariable
-	110, // 144: wgpb.S3UploadConfiguration.bucketLocation:type_name -> wgpb.ConfigurationVariable
-	119, // 145: wgpb.S3UploadConfiguration.uploadProfiles:type_name -> wgpb.S3UploadConfiguration.UploadProfilesEntry
-	67,  // 146: wgpb.UserDefinedApi.engineConfiguration:type_name -> wgpb.EngineConfiguration
-	40,  // 147: wgpb.UserDefinedApi.operations:type_name -> wgpb.Operation
-	109, // 148: wgpb.UserDefinedApi.corsConfiguration:type_name -> wgpb.CorsConfiguration
-	28,  // 149: wgpb.UserDefinedApi.authenticationConfig:type_name -> wgpb.ApiAuthenticationConfig
-	100, // 150: wgpb.UserDefinedApi.s3UploadConfiguration:type_name -> wgpb.S3UploadConfiguration
-	110, // 151: wgpb.UserDefinedApi.allowedHostNames:type_name -> wgpb.ConfigurationVariable
-	107, // 152: wgpb.UserDefinedApi.webhooks:type_name -> wgpb.WebhookConfiguration
-	106, // 153: wgpb.UserDefinedApi.serverOptions:type_name -> wgpb.ServerOptions
-	104, // 154: wgpb.UserDefinedApi.nodeOptions:type_name -> wgpb.NodeOptions
-	110, // 155: wgpb.ListenerOptions.host:type_name -> wgpb.ConfigurationVariable
-	110, // 156: wgpb.ListenerOptions.port:type_name -> wgpb.ConfigurationVariable
-	110, // 157: wgpb.NodeLogging.level:type_name -> wgpb.ConfigurationVariable
-	110, // 158: wgpb.NodeOptions.nodeUrl:type_name -> wgpb.ConfigurationVariable
-	110, // 159: wgpb.NodeOptions.publicNodeUrl:type_name -> wgpb.ConfigurationVariable
-	102, // 160: wgpb.NodeOptions.listen:type_name -> wgpb.ListenerOptions
-	103, // 161: wgpb.NodeOptions.logger:type_name -> wgpb.NodeLogging
-	110, // 162: wgpb.ServerLogging.level:type_name -> wgpb.ConfigurationVariable
-	110, // 163: wgpb.ServerOptions.serverUrl:type_name -> wgpb.ConfigurationVariable
-	102, // 164: wgpb.ServerOptions.listen:type_name -> wgpb.ListenerOptions
-	105, // 165: wgpb.ServerOptions.logger:type_name -> wgpb.ServerLogging
-	108, // 166: wgpb.WebhookConfiguration.verifier:type_name -> wgpb.WebhookVerifier
-	21,  // 167: wgpb.WebhookVerifier.kind:type_name -> wgpb.WebhookVerifierKind
-	110, // 168: wgpb.WebhookVerifier.secret:type_name -> wgpb.ConfigurationVariable
-	110, // 169: wgpb.CorsConfiguration.allowedOrigins:type_name -> wgpb.ConfigurationVariable
-	22,  // 170: wgpb.ConfigurationVariable.kind:type_name -> wgpb.ConfigurationVariableKind
-	45,  // 171: wgpb.Operation.DatasourceQuotesEntry.value:type_name -> wgpb.DatasourceQuote
-	70,  // 172: wgpb.DataSourceConfiguration.CustomRestMapEntry.value:type_name -> wgpb.DataSourceCustom_REST
-	73,  // 173: wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry.value:type_name -> wgpb.DataSourceCustom_REST_Rewriter
-	73,  // 174: wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry.value:type_name -> wgpb.DataSourceCustom_REST_Rewriter
-	90,  // 175: wgpb.FetchConfiguration.HeaderEntry.value:type_name -> wgpb.HTTPHeader
-	94,  // 176: wgpb.TypeField.QuotesEntry.value:type_name -> wgpb.QuoteField
-	99,  // 177: wgpb.S3UploadConfiguration.UploadProfilesEntry.value:type_name -> wgpb.S3UploadProfile
-	178, // [178:178] is the sub-list for method output_type
-	178, // [178:178] is the sub-list for method input_type
-	178, // [178:178] is the sub-list for extension type_name
-	178, // [178:178] is the sub-list for extension extendee
-	0,   // [0:178] is the sub-list for field type_name
+	52,  // 60: wgpb.OperationHooksConfiguration.mockResolve:type_name -> wgpb.MockResolveHookConfiguration
+	56,  // 61: wgpb.OperationAuthorizationConfig.claims:type_name -> wgpb.ClaimConfig
+	54,  // 62: wgpb.OperationAuthorizationConfig.roleConfig:type_name -> wgpb.OperationRoleConfig
+	11,  // 63: wgpb.CustomClaim.type:type_name -> wgpb.ValueType
+	10,  // 64: wgpb.ClaimConfig.claimType:type_name -> wgpb.ClaimType
+	55,  // 65: wgpb.ClaimConfig.custom:type_name -> wgpb.CustomClaim
+	58,  // 66: wgpb.VariableWhereInputConfiguration.whereInput:type_name -> wgpb.VariableWhereInput
+	58,  // 67: wgpb.VariableWhereInput.not:type_name -> wgpb.VariableWhereInput
+	59,  // 68: wgpb.VariableWhereInput.filter:type_name -> wgpb.VariableWhereInputFilter
+	60,  // 69: wgpb.VariableWhereInputFilter.scalar:type_name -> wgpb.VariableWhereInputScalarFilter
+	61,  // 70: wgpb.VariableWhereInputFilter.relation:type_name -> wgpb.VariableWhereInputRelationFilter
+	8,   // 71: wgpb.VariableWhereInputScalarFilter.type:type_name -> wgpb.VariableWhereInputScalarFilterType
+	9,   // 72: wgpb.VariableWhereInputRelationFilter.type:type_name -> wgpb.VariableWhereInputRelationFilterType
+	58,  // 73: wgpb.VariableWhereInputRelationFilter.where:type_name -> wgpb.VariableWhereInput
+	66,  // 74: wgpb.EngineConfiguration.datasourceConfigurations:type_name -> wgpb.DataSourceConfiguration
+	90,  // 75: wgpb.EngineConfiguration.fieldConfigurations:type_name -> wgpb.FieldConfiguration
+	89,  // 76: wgpb.EngineConfiguration.typeConfigurations:type_name -> wgpb.TypeConfiguration
+	13,  // 77: wgpb.DataSourceConfiguration.kind:type_name -> wgpb.DataSourceKind
+	13,  // 78: wgpb.DataSourceConfiguration.kindForPrisma:type_name -> wgpb.DataSourceKind
+	91,  // 79: wgpb.DataSourceConfiguration.rootNodes:type_name -> wgpb.TypeField
+	91,  // 80: wgpb.DataSourceConfiguration.childNodes:type_name -> wgpb.TypeField
+	110, // 81: wgpb.DataSourceConfiguration.customRestMap:type_name -> wgpb.DataSourceConfiguration.CustomRestMapEntry
+	111, // 82: wgpb.DataSourceConfiguration.customRestRequestRewriterMap:type_name -> wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry
+	112, // 83: wgpb.DataSourceConfiguration.customRestResponseRewriterMap:type_name -> wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry
+	68,  // 84: wgpb.DataSourceConfiguration.customRest:type_name -> wgpb.DataSourceCustom_REST
+	76,  // 85: wgpb.DataSourceConfiguration.customGraphql:type_name -> wgpb.DataSourceCustom_GraphQL
+	79,  // 86: wgpb.DataSourceConfiguration.customStatic:type_name -> wgpb.DataSourceCustom_Static
+	77,  // 87: wgpb.DataSourceConfiguration.customDatabase:type_name -> wgpb.DataSourceCustom_Database
+	67,  // 88: wgpb.DataSourceConfiguration.directives:type_name -> wgpb.DirectiveConfiguration
+	81,  // 89: wgpb.DataSourceCustom_REST.fetch:type_name -> wgpb.FetchConfiguration
+	86,  // 90: wgpb.DataSourceCustom_REST.subscription:type_name -> wgpb.RESTSubscriptionConfiguration
+	75,  // 91: wgpb.DataSourceCustom_REST.statusCodeTypeMappings:type_name -> wgpb.StatusCodeTypeMapping
+	72,  // 92: wgpb.DataSourceCustom_REST.requestRewriters:type_name -> wgpb.DataSourceRESTRewriter
+	72,  // 93: wgpb.DataSourceCustom_REST.responseRewriters:type_name -> wgpb.DataSourceRESTRewriter
+	69,  // 94: wgpb.DataSourceCustom_REST.responseExtractor:type_name -> wgpb.DataSourceRESTResponseExtractor
+	70,  // 95: wgpb.DataSourceRESTResponseExtractor.statusCodeScopes:type_name -> wgpb.DataSourceRESTResponseStatusCodeScope
+	72,  // 96: wgpb.DataSourceCustom_REST_Rewriter.rewriters:type_name -> wgpb.DataSourceRESTRewriter
+	14,  // 97: wgpb.DataSourceRESTRewriter.type:type_name -> wgpb.DataSourceRESTRewriterType
+	113, // 98: wgpb.DataSourceRESTRewriter.valueRewrites:type_name -> wgpb.DataSourceRESTRewriter.ValueRewritesEntry
+	114, // 99: wgpb.DataSourceRESTRewriter.applySubCommonFieldValues:type_name -> wgpb.DataSourceRESTRewriter.ApplySubCommonFieldValuesEntry
+	73,  // 100: wgpb.DataSourceRESTRewriter.applySubObjects:type_name -> wgpb.DataSourceRESTSubObject
+	74,  // 101: wgpb.DataSourceRESTRewriter.applySubFieldTypes:type_name -> wgpb.DataSourceRESTSubfield
+	74,  // 102: wgpb.DataSourceRESTSubObject.fields:type_name -> wgpb.DataSourceRESTSubfield
+	81,  // 103: wgpb.DataSourceCustom_GraphQL.fetch:type_name -> wgpb.FetchConfiguration
+	80,  // 104: wgpb.DataSourceCustom_GraphQL.subscription:type_name -> wgpb.GraphQLSubscriptionConfiguration
+	78,  // 105: wgpb.DataSourceCustom_GraphQL.federation:type_name -> wgpb.GraphQLFederationConfiguration
+	50,  // 106: wgpb.DataSourceCustom_GraphQL.hooksConfiguration:type_name -> wgpb.GraphQLDataSourceHooksConfiguration
+	93,  // 107: wgpb.DataSourceCustom_GraphQL.customScalarTypeFields:type_name -> wgpb.SingleTypeField
+	108, // 108: wgpb.DataSourceCustom_Database.databaseURL:type_name -> wgpb.ConfigurationVariable
+	93,  // 109: wgpb.DataSourceCustom_Database.jsonTypeFields:type_name -> wgpb.SingleTypeField
+	108, // 110: wgpb.DataSourceCustom_Static.data:type_name -> wgpb.ConfigurationVariable
+	108, // 111: wgpb.GraphQLSubscriptionConfiguration.url:type_name -> wgpb.ConfigurationVariable
+	108, // 112: wgpb.FetchConfiguration.url:type_name -> wgpb.ConfigurationVariable
+	17,  // 113: wgpb.FetchConfiguration.method:type_name -> wgpb.HTTPMethod
+	115, // 114: wgpb.FetchConfiguration.header:type_name -> wgpb.FetchConfiguration.HeaderEntry
+	108, // 115: wgpb.FetchConfiguration.body:type_name -> wgpb.ConfigurationVariable
+	87,  // 116: wgpb.FetchConfiguration.query:type_name -> wgpb.URLQueryConfiguration
+	83,  // 117: wgpb.FetchConfiguration.upstreamAuthentication:type_name -> wgpb.UpstreamAuthentication
+	82,  // 118: wgpb.FetchConfiguration.mTLS:type_name -> wgpb.MTLSConfiguration
+	108, // 119: wgpb.FetchConfiguration.baseUrl:type_name -> wgpb.ConfigurationVariable
+	108, // 120: wgpb.FetchConfiguration.path:type_name -> wgpb.ConfigurationVariable
+	108, // 121: wgpb.MTLSConfiguration.key:type_name -> wgpb.ConfigurationVariable
+	108, // 122: wgpb.MTLSConfiguration.cert:type_name -> wgpb.ConfigurationVariable
+	15,  // 123: wgpb.UpstreamAuthentication.kind:type_name -> wgpb.UpstreamAuthenticationKind
+	84,  // 124: wgpb.UpstreamAuthentication.jwtConfig:type_name -> wgpb.JwtUpstreamAuthenticationConfig
+	85,  // 125: wgpb.UpstreamAuthentication.jwtWithAccessTokenExchangeConfig:type_name -> wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange
+	108, // 126: wgpb.JwtUpstreamAuthenticationConfig.secret:type_name -> wgpb.ConfigurationVariable
+	16,  // 127: wgpb.JwtUpstreamAuthenticationConfig.signingMethod:type_name -> wgpb.SigningMethod
+	108, // 128: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.secret:type_name -> wgpb.ConfigurationVariable
+	16,  // 129: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.signingMethod:type_name -> wgpb.SigningMethod
+	108, // 130: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.accessTokenExchangeEndpoint:type_name -> wgpb.ConfigurationVariable
+	108, // 131: wgpb.HTTPHeader.values:type_name -> wgpb.ConfigurationVariable
+	94,  // 132: wgpb.FieldConfiguration.argumentsConfiguration:type_name -> wgpb.ArgumentConfiguration
+	116, // 133: wgpb.TypeField.quotes:type_name -> wgpb.TypeField.QuotesEntry
+	18,  // 134: wgpb.ArgumentConfiguration.sourceType:type_name -> wgpb.ArgumentSource
+	19,  // 135: wgpb.ArgumentConfiguration.renderConfiguration:type_name -> wgpb.ArgumentRenderConfiguration
+	99,  // 136: wgpb.WunderGraphConfiguration.api:type_name -> wgpb.UserDefinedApi
+	96,  // 137: wgpb.S3UploadProfile.hooks:type_name -> wgpb.S3UploadProfileHooksConfiguration
+	108, // 138: wgpb.S3UploadConfiguration.endpoint:type_name -> wgpb.ConfigurationVariable
+	108, // 139: wgpb.S3UploadConfiguration.accessKeyID:type_name -> wgpb.ConfigurationVariable
+	108, // 140: wgpb.S3UploadConfiguration.secretAccessKey:type_name -> wgpb.ConfigurationVariable
+	108, // 141: wgpb.S3UploadConfiguration.bucketName:type_name -> wgpb.ConfigurationVariable
+	108, // 142: wgpb.S3UploadConfiguration.bucketLocation:type_name -> wgpb.ConfigurationVariable
+	117, // 143: wgpb.S3UploadConfiguration.uploadProfiles:type_name -> wgpb.S3UploadConfiguration.UploadProfilesEntry
+	65,  // 144: wgpb.UserDefinedApi.engineConfiguration:type_name -> wgpb.EngineConfiguration
+	39,  // 145: wgpb.UserDefinedApi.operations:type_name -> wgpb.Operation
+	107, // 146: wgpb.UserDefinedApi.corsConfiguration:type_name -> wgpb.CorsConfiguration
+	27,  // 147: wgpb.UserDefinedApi.authenticationConfig:type_name -> wgpb.ApiAuthenticationConfig
+	98,  // 148: wgpb.UserDefinedApi.s3UploadConfiguration:type_name -> wgpb.S3UploadConfiguration
+	108, // 149: wgpb.UserDefinedApi.allowedHostNames:type_name -> wgpb.ConfigurationVariable
+	105, // 150: wgpb.UserDefinedApi.webhooks:type_name -> wgpb.WebhookConfiguration
+	104, // 151: wgpb.UserDefinedApi.serverOptions:type_name -> wgpb.ServerOptions
+	102, // 152: wgpb.UserDefinedApi.nodeOptions:type_name -> wgpb.NodeOptions
+	108, // 153: wgpb.ListenerOptions.host:type_name -> wgpb.ConfigurationVariable
+	108, // 154: wgpb.ListenerOptions.port:type_name -> wgpb.ConfigurationVariable
+	108, // 155: wgpb.NodeLogging.level:type_name -> wgpb.ConfigurationVariable
+	108, // 156: wgpb.NodeOptions.nodeUrl:type_name -> wgpb.ConfigurationVariable
+	108, // 157: wgpb.NodeOptions.publicNodeUrl:type_name -> wgpb.ConfigurationVariable
+	100, // 158: wgpb.NodeOptions.listen:type_name -> wgpb.ListenerOptions
+	101, // 159: wgpb.NodeOptions.logger:type_name -> wgpb.NodeLogging
+	108, // 160: wgpb.ServerLogging.level:type_name -> wgpb.ConfigurationVariable
+	108, // 161: wgpb.ServerOptions.serverUrl:type_name -> wgpb.ConfigurationVariable
+	100, // 162: wgpb.ServerOptions.listen:type_name -> wgpb.ListenerOptions
+	103, // 163: wgpb.ServerOptions.logger:type_name -> wgpb.ServerLogging
+	106, // 164: wgpb.WebhookConfiguration.verifier:type_name -> wgpb.WebhookVerifier
+	20,  // 165: wgpb.WebhookVerifier.kind:type_name -> wgpb.WebhookVerifierKind
+	108, // 166: wgpb.WebhookVerifier.secret:type_name -> wgpb.ConfigurationVariable
+	108, // 167: wgpb.CorsConfiguration.allowedOrigins:type_name -> wgpb.ConfigurationVariable
+	21,  // 168: wgpb.ConfigurationVariable.kind:type_name -> wgpb.ConfigurationVariableKind
+	44,  // 169: wgpb.Operation.DatasourceQuotesEntry.value:type_name -> wgpb.DatasourceQuote
+	68,  // 170: wgpb.DataSourceConfiguration.CustomRestMapEntry.value:type_name -> wgpb.DataSourceCustom_REST
+	71,  // 171: wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry.value:type_name -> wgpb.DataSourceCustom_REST_Rewriter
+	71,  // 172: wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry.value:type_name -> wgpb.DataSourceCustom_REST_Rewriter
+	88,  // 173: wgpb.FetchConfiguration.HeaderEntry.value:type_name -> wgpb.HTTPHeader
+	92,  // 174: wgpb.TypeField.QuotesEntry.value:type_name -> wgpb.QuoteField
+	97,  // 175: wgpb.S3UploadConfiguration.UploadProfilesEntry.value:type_name -> wgpb.S3UploadProfile
+	176, // [176:176] is the sub-list for method output_type
+	176, // [176:176] is the sub-list for method input_type
+	176, // [176:176] is the sub-list for extension type_name
+	176, // [176:176] is the sub-list for extension extendee
+	0,   // [0:176] is the sub-list for field type_name
 }
 
 func init() { file_wundernode_config_proto_init() }
@@ -9788,18 +9661,6 @@ func file_wundernode_config_proto_init() {
 			}
 		}
 		file_wundernode_config_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ClaimRemoveIfNoneMatch); i {
-			case 0:
-				return &v.state
-			case 1:
-				return &v.sizeCache
-			case 2:
-				return &v.unknownFields
-			default:
-				return nil
-			}
-		}
-		file_wundernode_config_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VariableWhereInputConfiguration); i {
 			case 0:
 				return &v.state
@@ -9811,7 +9672,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VariableWhereInput); i {
 			case 0:
 				return &v.state
@@ -9823,7 +9684,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VariableWhereInputFilter); i {
 			case 0:
 				return &v.state
@@ -9835,7 +9696,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VariableWhereInputScalarFilter); i {
 			case 0:
 				return &v.state
@@ -9847,7 +9708,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*VariableWhereInputRelationFilter); i {
 			case 0:
 				return &v.state
@@ -9859,7 +9720,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[40].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*OperationLiveQueryConfig); i {
 			case 0:
 				return &v.state
@@ -9871,7 +9732,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[41].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*OperationAuthenticationConfig); i {
 			case 0:
 				return &v.state
@@ -9883,7 +9744,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[42].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*OperationCacheConfig); i {
 			case 0:
 				return &v.state
@@ -9895,7 +9756,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[43].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*EngineConfiguration); i {
 			case 0:
 				return &v.state
@@ -9907,7 +9768,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[44].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceConfiguration); i {
 			case 0:
 				return &v.state
@@ -9919,7 +9780,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[45].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DirectiveConfiguration); i {
 			case 0:
 				return &v.state
@@ -9931,7 +9792,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[46].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceCustom_REST); i {
 			case 0:
 				return &v.state
@@ -9943,7 +9804,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[47].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceRESTResponseExtractor); i {
 			case 0:
 				return &v.state
@@ -9955,7 +9816,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[48].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceRESTResponseStatusCodeScope); i {
 			case 0:
 				return &v.state
@@ -9967,7 +9828,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[49].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceCustom_REST_Rewriter); i {
 			case 0:
 				return &v.state
@@ -9979,7 +9840,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[50].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceRESTRewriter); i {
 			case 0:
 				return &v.state
@@ -9991,7 +9852,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[51].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceRESTSubObject); i {
 			case 0:
 				return &v.state
@@ -10003,7 +9864,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[52].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceRESTSubfield); i {
 			case 0:
 				return &v.state
@@ -10015,7 +9876,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[53].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*StatusCodeTypeMapping); i {
 			case 0:
 				return &v.state
@@ -10027,7 +9888,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[54].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceCustom_GraphQL); i {
 			case 0:
 				return &v.state
@@ -10039,7 +9900,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[55].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceCustom_Database); i {
 			case 0:
 				return &v.state
@@ -10051,7 +9912,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[56].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GraphQLFederationConfiguration); i {
 			case 0:
 				return &v.state
@@ -10063,7 +9924,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[57].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DataSourceCustom_Static); i {
 			case 0:
 				return &v.state
@@ -10075,7 +9936,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[58].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*GraphQLSubscriptionConfiguration); i {
 			case 0:
 				return &v.state
@@ -10087,7 +9948,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[59].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FetchConfiguration); i {
 			case 0:
 				return &v.state
@@ -10099,7 +9960,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[60].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*MTLSConfiguration); i {
 			case 0:
 				return &v.state
@@ -10111,7 +9972,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[61].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UpstreamAuthentication); i {
 			case 0:
 				return &v.state
@@ -10123,7 +9984,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[62].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*JwtUpstreamAuthenticationConfig); i {
 			case 0:
 				return &v.state
@@ -10135,7 +9996,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[63].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*JwtUpstreamAuthenticationWithAccessTokenExchange); i {
 			case 0:
 				return &v.state
@@ -10147,7 +10008,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[64].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*RESTSubscriptionConfiguration); i {
 			case 0:
 				return &v.state
@@ -10159,7 +10020,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[65].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*URLQueryConfiguration); i {
 			case 0:
 				return &v.state
@@ -10171,7 +10032,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[66].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*HTTPHeader); i {
 			case 0:
 				return &v.state
@@ -10183,7 +10044,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[67].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TypeConfiguration); i {
 			case 0:
 				return &v.state
@@ -10195,7 +10056,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[68].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*FieldConfiguration); i {
 			case 0:
 				return &v.state
@@ -10207,7 +10068,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[69].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*TypeField); i {
 			case 0:
 				return &v.state
@@ -10219,7 +10080,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[70].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*QuoteField); i {
 			case 0:
 				return &v.state
@@ -10231,7 +10092,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[71].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*SingleTypeField); i {
 			case 0:
 				return &v.state
@@ -10243,7 +10104,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[72].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ArgumentConfiguration); i {
 			case 0:
 				return &v.state
@@ -10255,7 +10116,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[73].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WunderGraphConfiguration); i {
 			case 0:
 				return &v.state
@@ -10267,7 +10128,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[74].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*S3UploadProfileHooksConfiguration); i {
 			case 0:
 				return &v.state
@@ -10279,7 +10140,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[75].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*S3UploadProfile); i {
 			case 0:
 				return &v.state
@@ -10291,7 +10152,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[76].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*S3UploadConfiguration); i {
 			case 0:
 				return &v.state
@@ -10303,7 +10164,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[77].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*UserDefinedApi); i {
 			case 0:
 				return &v.state
@@ -10315,7 +10176,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[78].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ListenerOptions); i {
 			case 0:
 				return &v.state
@@ -10327,7 +10188,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[79].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*NodeLogging); i {
 			case 0:
 				return &v.state
@@ -10339,7 +10200,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[80].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*NodeOptions); i {
 			case 0:
 				return &v.state
@@ -10351,7 +10212,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[82].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[81].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ServerLogging); i {
 			case 0:
 				return &v.state
@@ -10363,7 +10224,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[83].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[82].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ServerOptions); i {
 			case 0:
 				return &v.state
@@ -10375,7 +10236,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[84].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[83].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WebhookConfiguration); i {
 			case 0:
 				return &v.state
@@ -10387,7 +10248,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[85].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[84].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*WebhookVerifier); i {
 			case 0:
 				return &v.state
@@ -10399,7 +10260,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[86].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[85].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*CorsConfiguration); i {
 			case 0:
 				return &v.state
@@ -10411,7 +10272,7 @@ func file_wundernode_config_proto_init() {
 				return nil
 			}
 		}
-		file_wundernode_config_proto_msgTypes[87].Exporter = func(v interface{}, i int) interface{} {
+		file_wundernode_config_proto_msgTypes[86].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*ConfigurationVariable); i {
 			case 0:
 				return &v.state
@@ -10425,14 +10286,14 @@ func file_wundernode_config_proto_init() {
 		}
 	}
 	file_wundernode_config_proto_msgTypes[34].OneofWrappers = []interface{}{}
-	file_wundernode_config_proto_msgTypes[37].OneofWrappers = []interface{}{}
+	file_wundernode_config_proto_msgTypes[36].OneofWrappers = []interface{}{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_wundernode_config_proto_rawDesc,
-			NumEnums:      23,
-			NumMessages:   97,
+			NumEnums:      22,
+			NumMessages:   96,
 			NumExtensions: 0,
 			NumServices:   0,
 		},

@@ -1017,7 +1017,7 @@ func makeArrayRawString(strArr []string, wrapQuote bool) string {
 	return fmt.Sprintf("[%s]", strings.Join(array, ","))
 }
 
-func fetchCustomClaim(customClaim *wgpb.CustomClaim, user *authentication.User, compareValueType bool) (result []byte, err error) {
+func fetchCustomClaim(customClaim *wgpb.CustomClaim, user *authentication.User) (result []byte, err error) {
 	customClaimsBytes, _ := json.Marshal(user.CustomClaims)
 	setValue, setValueType, _, _ := jsonparser.Get(customClaimsBytes, customClaim.JsonPathComponents...)
 	if setValueType == jsonparser.Null || setValueType == jsonparser.NotExist {
@@ -1033,7 +1033,7 @@ func fetchCustomClaim(customClaim *wgpb.CustomClaim, user *authentication.User, 
 		return
 	}
 
-	if compareValueType && match != setValueType {
+	if match != setValueType {
 		err = inputvariables.NewValidationError(fmt.Sprintf("customClaim %s expected to be of type %s, found %s instead", customClaim.Name, customClaim.Type.String(), setValueType.String()), nil, nil)
 		return
 	}
@@ -1047,7 +1047,7 @@ func fetchCustomClaim(customClaim *wgpb.CustomClaim, user *authentication.User, 
 }
 
 func injectClaims(operation *wgpb.Operation, r *http.Request, variables []byte) ([]byte, error) {
-	claims := operation.GetAuthorizationConfig().GetClaims()
+	claims := operation.AuthorizationConfig.Claims
 	if len(claims) == 0 {
 		return variables, nil
 	}
@@ -1058,9 +1058,8 @@ func injectClaims(operation *wgpb.Operation, r *http.Request, variables []byte) 
 	var err error
 	var claimVariables []byte
 	for _, claim := range claims {
-		removeIfNoneExisted := claim.RemoveIfNoneMatch != nil
-		if claim.GetClaimType() == wgpb.ClaimType_CUSTOM {
-			claimVariables, err = fetchCustomClaim(claim.Custom, user, !removeIfNoneExisted)
+		if claim.ClaimType == wgpb.ClaimType_CUSTOM {
+			claimVariables, err = fetchCustomClaim(claim.Custom, user)
 		} else {
 			claimVariables, err = fetchWellKnownClaim(claim.ClaimType, user)
 		}
@@ -1068,32 +1067,6 @@ func injectClaims(operation *wgpb.Operation, r *http.Request, variables []byte) 
 			return nil, err
 		}
 		if claimVariables == nil {
-			continue
-		}
-
-		if removeIfNoneExisted {
-			claimVariablesResult := gjson.ParseBytes(claimVariables)
-			var compareValues []string
-			if claimVariablesResult.IsArray() {
-				claimVariablesResult.ForEach(func(_, value gjson.Result) bool {
-					compareValues = append(compareValues, value.String())
-					return true
-				})
-			} else {
-				compareValues = append(compareValues, string(claimVariables))
-			}
-			var compareFunc func(s string) bool
-			switch claim.RemoveIfNoneMatch.Type {
-			case wgpb.ClaimRemoveIfNoneMatchType_Environment:
-				compareFunc = func(s string) bool { return os.Getenv(claim.RemoveIfNoneMatch.Name) == s }
-			case wgpb.ClaimRemoveIfNoneMatchType_Header:
-				compareFunc = func(s string) bool { return slices.Contains(r.Header[claim.RemoveIfNoneMatch.Name], s) }
-			default:
-				return nil, fmt.Errorf("unhandled RemoveIfNoneMatchType %s", claim.RemoveIfNoneMatch.Type.String())
-			}
-			if !slices.ContainsFunc(compareValues, compareFunc) {
-				variables = jsonparser.Delete(variables, claim.VariablePathComponents...)
-			}
 			continue
 		}
 
