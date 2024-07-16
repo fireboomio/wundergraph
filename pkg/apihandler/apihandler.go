@@ -1213,12 +1213,14 @@ func injectVariables(operation *wgpb.Operation, r *http.Request, ctx *resolve.Co
 			replacement, _ = uuid.GenerateUUID()
 		case wgpb.InjectVariableKind_FROM_HEADER:
 			replacement = r.Header.Get(currentVariable.FromHeaderName)
+			replaceWrapQuoteIgnored = currentVariable.ValueTypeName != openapi3.TypeString
 		case wgpb.InjectVariableKind_DATE_TIME:
 			format := currentVariable.DateFormat
 			now := addDateOffset(time.Now(), currentVariable.DateOffset)
 			replacement = now.Format(format)
 		case wgpb.InjectVariableKind_ENVIRONMENT_VARIABLE:
 			replacement = os.Getenv(currentVariable.EnvironmentVariableName)
+			replaceWrapQuoteIgnored = currentVariable.ValueTypeName != openapi3.TypeString
 		case wgpb.InjectVariableKind_RULE_EXPRESSION:
 			ruleValue, err := GvalFullLanguage.Evaluate(currentVariable.RuleExpression, ruleParameters)
 			if err != nil {
@@ -1227,7 +1229,7 @@ func injectVariables(operation *wgpb.Operation, r *http.Request, ctx *resolve.Co
 			if ruleValue == nil {
 				continue
 			}
-			switch typeName := currentVariable.RuleValueTypeName; typeName {
+			switch typeName := currentVariable.ValueTypeName; typeName {
 			case openapi3.TypeArray, openapi3.TypeObject:
 				var buf bytes.Buffer
 				if err = gob.NewEncoder(&buf).Encode(ruleValue); err != nil {

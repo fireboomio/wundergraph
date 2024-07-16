@@ -227,12 +227,12 @@ message OperationVariablesConfiguration {
 message VariableInjectionConfiguration {
   repeated string variablePathComponents = 1;
   InjectVariableKind variableKind = 2;
-  string dateFormat = 3;
-  DateOffset dateOffset = 6;
-  string environmentVariableName = 4;
-  string fromHeaderName = 5;
-  string ruleExpression = 7;
-  string ruleValueTypeName = 8;
+  string valueTypeName = 8;
+  string dateFormat = 3; // [omitempty]
+  DateOffset dateOffset = 6; // [omitempty]
+  string environmentVariableName = 4; // [omitempty]
+  string fromHeaderName = 5; // [omitempty]
+  string ruleExpression = 7; // [omitempty]
 }
 
 enum InjectVariableKind {
