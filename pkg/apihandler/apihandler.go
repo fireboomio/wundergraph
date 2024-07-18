@@ -1169,12 +1169,13 @@ func makeRuleParameters(r *http.Request, ctx *resolve.Context) (ruleParameters m
 		_ = json.Unmarshal(userBytes, &user)
 		ruleParameters["user"] = user
 	}
-	ctxVariables := ctx.Variables
+	ctxVariables, evaluateMutex := ctx.Variables, sync.Mutex{}
 	ctx.RuleEvaluate = func(variablesBytes []byte, expression string) bool {
+		evaluateMutex.Lock()
+		defer evaluateMutex.Unlock()
 		if !bytes.Equal(variablesBytes, ctxVariables) {
-			var modifiedVariables map[string]interface{}
-			_ = json.Unmarshal(variablesBytes, &modifiedVariables)
-			ruleParameters["arguments"] = modifiedVariables
+			_ = json.Unmarshal(variablesBytes, &arguments)
+			ruleParameters["arguments"] = arguments
 			ctxVariables = variablesBytes
 		}
 		expression = strings.ReplaceAll(expression, "'", "`")
