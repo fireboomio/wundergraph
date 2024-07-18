@@ -1172,8 +1172,9 @@ func makeRuleParameters(r *http.Request, ctx *resolve.Context) (ruleParameters m
 	ctxVariables := ctx.Variables
 	ctx.RuleEvaluate = func(variablesBytes []byte, expression string) bool {
 		if !bytes.Equal(variablesBytes, ctxVariables) {
-			_ = json.Unmarshal(variablesBytes, &arguments)
-			ruleParameters["arguments"] = arguments
+			var modifiedVariables map[string]interface{}
+			_ = json.Unmarshal(variablesBytes, &modifiedVariables)
+			ruleParameters["arguments"] = modifiedVariables
 			ctxVariables = variablesBytes
 		}
 		expression = strings.ReplaceAll(expression, "'", "`")
