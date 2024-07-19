@@ -152,12 +152,12 @@ func handleBeforeRequestHook(r *http.Request, metaData *OperationMetaData, buf *
 		return nil, errors.New("canceled")
 	}
 	if modifiedRequest := response.Request; modifiedRequest != nil {
-		originBodyReader, originIsMultipart := r.Body, !logging.NoneMultipartContentType(r)
+		originBodyReader := r.Body
 		if r, err = http.NewRequestWithContext(r.Context(), modifiedRequest.Method, modifiedRequest.RequestURI,
 			bytes.NewReader(modifiedRequest.OriginBody)); err != nil {
 			return nil, err
 		}
-		if originIsMultipart && originBodyReader != nil {
+		if modifiedRequest.OriginBody == nil {
 			r.Body = originBodyReader
 		}
 		r.Header = hooks.HeaderCSVToSlice(modifiedRequest.Headers)

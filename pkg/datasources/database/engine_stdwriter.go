@@ -5,6 +5,7 @@ import (
 	"fmt"
 	json "github.com/json-iterator/go"
 	"github.com/opentracing/opentracing-go"
+	"github.com/opentracing/opentracing-go/log"
 	"github.com/tidwall/gjson"
 	"github.com/uber/jaeger-client-go"
 )
@@ -33,7 +34,7 @@ func (t *stdoutWriter) Write(p []byte) (n int, err error) {
 			itemSpan := opentracing.StartSpan(item.Name, opentracing.StartTime(item.StartTime.toDateTime()),
 				jaeger.SelfRef(item.newSpanContext()))
 			for k, v := range item.Attributes {
-				itemSpan.SetTag(k, v)
+				itemSpan.LogFields(log.Object(k, v))
 			}
 			itemSpan.FinishWithOptions(opentracing.FinishOptions{FinishTime: item.EndTime.toDateTime()})
 		}
