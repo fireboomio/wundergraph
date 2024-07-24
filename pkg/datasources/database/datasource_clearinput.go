@@ -144,7 +144,9 @@ func clearInputWithScope(input []byte, jointIndexes []int, clearedScope []string
 			} else {
 				nextClearStart = getKeywordStartIndex(clearedBytes[:clearedLength-1], nextJointIndexes)
 			}
-			nextClearEnd += getEndIndexOffset(input, clearedBytes[nextClearStart], start+1)
+			if clearedBuf.Len() > nextClearEnd {
+				nextClearEnd += getEndIndexOffset(input, clearedBytes[nextClearStart], start+1)
+			}
 		}
 		if len(nextJointIndexes) == 0 {
 			nextJointIndexes = append(nextJointIndexes, 0)
