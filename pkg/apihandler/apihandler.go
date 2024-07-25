@@ -1220,6 +1220,22 @@ func injectVariables(operation *wgpb.Operation, r *http.Request, ctx *resolve.Co
 			format := currentVariable.DateFormat
 			now := addDateOffset(time.Now(), currentVariable.DateOffset)
 			replacement = now.Format(format)
+			if toUnix := currentVariable.DateToUnix; toUnix != nil {
+				now, _ = time.Parse(format, replacement)
+				var unixInt64 int64
+				switch *toUnix {
+				case wgpb.DateToUnix_Micro:
+					unixInt64 = now.UnixMicro()
+				case wgpb.DateToUnix_Milli:
+					unixInt64 = now.UnixMilli()
+				case wgpb.DateToUnix_Nano:
+					unixInt64 = now.UnixNano()
+				default:
+					unixInt64 = now.Unix()
+				}
+				replacement = fmt.Sprintf("%d", unixInt64)
+				replaceWrapQuoteIgnored = true
+			}
 		case wgpb.InjectVariableKind_ENVIRONMENT_VARIABLE:
 			replacement = os.Getenv(currentVariable.EnvironmentVariableName)
 			replaceWrapQuoteIgnored = currentVariable.ValueTypeName != openapi3.TypeString

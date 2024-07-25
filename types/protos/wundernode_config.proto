@@ -230,6 +230,7 @@ message VariableInjectionConfiguration {
   string valueTypeName = 8;
   string dateFormat = 3; // [omitempty]
   DateOffset dateOffset = 6; // [omitempty]
+  optional DateToUnix dateToUnix = 9; // [omitempty]
   string environmentVariableName = 4; // [omitempty]
   string fromHeaderName = 5; // [omitempty]
   string ruleExpression = 7; // [omitempty]
@@ -256,6 +257,13 @@ enum DateOffsetUnit {
   HOUR = 3;
   MINUTE = 4;
   SECOND = 5;
+}
+
+enum DateToUnix {
+  Sec = 0;
+  Micro = 1;
+  Milli = 2;
+  Nano = 3;
 }
 
 message GraphQLDataSourceHooksConfiguration {
