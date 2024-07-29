@@ -36,6 +36,7 @@ type Planner struct {
 	selectionFieldNames []string
 	rootTypeName        string // rootTypeName - holds name of top level type
 	rootFieldName       string // rootFieldName - holds name of root type field
+	rootFieldType       string // rootFieldType - holds type of root type field
 	rootFieldRef        int    // rootFieldRef - holds ref of root type field
 	operationDefinition int
 }
@@ -170,6 +171,9 @@ func (p *Planner) EnterField(ref int) {
 	// store root field name and ref
 	if p.rootFieldName == "" {
 		p.rootFieldName = p.visitor.Operation.FieldNameString(ref)
+		if len(p.visitor.Operation.Types) > ref {
+			p.rootFieldType = p.visitor.Operation.ResolveTypeNameString(ref)
+		}
 	}
 	// store root type name
 	if p.rootTypeName == "" {
@@ -220,6 +224,7 @@ func (p *Planner) newSource() *Source {
 		datasourceName:      p.config.DatasourceName,
 		rootTypeName:        p.rootTypeName,
 		rootFieldName:       p.rootFieldName,
+		rootFieldType:       p.rootFieldType,
 	}
 	if p.config.DefaultTypeName != "" {
 		source.defaultTypeName = []byte("\"" + p.config.DefaultTypeName + "\"")
@@ -276,6 +281,7 @@ type Source struct {
 	datasourceName      string
 	rootTypeName        string
 	rootFieldName       string
+	rootFieldType       string
 }
 
 var jsonFlags = []byte{'{', '['}
@@ -346,6 +352,10 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 		}
 	}
 	spanFuncs = append(spanFuncs, logging.SpanWithLogOutput(data))
+	if s.rootFieldType == "String" && !bytes.HasPrefix(data, literal.QUOTE) {
+		_, _ = w.Write(literal.QUOTE)
+		defer func() { _, _ = w.Write(literal.QUOTE) }()
+	}
 	_, err = w.Write(data)
 	return err
 }
