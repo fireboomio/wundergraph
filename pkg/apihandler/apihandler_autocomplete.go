@@ -13,9 +13,9 @@ import (
 	"strings"
 )
 
-var buildFieldDirectiveFuncs []func(string, string) (string, []DirectiveArgument)
+var buildFieldDirectiveFuncs []func(string, *resolve.QueryRawValueType) (string, []DirectiveArgument)
 
-func AddBuildFieldDirectiveFunc(buildDirectiveFunc func(string, string) (string, []DirectiveArgument)) {
+func AddBuildFieldDirectiveFunc(buildDirectiveFunc func(string, *resolve.QueryRawValueType) (string, []DirectiveArgument)) {
 	buildFieldDirectiveFuncs = append(buildFieldDirectiveFuncs, buildDirectiveFunc)
 }
 
@@ -152,7 +152,7 @@ func (c *graphqlAutoComplete) autoComplete(buf *bytes.Buffer) error {
 
 	for _, item := range c.executeRawTypes {
 		modified = true
-		c.doc.Fields[item.FieldIndex].Directives.Refs, c.doc.Fields[item.FieldIndex].HasDirectives = c.buildAstFieldDirectives("", "int")
+		c.doc.Fields[item.FieldIndex].Directives.Refs, c.doc.Fields[item.FieldIndex].HasDirectives = c.buildAstFieldDirectives("", &resolve.QueryRawValueType{Type: "int"})
 	}
 
 	if !modified {
@@ -161,16 +161,16 @@ func (c *graphqlAutoComplete) autoComplete(buf *bytes.Buffer) error {
 	return astprinter.PrintIndent(c.doc, nil, []byte(" "), buf)
 }
 
-func (c *graphqlAutoComplete) buildAstField(name, prismaType string) ast.Field {
+func (c *graphqlAutoComplete) buildAstField(name string, rawValueType *resolve.QueryRawValueType) ast.Field {
 	field := ast.Field{Name: c.buildByteSliceReference(name)}
-	field.Directives.Refs, field.HasDirectives = c.buildAstFieldDirectives(name, prismaType)
+	field.Directives.Refs, field.HasDirectives = c.buildAstFieldDirectives(name, rawValueType)
 	return field
 }
 
-func (c *graphqlAutoComplete) buildAstFieldDirectives(name, prismaType string) (directiveRefs []int, hasDirectives bool) {
+func (c *graphqlAutoComplete) buildAstFieldDirectives(name string, rawValueType *resolve.QueryRawValueType) (directiveRefs []int, hasDirectives bool) {
 	hasDirectives = len(buildFieldDirectiveFuncs) > 0
 	for _, addDirectiveFunc := range buildFieldDirectiveFuncs {
-		directiveName, directiveArgs := addDirectiveFunc(name, prismaType)
+		directiveName, directiveArgs := addDirectiveFunc(name, rawValueType)
 		directive := ast.Directive{Name: c.buildByteSliceReference(directiveName), HasArguments: len(directiveArgs) > 0}
 		for _, arg := range directiveArgs {
 			argRef := c.doc.AddArgument(ast.Argument{

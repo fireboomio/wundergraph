@@ -291,7 +291,8 @@ type (
 
 func (p *Planner) isOptionalRawField(fieldRef int) bool {
 	name := p.visitor.Operation.FieldNameString(fieldRef)
-	return name == "optional_queryRaw" || strings.HasSuffix(name, "_optional_queryRaw")
+	return name == "optional_queryRaw" || strings.HasSuffix(name, "_optional_queryRaw") ||
+		name == "optional_executeRaw" || strings.HasSuffix(name, "_optional_executeRaw")
 }
 
 func (p *Planner) rewriteVariable(ctx *resolve.Context, key string, value []byte, valueType jsonparser.ValueType) ([]byte, error) {
