@@ -29,16 +29,16 @@ import (
 )
 
 type Planner struct {
-	client              *http.Client
-	streamingClient     *http.Client
-	visitor             *plan.Visitor
-	config              Configuration
-	selectionFieldNames []string
-	rootTypeName        string // rootTypeName - holds name of top level type
-	rootFieldName       string // rootFieldName - holds name of root type field
-	rootFieldType       string // rootFieldType - holds type of root type field
-	rootFieldRef        int    // rootFieldRef - holds ref of root type field
-	operationDefinition int
+	client                  *http.Client
+	streamingClient         *http.Client
+	visitor                 *plan.Visitor
+	config                  Configuration
+	selectionFieldNames     []string
+	rootTypeName            string // rootTypeName - holds name of top level type
+	rootFieldName           string // rootFieldName - holds name of root type field
+	rootFieldDefinitionType string // rootFieldDefinitionType - holds definition type of root type field
+	rootFieldRef            int    // rootFieldRef - holds ref of root type field
+	operationDefinition     int
 }
 
 func (p *Planner) DownstreamResponseFieldAlias(_ int) (alias string, exists bool) {
@@ -171,13 +171,17 @@ func (p *Planner) EnterField(ref int) {
 	// store root field name and ref
 	if p.rootFieldName == "" {
 		p.rootFieldName = p.visitor.Operation.FieldNameString(ref)
-		if len(p.visitor.Operation.Types) > ref {
-			p.rootFieldType = p.visitor.Operation.ResolveTypeNameString(ref)
-		}
 	}
 	// store root type name
 	if p.rootTypeName == "" {
 		p.rootTypeName = p.visitor.Walker.EnclosingTypeDefinition.NameString(p.visitor.Definition)
+	}
+	if p.rootFieldDefinitionType == "" {
+		if typeDefinition, typeExisted := p.visitor.Definition.Index.FirstNodeByNameBytes([]byte(p.rootTypeName)); typeExisted {
+			if fieldDefinition, fieldExisted := p.visitor.Definition.NodeFieldDefinitionByName(typeDefinition, []byte(p.rootFieldName)); fieldExisted {
+				p.rootFieldDefinitionType = p.visitor.Definition.ResolveTypeNameString(p.visitor.Definition.FieldDefinitionType(fieldDefinition))
+			}
+		}
 	}
 }
 
@@ -215,16 +219,16 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 
 func (p *Planner) newSource() *Source {
 	source := &Source{
-		client:              p.client,
-		statusCodeMappings:  p.config.StatusCodeTypeMappings,
-		requestRewriters:    p.config.RequestRewriters,
-		responseRewriters:   p.config.ResponseRewriters,
-		responseExtractor:   p.config.ResponseExtractor,
-		selectionFieldNames: p.selectionFieldNames,
-		datasourceName:      p.config.DatasourceName,
-		rootTypeName:        p.rootTypeName,
-		rootFieldName:       p.rootFieldName,
-		rootFieldType:       p.rootFieldType,
+		client:                  p.client,
+		statusCodeMappings:      p.config.StatusCodeTypeMappings,
+		requestRewriters:        p.config.RequestRewriters,
+		responseRewriters:       p.config.ResponseRewriters,
+		responseExtractor:       p.config.ResponseExtractor,
+		selectionFieldNames:     p.selectionFieldNames,
+		datasourceName:          p.config.DatasourceName,
+		rootTypeName:            p.rootTypeName,
+		rootFieldName:           p.rootFieldName,
+		rootFieldDefinitionType: p.rootFieldDefinitionType,
 	}
 	if p.config.DefaultTypeName != "" {
 		source.defaultTypeName = []byte("\"" + p.config.DefaultTypeName + "\"")
@@ -271,17 +275,17 @@ Next:
 }
 
 type Source struct {
-	client              *http.Client
-	statusCodeMappings  []StatusCodeTypeMapping
-	defaultTypeName     []byte
-	requestRewriters    []*wgpb.DataSourceRESTRewriter
-	responseRewriters   []*wgpb.DataSourceRESTRewriter
-	responseExtractor   *wgpb.DataSourceRESTResponseExtractor
-	selectionFieldNames []string
-	datasourceName      string
-	rootTypeName        string
-	rootFieldName       string
-	rootFieldType       string
+	client                  *http.Client
+	statusCodeMappings      []StatusCodeTypeMapping
+	defaultTypeName         []byte
+	requestRewriters        []*wgpb.DataSourceRESTRewriter
+	responseRewriters       []*wgpb.DataSourceRESTRewriter
+	responseExtractor       *wgpb.DataSourceRESTResponseExtractor
+	selectionFieldNames     []string
+	datasourceName          string
+	rootTypeName            string
+	rootFieldName           string
+	rootFieldDefinitionType string
 }
 
 var jsonFlags = []byte{'{', '['}
@@ -352,7 +356,7 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 		}
 	}
 	spanFuncs = append(spanFuncs, logging.SpanWithLogOutput(data))
-	if s.rootFieldType == "String" && !bytes.HasPrefix(data, literal.QUOTE) {
+	if s.rootFieldDefinitionType == "String" && !bytes.HasPrefix(data, literal.QUOTE) {
 		_, _ = w.Write(literal.QUOTE)
 		defer func() { _, _ = w.Write(literal.QUOTE) }()
 	}
