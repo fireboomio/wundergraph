@@ -274,7 +274,8 @@ func (r *OptionalQueryRenderer) RenderVariable(_ context.Context, data []byte, o
 }
 
 var (
-	dollarParameter1Regexp        = regexp.MustCompile(`\${\w+}`)
+	dollarParameterRegexp         = regexp.MustCompile(`\${\w+}`)
+	ampersandParameterRegexp      = regexp.MustCompile(`&{\w+}`)
 	optionalParameterReplaceFuncs = map[wgpb.DataSourceKind]optionalParameterReplaceFunc{
 		wgpb.DataSourceKind_MYSQL:      func(int, []byte) []byte { return []byte(`?`) },
 		wgpb.DataSourceKind_POSTGRESQL: func(i int, _ []byte) []byte { return []byte(fmt.Sprintf(`$%d`, i+1)) },
@@ -313,14 +314,19 @@ func (p *Planner) rewriteVariable(ctx *resolve.Context, key string, value []byte
 	)
 	_, _ = jsonparser.ArrayEach(value, func(v []byte, t jsonparser.ValueType, _ int, _ error) {
 		sqlBytes, _, _, _ := jsonparser.Get(v, "sql")
-		params := dollarParameter1Regexp.FindAllString(string(sqlBytes), -1)
-		foundParamsLen := len(params)
-		if foundParamsLen == 0 {
+		dollarParams := dollarParameterRegexp.FindAllString(string(sqlBytes), -1)
+		ampersandParams := ampersandParameterRegexp.FindAllString(string(sqlBytes), -1)
+		dollarParamsLen, ampersandParamsLen := len(dollarParams), len(ampersandParams)
+		if dollarParamsLen == 0 && ampersandParamsLen == 0 {
 			savedSqlBytes = append(savedSqlBytes, sqlBytes)
 			return
 		}
-		itemSavedParameters := make([]*optionalParameter, 0, foundParamsLen)
-		for _, param := range params {
+		for _, param := range ampersandParams {
+			paramValue, _, _, _ := jsonparser.Get(ctx.Variables, param[2:len(param)-1])
+			sqlBytes = bytes.Replace(sqlBytes, []byte(param), paramValue, 1)
+		}
+		itemSavedParameters := make([]*optionalParameter, 0, dollarParamsLen)
+		for _, param := range dollarParams {
 			paramKey := param[2 : len(param)-1]
 			paramValue, paramValueType, paramOffset, _ := jsonparser.Get(ctx.Variables, paramKey)
 			if paramValueType == jsonparser.NotExist {
@@ -333,7 +339,7 @@ func (p *Planner) rewriteVariable(ctx *resolve.Context, key string, value []byte
 				param: []byte(param), value: paramValue,
 			})
 		}
-		if len(itemSavedParameters) == foundParamsLen {
+		if len(itemSavedParameters) == dollarParamsLen {
 			savedSqlBytes = append(savedSqlBytes, sqlBytes)
 			savedParameters = append(savedParameters, itemSavedParameters...)
 		}
