@@ -93,6 +93,9 @@ func clearUnrenderVariables(ctx context.Context, unrenderVariables []resolve.Unr
 		startIndex := getKeywordStartIndex(input[:variableIndex], jointIndexes)
 		endIndex := variableIndex + nullBytesLength
 		endIndex += getEndIndexOffset(input, input[startIndex], endIndex)
+		if input[variableIndex-1] == charLBRACK && input[variableIndex+nullBytesLength] == charRBRACK {
+			endIndex++
+		}
 		if len(jointIndexes) == 0 {
 			jointIndexes = append(jointIndexes, 0)
 		}
