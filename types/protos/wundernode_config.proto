@@ -248,6 +248,7 @@ message DateOffset {
   bool previous = 1;
   int32 value = 2;
   DateOffsetUnit unit = 3;
+  string format = 4; // [omitempty]
 }
 
 enum DateOffsetUnit {

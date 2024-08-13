@@ -1218,20 +1218,27 @@ func injectVariables(operation *wgpb.Operation, r *http.Request, ctx *resolve.Co
 			replaceWrapQuoteIgnored = currentVariable.ValueTypeName != openapi3.TypeString
 		case wgpb.InjectVariableKind_DATE_TIME:
 			format := currentVariable.DateFormat
-			now := addDateOffset(time.Now(), currentVariable.DateOffset)
-			replacement = now.Format(format)
+			replacement = time.Now().Format(format)
+			if dateOffset := currentVariable.DateOffset; dateOffset != nil {
+				formatDate, _ := time.Parse(format, replacement)
+				formatDate = addDateOffset(formatDate, dateOffset)
+				if dateOffset.Format != "" {
+					format = dateOffset.Format
+				}
+				replacement = formatDate.Format(format)
+			}
 			if toUnix := currentVariable.DateToUnix; toUnix != nil {
-				now, _ = time.Parse(format, replacement)
+				formatDate, _ := time.Parse(format, replacement)
 				var unixInt64 int64
 				switch *toUnix {
 				case wgpb.DateToUnix_Micro:
-					unixInt64 = now.UnixMicro()
+					unixInt64 = formatDate.UnixMicro()
 				case wgpb.DateToUnix_Milli:
-					unixInt64 = now.UnixMilli()
+					unixInt64 = formatDate.UnixMilli()
 				case wgpb.DateToUnix_Nano:
-					unixInt64 = now.UnixNano()
+					unixInt64 = formatDate.UnixNano()
 				default:
-					unixInt64 = now.Unix()
+					unixInt64 = formatDate.Unix()
 				}
 				replacement = fmt.Sprintf("%d", unixInt64)
 				replaceWrapQuoteIgnored = true
