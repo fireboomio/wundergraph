@@ -1465,6 +1465,9 @@ func (h *QueryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if len(h.extractedVariables) != 0 {
 		ctx.Variables = MergeJsonRightIntoLeft(h.extractedVariables, ctx.Variables)
 	}
+	if len(h.operation.HookVariableDefaultValues) != 0 {
+		ctx.Variables = MergeJsonRightIntoLeft(h.operation.HookVariableDefaultValues, ctx.Variables)
+	}
 
 	ctx.Variables, err = postProcessVariables(h.operation, r, ctx)
 	if err != nil {
@@ -1894,6 +1897,9 @@ func (h *MutationHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if len(h.extractedVariables) != 0 {
 		ctx.Variables = MergeJsonRightIntoLeft(h.extractedVariables, ctx.Variables)
 	}
+	if len(h.operation.HookVariableDefaultValues) != 0 {
+		ctx.Variables = MergeJsonRightIntoLeft(h.operation.HookVariableDefaultValues, ctx.Variables)
+	}
 
 	ctx.Variables, err = postProcessVariables(h.operation, r, ctx)
 	if err != nil {
@@ -2014,6 +2020,9 @@ func (h *SubscriptionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 
 	if len(h.extractedVariables) != 0 {
 		ctx.Variables = MergeJsonRightIntoLeft(h.extractedVariables, ctx.Variables)
+	}
+	if len(h.operation.HookVariableDefaultValues) != 0 {
+		ctx.Variables = MergeJsonRightIntoLeft(h.operation.HookVariableDefaultValues, ctx.Variables)
 	}
 
 	ctx.Variables, err = postProcessVariables(h.operation, r, ctx)

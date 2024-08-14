@@ -162,6 +162,7 @@ message Operation {
   bool ruleExpressionExisted = 25;
   string internalVariablesSchema = 254; // [omitempty]
   string injectedVariablesSchema = 255; // [omitempty]
+  bytes hookVariableDefaultValues = 253; // [omitempty]
 }
 
 message OperationSemaphore {
