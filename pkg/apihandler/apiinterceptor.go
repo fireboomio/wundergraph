@@ -125,7 +125,7 @@ func handleBeforeRequestHook(r *http.Request, metaData *OperationMetaData, buf *
 		OperationType: metaData.GetOperationTypeString(),
 		ArgsAllowList: metaData.ArgsAllowList,
 	}
-	payload.Request.Headers["X-Real-Ip"] = r.RemoteAddr
+	payload.Request.Headers["X-Remote-Addr"] = r.RemoteAddr
 	hookData, err := json.Marshal(payload)
 	if err != nil {
 		return nil, err
