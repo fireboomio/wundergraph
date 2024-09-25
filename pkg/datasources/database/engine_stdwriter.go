@@ -8,6 +8,7 @@ import (
 	"github.com/opentracing/opentracing-go/log"
 	"github.com/tidwall/gjson"
 	"github.com/uber/jaeger-client-go"
+	"strings"
 )
 
 type stdoutWriter struct{}
@@ -35,6 +36,10 @@ func (t *stdoutWriter) Write(p []byte) (n int, err error) {
 				jaeger.SelfRef(item.newSpanContext()))
 			for k, v := range item.Attributes {
 				itemSpan.LogFields(log.Object(k, v))
+				switch vv := strings.ToUpper(fmt.Sprintf("%v", v)); vv {
+				case "BEGIN", "COMMIT", "ROLLBACK":
+					itemSpan.SetTag("db.transaction", vv)
+				}
 			}
 			itemSpan.FinishWithOptions(opentracing.FinishOptions{FinishTime: item.EndTime.toDateTime()})
 		}
