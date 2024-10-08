@@ -362,7 +362,8 @@ func (u *User) Load(loader *UserLoader, r *http.Request) error {
 			isLastConfig := i == lastConfigIndex
 			if keyFunc != nil && isLastConfig {
 				if err != nil {
-					loader.log.Warn("could not parse token", zap.String("token", tokenString), zap.Error(err))
+					loader.log.Warn("could not parse token", zap.String("token", tokenString),
+						zap.Time("timeFunc", jwt.TimeFunc()), zap.Error(err))
 					continue
 				}
 				if token != nil && !token.Valid {
