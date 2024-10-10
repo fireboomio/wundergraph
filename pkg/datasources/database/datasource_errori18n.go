@@ -79,7 +79,9 @@ func replaceMetaData(metaBytes []byte, codeTranslate string, top bool) (result s
 			}
 			params := placeHolderRegexp.FindAllString(item, -1)
 			slices.Sort(params)
-			return slices.Equal(params, metaKeys)
+			return slices.EqualFunc(params, metaKeys, func(p, m string) bool {
+				return strings.Trim(p, `{}`) == m
+			})
 		})
 		if matchIndex == -1 {
 			matchIndex = 0
