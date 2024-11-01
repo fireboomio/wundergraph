@@ -112,6 +112,7 @@ var applyRequestIdPathPrefixes = []string{
 	"/operations/",
 	"/internal/operations/",
 	"/s3/",
+	"/app/main/graphql",
 }
 
 func RequestIDMiddleware(handler http.Handler) http.Handler {
