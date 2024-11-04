@@ -318,6 +318,61 @@ func (PostResolveTransformationKind) EnumDescriptor() ([]byte, []int) {
 	return file_wundernode_config_proto_rawDescGZIP(), []int{5}
 }
 
+type PostResolveTransformationMath int32
+
+const (
+	PostResolveTransformationMath_MAX   PostResolveTransformationMath = 0
+	PostResolveTransformationMath_MIN   PostResolveTransformationMath = 1
+	PostResolveTransformationMath_SUM   PostResolveTransformationMath = 2
+	PostResolveTransformationMath_AVG   PostResolveTransformationMath = 3
+	PostResolveTransformationMath_COUNT PostResolveTransformationMath = 4
+)
+
+// Enum value maps for PostResolveTransformationMath.
+var (
+	PostResolveTransformationMath_name = map[int32]string{
+		0: "MAX",
+		1: "MIN",
+		2: "SUM",
+		3: "AVG",
+		4: "COUNT",
+	}
+	PostResolveTransformationMath_value = map[string]int32{
+		"MAX":   0,
+		"MIN":   1,
+		"SUM":   2,
+		"AVG":   3,
+		"COUNT": 4,
+	}
+)
+
+func (x PostResolveTransformationMath) Enum() *PostResolveTransformationMath {
+	p := new(PostResolveTransformationMath)
+	*p = x
+	return p
+}
+
+func (x PostResolveTransformationMath) String() string {
+	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
+}
+
+func (PostResolveTransformationMath) Descriptor() protoreflect.EnumDescriptor {
+	return file_wundernode_config_proto_enumTypes[6].Descriptor()
+}
+
+func (PostResolveTransformationMath) Type() protoreflect.EnumType {
+	return &file_wundernode_config_proto_enumTypes[6]
+}
+
+func (x PostResolveTransformationMath) Number() protoreflect.EnumNumber {
+	return protoreflect.EnumNumber(x)
+}
+
+// Deprecated: Use PostResolveTransformationMath.Descriptor instead.
+func (PostResolveTransformationMath) EnumDescriptor() ([]byte, []int) {
+	return file_wundernode_config_proto_rawDescGZIP(), []int{6}
+}
+
 type InjectVariableKind int32
 
 const (
@@ -357,11 +412,11 @@ func (x InjectVariableKind) String() string {
 }
 
 func (InjectVariableKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[6].Descriptor()
+	return file_wundernode_config_proto_enumTypes[7].Descriptor()
 }
 
 func (InjectVariableKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[6]
+	return &file_wundernode_config_proto_enumTypes[7]
 }
 
 func (x InjectVariableKind) Number() protoreflect.EnumNumber {
@@ -370,7 +425,7 @@ func (x InjectVariableKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use InjectVariableKind.Descriptor instead.
 func (InjectVariableKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{6}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{7}
 }
 
 type DateOffsetUnit int32
@@ -415,11 +470,11 @@ func (x DateOffsetUnit) String() string {
 }
 
 func (DateOffsetUnit) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[7].Descriptor()
+	return file_wundernode_config_proto_enumTypes[8].Descriptor()
 }
 
 func (DateOffsetUnit) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[7]
+	return &file_wundernode_config_proto_enumTypes[8]
 }
 
 func (x DateOffsetUnit) Number() protoreflect.EnumNumber {
@@ -428,7 +483,7 @@ func (x DateOffsetUnit) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DateOffsetUnit.Descriptor instead.
 func (DateOffsetUnit) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{7}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{8}
 }
 
 type DateToUnix int32
@@ -467,11 +522,11 @@ func (x DateToUnix) String() string {
 }
 
 func (DateToUnix) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[8].Descriptor()
+	return file_wundernode_config_proto_enumTypes[9].Descriptor()
 }
 
 func (DateToUnix) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[8]
+	return &file_wundernode_config_proto_enumTypes[9]
 }
 
 func (x DateToUnix) Number() protoreflect.EnumNumber {
@@ -480,7 +535,7 @@ func (x DateToUnix) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DateToUnix.Descriptor instead.
 func (DateToUnix) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{8}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{9}
 }
 
 type VariableWhereInputScalarFilterType int32
@@ -537,11 +592,11 @@ func (x VariableWhereInputScalarFilterType) String() string {
 }
 
 func (VariableWhereInputScalarFilterType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[9].Descriptor()
+	return file_wundernode_config_proto_enumTypes[10].Descriptor()
 }
 
 func (VariableWhereInputScalarFilterType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[9]
+	return &file_wundernode_config_proto_enumTypes[10]
 }
 
 func (x VariableWhereInputScalarFilterType) Number() protoreflect.EnumNumber {
@@ -550,7 +605,7 @@ func (x VariableWhereInputScalarFilterType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use VariableWhereInputScalarFilterType.Descriptor instead.
 func (VariableWhereInputScalarFilterType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{9}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{10}
 }
 
 type VariableWhereInputRelationFilterType int32
@@ -592,11 +647,11 @@ func (x VariableWhereInputRelationFilterType) String() string {
 }
 
 func (VariableWhereInputRelationFilterType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[10].Descriptor()
+	return file_wundernode_config_proto_enumTypes[11].Descriptor()
 }
 
 func (VariableWhereInputRelationFilterType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[10]
+	return &file_wundernode_config_proto_enumTypes[11]
 }
 
 func (x VariableWhereInputRelationFilterType) Number() protoreflect.EnumNumber {
@@ -605,7 +660,7 @@ func (x VariableWhereInputRelationFilterType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use VariableWhereInputRelationFilterType.Descriptor instead.
 func (VariableWhereInputRelationFilterType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{10}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{11}
 }
 
 type ClaimType int32
@@ -699,11 +754,11 @@ func (x ClaimType) String() string {
 }
 
 func (ClaimType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[11].Descriptor()
+	return file_wundernode_config_proto_enumTypes[12].Descriptor()
 }
 
 func (ClaimType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[11]
+	return &file_wundernode_config_proto_enumTypes[12]
 }
 
 func (x ClaimType) Number() protoreflect.EnumNumber {
@@ -712,7 +767,7 @@ func (x ClaimType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ClaimType.Descriptor instead.
 func (ClaimType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{11}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{12}
 }
 
 type ValueType int32
@@ -754,11 +809,11 @@ func (x ValueType) String() string {
 }
 
 func (ValueType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[12].Descriptor()
+	return file_wundernode_config_proto_enumTypes[13].Descriptor()
 }
 
 func (ValueType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[12]
+	return &file_wundernode_config_proto_enumTypes[13]
 }
 
 func (x ValueType) Number() protoreflect.EnumNumber {
@@ -767,7 +822,7 @@ func (x ValueType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ValueType.Descriptor instead.
 func (ValueType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{12}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{13}
 }
 
 type OperationType int32
@@ -803,11 +858,11 @@ func (x OperationType) String() string {
 }
 
 func (OperationType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[13].Descriptor()
+	return file_wundernode_config_proto_enumTypes[14].Descriptor()
 }
 
 func (OperationType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[13]
+	return &file_wundernode_config_proto_enumTypes[14]
 }
 
 func (x OperationType) Number() protoreflect.EnumNumber {
@@ -816,7 +871,7 @@ func (x OperationType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use OperationType.Descriptor instead.
 func (OperationType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{13}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{14}
 }
 
 type DataSourceKind int32
@@ -873,11 +928,11 @@ func (x DataSourceKind) String() string {
 }
 
 func (DataSourceKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[14].Descriptor()
+	return file_wundernode_config_proto_enumTypes[15].Descriptor()
 }
 
 func (DataSourceKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[14]
+	return &file_wundernode_config_proto_enumTypes[15]
 }
 
 func (x DataSourceKind) Number() protoreflect.EnumNumber {
@@ -886,7 +941,7 @@ func (x DataSourceKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DataSourceKind.Descriptor instead.
 func (DataSourceKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{14}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{15}
 }
 
 type DataSourceRESTRewriterType int32
@@ -937,11 +992,11 @@ func (x DataSourceRESTRewriterType) String() string {
 }
 
 func (DataSourceRESTRewriterType) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[15].Descriptor()
+	return file_wundernode_config_proto_enumTypes[16].Descriptor()
 }
 
 func (DataSourceRESTRewriterType) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[15]
+	return &file_wundernode_config_proto_enumTypes[16]
 }
 
 func (x DataSourceRESTRewriterType) Number() protoreflect.EnumNumber {
@@ -950,7 +1005,7 @@ func (x DataSourceRESTRewriterType) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use DataSourceRESTRewriterType.Descriptor instead.
 func (DataSourceRESTRewriterType) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{15}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{16}
 }
 
 type UpstreamAuthenticationKind int32
@@ -983,11 +1038,11 @@ func (x UpstreamAuthenticationKind) String() string {
 }
 
 func (UpstreamAuthenticationKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[16].Descriptor()
+	return file_wundernode_config_proto_enumTypes[17].Descriptor()
 }
 
 func (UpstreamAuthenticationKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[16]
+	return &file_wundernode_config_proto_enumTypes[17]
 }
 
 func (x UpstreamAuthenticationKind) Number() protoreflect.EnumNumber {
@@ -996,7 +1051,7 @@ func (x UpstreamAuthenticationKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use UpstreamAuthenticationKind.Descriptor instead.
 func (UpstreamAuthenticationKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{16}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{17}
 }
 
 type SigningMethod int32
@@ -1026,11 +1081,11 @@ func (x SigningMethod) String() string {
 }
 
 func (SigningMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[17].Descriptor()
+	return file_wundernode_config_proto_enumTypes[18].Descriptor()
 }
 
 func (SigningMethod) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[17]
+	return &file_wundernode_config_proto_enumTypes[18]
 }
 
 func (x SigningMethod) Number() protoreflect.EnumNumber {
@@ -1039,7 +1094,7 @@ func (x SigningMethod) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use SigningMethod.Descriptor instead.
 func (SigningMethod) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{17}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{18}
 }
 
 type HTTPMethod int32
@@ -1093,11 +1148,11 @@ func (x HTTPMethod) String() string {
 }
 
 func (HTTPMethod) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[18].Descriptor()
+	return file_wundernode_config_proto_enumTypes[19].Descriptor()
 }
 
 func (HTTPMethod) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[18]
+	return &file_wundernode_config_proto_enumTypes[19]
 }
 
 func (x HTTPMethod) Number() protoreflect.EnumNumber {
@@ -1106,7 +1161,7 @@ func (x HTTPMethod) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use HTTPMethod.Descriptor instead.
 func (HTTPMethod) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{18}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{19}
 }
 
 type ArgumentSource int32
@@ -1139,11 +1194,11 @@ func (x ArgumentSource) String() string {
 }
 
 func (ArgumentSource) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[19].Descriptor()
+	return file_wundernode_config_proto_enumTypes[20].Descriptor()
 }
 
 func (ArgumentSource) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[19]
+	return &file_wundernode_config_proto_enumTypes[20]
 }
 
 func (x ArgumentSource) Number() protoreflect.EnumNumber {
@@ -1152,7 +1207,7 @@ func (x ArgumentSource) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ArgumentSource.Descriptor instead.
 func (ArgumentSource) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{19}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{20}
 }
 
 type ArgumentRenderConfiguration int32
@@ -1191,11 +1246,11 @@ func (x ArgumentRenderConfiguration) String() string {
 }
 
 func (ArgumentRenderConfiguration) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[20].Descriptor()
+	return file_wundernode_config_proto_enumTypes[21].Descriptor()
 }
 
 func (ArgumentRenderConfiguration) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[20]
+	return &file_wundernode_config_proto_enumTypes[21]
 }
 
 func (x ArgumentRenderConfiguration) Number() protoreflect.EnumNumber {
@@ -1204,7 +1259,7 @@ func (x ArgumentRenderConfiguration) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ArgumentRenderConfiguration.Descriptor instead.
 func (ArgumentRenderConfiguration) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{20}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{21}
 }
 
 type WebhookVerifierKind int32
@@ -1234,11 +1289,11 @@ func (x WebhookVerifierKind) String() string {
 }
 
 func (WebhookVerifierKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[21].Descriptor()
+	return file_wundernode_config_proto_enumTypes[22].Descriptor()
 }
 
 func (WebhookVerifierKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[21]
+	return &file_wundernode_config_proto_enumTypes[22]
 }
 
 func (x WebhookVerifierKind) Number() protoreflect.EnumNumber {
@@ -1247,7 +1302,7 @@ func (x WebhookVerifierKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use WebhookVerifierKind.Descriptor instead.
 func (WebhookVerifierKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{21}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{22}
 }
 
 type ConfigurationVariableKind int32
@@ -1283,11 +1338,11 @@ func (x ConfigurationVariableKind) String() string {
 }
 
 func (ConfigurationVariableKind) Descriptor() protoreflect.EnumDescriptor {
-	return file_wundernode_config_proto_enumTypes[22].Descriptor()
+	return file_wundernode_config_proto_enumTypes[23].Descriptor()
 }
 
 func (ConfigurationVariableKind) Type() protoreflect.EnumType {
-	return &file_wundernode_config_proto_enumTypes[22]
+	return &file_wundernode_config_proto_enumTypes[23]
 }
 
 func (x ConfigurationVariableKind) Number() protoreflect.EnumNumber {
@@ -1296,7 +1351,7 @@ func (x ConfigurationVariableKind) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use ConfigurationVariableKind.Descriptor instead.
 func (ConfigurationVariableKind) EnumDescriptor() ([]byte, []int) {
-	return file_wundernode_config_proto_rawDescGZIP(), []int{22}
+	return file_wundernode_config_proto_rawDescGZIP(), []int{23}
 }
 
 type WunderNodeConfig struct {
@@ -2468,7 +2523,7 @@ type Operation struct {
 	Content                      string                           `protobuf:"bytes,2,opt,name=content,proto3" json:"content"`
 	OperationType                OperationType                    `protobuf:"varint,3,opt,name=operationType,proto3,enum=wgpb.OperationType" json:"operationType"`
 	Engine                       OperationExecutionEngine         `protobuf:"varint,16,opt,name=engine,proto3,enum=wgpb.OperationExecutionEngine" json:"engine"`
-	Internal                     bool                             `protobuf:"varint,13,opt,name=internal,proto3" json:"internal"`                                                  // they cannot be reached from the public surface of the API
+	Internal                     bool                             `protobuf:"varint,13,opt,name=internal,proto3" json:"internal"`                                        // they cannot be reached from the public surface of the API
 	ResponseSchema               string                           `protobuf:"bytes,5,opt,name=responseSchema,proto3" json:"responseSchema,omitempty"`                              // [omitempty]
 	VariablesSchema              string                           `protobuf:"bytes,4,opt,name=variablesSchema,proto3" json:"variablesSchema,omitempty"`                            // [omitempty]
 	InterpolationVariablesSchema string                           `protobuf:"bytes,14,opt,name=interpolationVariablesSchema,proto3" json:"interpolationVariablesSchema,omitempty"` // [omitempty]
@@ -8874,7 +8929,12 @@ var file_wundernode_config_proto_rawDesc = []byte{
 	0x6f, 0x6c, 0x76, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66, 0x6f, 0x72, 0x6d, 0x61, 0x74, 0x69,
 	0x6f, 0x6e, 0x4b, 0x69, 0x6e, 0x64, 0x12, 0x23, 0x0a, 0x1f, 0x47, 0x45, 0x54, 0x5f, 0x50, 0x4f,
 	0x53, 0x54, 0x5f, 0x52, 0x45, 0x53, 0x4f, 0x4c, 0x56, 0x45, 0x5f, 0x54, 0x52, 0x41, 0x4e, 0x53,
-	0x46, 0x4f, 0x52, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x00, 0x2a, 0x6d, 0x0a, 0x12, 0x49,
+	0x46, 0x4f, 0x52, 0x4d, 0x41, 0x54, 0x49, 0x4f, 0x4e, 0x10, 0x00, 0x2a, 0x4e, 0x0a, 0x1d, 0x50,
+	0x6f, 0x73, 0x74, 0x52, 0x65, 0x73, 0x6f, 0x6c, 0x76, 0x65, 0x54, 0x72, 0x61, 0x6e, 0x73, 0x66,
+	0x6f, 0x72, 0x6d, 0x61, 0x74, 0x69, 0x6f, 0x6e, 0x4d, 0x61, 0x74, 0x68, 0x12, 0x07, 0x0a, 0x03,
+	0x4d, 0x41, 0x58, 0x10, 0x00, 0x12, 0x07, 0x0a, 0x03, 0x4d, 0x49, 0x4e, 0x10, 0x01, 0x12, 0x07,
+	0x0a, 0x03, 0x53, 0x55, 0x4d, 0x10, 0x02, 0x12, 0x07, 0x0a, 0x03, 0x41, 0x56, 0x47, 0x10, 0x03,
+	0x12, 0x09, 0x0a, 0x05, 0x43, 0x4f, 0x55, 0x4e, 0x54, 0x10, 0x04, 0x2a, 0x6d, 0x0a, 0x12, 0x49,
 	0x6e, 0x6a, 0x65, 0x63, 0x74, 0x56, 0x61, 0x72, 0x69, 0x61, 0x62, 0x6c, 0x65, 0x4b, 0x69, 0x6e,
 	0x64, 0x12, 0x08, 0x0a, 0x04, 0x55, 0x55, 0x49, 0x44, 0x10, 0x00, 0x12, 0x0d, 0x0a, 0x09, 0x44,
 	0x41, 0x54, 0x45, 0x5f, 0x54, 0x49, 0x4d, 0x45, 0x10, 0x01, 0x12, 0x18, 0x0a, 0x14, 0x45, 0x4e,
@@ -9016,7 +9076,7 @@ func file_wundernode_config_proto_rawDescGZIP() []byte {
 	return file_wundernode_config_proto_rawDescData
 }
 
-var file_wundernode_config_proto_enumTypes = make([]protoimpl.EnumInfo, 23)
+var file_wundernode_config_proto_enumTypes = make([]protoimpl.EnumInfo, 24)
 var file_wundernode_config_proto_msgTypes = make([]protoimpl.MessageInfo, 96)
 var file_wundernode_config_proto_goTypes = []interface{}{
 	(LogLevel)(0),                                            // 0: wgpb.LogLevel
@@ -9025,298 +9085,299 @@ var file_wundernode_config_proto_goTypes = []interface{}{
 	(OperationTransactionIsolationLevel)(0),                  // 3: wgpb.OperationTransactionIsolationLevel
 	(OperationExecutionEngine)(0),                            // 4: wgpb.OperationExecutionEngine
 	(PostResolveTransformationKind)(0),                       // 5: wgpb.PostResolveTransformationKind
-	(InjectVariableKind)(0),                                  // 6: wgpb.InjectVariableKind
-	(DateOffsetUnit)(0),                                      // 7: wgpb.DateOffsetUnit
-	(DateToUnix)(0),                                          // 8: wgpb.DateToUnix
-	(VariableWhereInputScalarFilterType)(0),                  // 9: wgpb.VariableWhereInputScalarFilterType
-	(VariableWhereInputRelationFilterType)(0),                // 10: wgpb.VariableWhereInputRelationFilterType
-	(ClaimType)(0),                                           // 11: wgpb.ClaimType
-	(ValueType)(0),                                           // 12: wgpb.ValueType
-	(OperationType)(0),                                       // 13: wgpb.OperationType
-	(DataSourceKind)(0),                                      // 14: wgpb.DataSourceKind
-	(DataSourceRESTRewriterType)(0),                          // 15: wgpb.DataSourceRESTRewriterType
-	(UpstreamAuthenticationKind)(0),                          // 16: wgpb.UpstreamAuthenticationKind
-	(SigningMethod)(0),                                       // 17: wgpb.SigningMethod
-	(HTTPMethod)(0),                                          // 18: wgpb.HTTPMethod
-	(ArgumentSource)(0),                                      // 19: wgpb.ArgumentSource
-	(ArgumentRenderConfiguration)(0),                         // 20: wgpb.ArgumentRenderConfiguration
-	(WebhookVerifierKind)(0),                                 // 21: wgpb.WebhookVerifierKind
-	(ConfigurationVariableKind)(0),                           // 22: wgpb.ConfigurationVariableKind
-	(*WunderNodeConfig)(nil),                                 // 23: wgpb.WunderNodeConfig
-	(*Server)(nil),                                           // 24: wgpb.Server
-	(*Certificate)(nil),                                      // 25: wgpb.Certificate
-	(*Logging)(nil),                                          // 26: wgpb.Logging
-	(*Api)(nil),                                              // 27: wgpb.Api
-	(*ApiAuthenticationConfig)(nil),                          // 28: wgpb.ApiAuthenticationConfig
-	(*JwksBasedAuthentication)(nil),                          // 29: wgpb.JwksBasedAuthentication
-	(*JwksAuthProvider)(nil),                                 // 30: wgpb.JwksAuthProvider
-	(*ApiAuthenticationHooks)(nil),                           // 31: wgpb.ApiAuthenticationHooks
-	(*CookieBasedAuthentication)(nil),                        // 32: wgpb.CookieBasedAuthentication
-	(*AuthProvider)(nil),                                     // 33: wgpb.AuthProvider
-	(*GithubAuthProviderConfig)(nil),                         // 34: wgpb.GithubAuthProviderConfig
-	(*OpenIDConnectQueryParameter)(nil),                      // 35: wgpb.OpenIDConnectQueryParameter
-	(*OpenIDConnectAuthProviderConfig)(nil),                  // 36: wgpb.OpenIDConnectAuthProviderConfig
-	(*ApiCacheConfig)(nil),                                   // 37: wgpb.ApiCacheConfig
-	(*InMemoryCacheConfig)(nil),                              // 38: wgpb.InMemoryCacheConfig
-	(*RedisCacheConfig)(nil),                                 // 39: wgpb.RedisCacheConfig
-	(*Operation)(nil),                                        // 40: wgpb.Operation
-	(*OperationSemaphore)(nil),                               // 41: wgpb.OperationSemaphore
-	(*OperationTransaction)(nil),                             // 42: wgpb.OperationTransaction
-	(*OperationMultipartForm)(nil),                           // 43: wgpb.OperationMultipartForm
-	(*OperationRateLimit)(nil),                               // 44: wgpb.OperationRateLimit
-	(*DatasourceQuote)(nil),                                  // 45: wgpb.DatasourceQuote
-	(*PostResolveTransformation)(nil),                        // 46: wgpb.PostResolveTransformation
-	(*PostResolveGetTransformation)(nil),                     // 47: wgpb.PostResolveGetTransformation
-	(*OperationVariablesConfiguration)(nil),                  // 48: wgpb.OperationVariablesConfiguration
-	(*VariableInjectionConfiguration)(nil),                   // 49: wgpb.VariableInjectionConfiguration
-	(*DateOffset)(nil),                                       // 50: wgpb.DateOffset
-	(*GraphQLDataSourceHooksConfiguration)(nil),              // 51: wgpb.GraphQLDataSourceHooksConfiguration
-	(*OperationHooksConfiguration)(nil),                      // 52: wgpb.OperationHooksConfiguration
-	(*MockResolveHookConfiguration)(nil),                     // 53: wgpb.MockResolveHookConfiguration
-	(*OperationAuthorizationConfig)(nil),                     // 54: wgpb.OperationAuthorizationConfig
-	(*OperationRoleConfig)(nil),                              // 55: wgpb.OperationRoleConfig
-	(*CustomClaim)(nil),                                      // 56: wgpb.CustomClaim
-	(*ClaimConfig)(nil),                                      // 57: wgpb.ClaimConfig
-	(*VariableWhereInputConfiguration)(nil),                  // 58: wgpb.VariableWhereInputConfiguration
-	(*VariableWhereInput)(nil),                               // 59: wgpb.VariableWhereInput
-	(*VariableWhereInputFilter)(nil),                         // 60: wgpb.VariableWhereInputFilter
-	(*VariableWhereInputScalarFilter)(nil),                   // 61: wgpb.VariableWhereInputScalarFilter
-	(*VariableWhereInputRelationFilter)(nil),                 // 62: wgpb.VariableWhereInputRelationFilter
-	(*OperationLiveQueryConfig)(nil),                         // 63: wgpb.OperationLiveQueryConfig
-	(*OperationAuthenticationConfig)(nil),                    // 64: wgpb.OperationAuthenticationConfig
-	(*OperationCacheConfig)(nil),                             // 65: wgpb.OperationCacheConfig
-	(*EngineConfiguration)(nil),                              // 66: wgpb.EngineConfiguration
-	(*DataSourceConfiguration)(nil),                          // 67: wgpb.DataSourceConfiguration
-	(*DirectiveConfiguration)(nil),                           // 68: wgpb.DirectiveConfiguration
-	(*DataSourceCustom_REST)(nil),                            // 69: wgpb.DataSourceCustom_REST
-	(*DataSourceRESTResponseExtractor)(nil),                  // 70: wgpb.DataSourceRESTResponseExtractor
-	(*DataSourceRESTResponseStatusCodeScope)(nil),            // 71: wgpb.DataSourceRESTResponseStatusCodeScope
-	(*DataSourceCustom_REST_Rewriter)(nil),                   // 72: wgpb.DataSourceCustom_REST_Rewriter
-	(*DataSourceRESTRewriter)(nil),                           // 73: wgpb.DataSourceRESTRewriter
-	(*DataSourceRESTSubObject)(nil),                          // 74: wgpb.DataSourceRESTSubObject
-	(*DataSourceRESTSubfield)(nil),                           // 75: wgpb.DataSourceRESTSubfield
-	(*StatusCodeTypeMapping)(nil),                            // 76: wgpb.StatusCodeTypeMapping
-	(*DataSourceCustom_GraphQL)(nil),                         // 77: wgpb.DataSourceCustom_GraphQL
-	(*DataSourceCustom_Database)(nil),                        // 78: wgpb.DataSourceCustom_Database
-	(*GraphQLFederationConfiguration)(nil),                   // 79: wgpb.GraphQLFederationConfiguration
-	(*DataSourceCustom_Static)(nil),                          // 80: wgpb.DataSourceCustom_Static
-	(*GraphQLSubscriptionConfiguration)(nil),                 // 81: wgpb.GraphQLSubscriptionConfiguration
-	(*FetchConfiguration)(nil),                               // 82: wgpb.FetchConfiguration
-	(*MTLSConfiguration)(nil),                                // 83: wgpb.MTLSConfiguration
-	(*UpstreamAuthentication)(nil),                           // 84: wgpb.UpstreamAuthentication
-	(*JwtUpstreamAuthenticationConfig)(nil),                  // 85: wgpb.JwtUpstreamAuthenticationConfig
-	(*JwtUpstreamAuthenticationWithAccessTokenExchange)(nil), // 86: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange
-	(*RESTSubscriptionConfiguration)(nil),                    // 87: wgpb.RESTSubscriptionConfiguration
-	(*URLQueryConfiguration)(nil),                            // 88: wgpb.URLQueryConfiguration
-	(*HTTPHeader)(nil),                                       // 89: wgpb.HTTPHeader
-	(*TypeConfiguration)(nil),                                // 90: wgpb.TypeConfiguration
-	(*FieldConfiguration)(nil),                               // 91: wgpb.FieldConfiguration
-	(*TypeField)(nil),                                        // 92: wgpb.TypeField
-	(*QuoteField)(nil),                                       // 93: wgpb.QuoteField
-	(*SingleTypeField)(nil),                                  // 94: wgpb.SingleTypeField
-	(*ArgumentConfiguration)(nil),                            // 95: wgpb.ArgumentConfiguration
-	(*WunderGraphConfiguration)(nil),                         // 96: wgpb.WunderGraphConfiguration
-	(*S3UploadProfileHooksConfiguration)(nil),                // 97: wgpb.S3UploadProfileHooksConfiguration
-	(*S3UploadProfile)(nil),                                  // 98: wgpb.S3UploadProfile
-	(*S3UploadConfiguration)(nil),                            // 99: wgpb.S3UploadConfiguration
-	(*UserDefinedApi)(nil),                                   // 100: wgpb.UserDefinedApi
-	(*ListenerOptions)(nil),                                  // 101: wgpb.ListenerOptions
-	(*NodeLogging)(nil),                                      // 102: wgpb.NodeLogging
-	(*NodeOptions)(nil),                                      // 103: wgpb.NodeOptions
-	(*ServerLogging)(nil),                                    // 104: wgpb.ServerLogging
-	(*ServerOptions)(nil),                                    // 105: wgpb.ServerOptions
-	(*WebhookConfiguration)(nil),                             // 106: wgpb.WebhookConfiguration
-	(*WebhookVerifier)(nil),                                  // 107: wgpb.WebhookVerifier
-	(*CorsConfiguration)(nil),                                // 108: wgpb.CorsConfiguration
-	(*ConfigurationVariable)(nil),                            // 109: wgpb.ConfigurationVariable
-	nil,                                                      // 110: wgpb.Operation.DatasourceQuotesEntry
-	nil,                                                      // 111: wgpb.DataSourceConfiguration.CustomRestMapEntry
-	nil,                                                      // 112: wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry
-	nil,                                                      // 113: wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry
-	nil,                                                      // 114: wgpb.DataSourceRESTRewriter.ValueRewritesEntry
-	nil,                                                      // 115: wgpb.DataSourceRESTRewriter.ApplySubCommonFieldValuesEntry
-	nil,                                                      // 116: wgpb.FetchConfiguration.HeaderEntry
-	nil,                                                      // 117: wgpb.TypeField.QuotesEntry
-	nil,                                                      // 118: wgpb.S3UploadConfiguration.UploadProfilesEntry
+	(PostResolveTransformationMath)(0),                       // 6: wgpb.PostResolveTransformationMath
+	(InjectVariableKind)(0),                                  // 7: wgpb.InjectVariableKind
+	(DateOffsetUnit)(0),                                      // 8: wgpb.DateOffsetUnit
+	(DateToUnix)(0),                                          // 9: wgpb.DateToUnix
+	(VariableWhereInputScalarFilterType)(0),                  // 10: wgpb.VariableWhereInputScalarFilterType
+	(VariableWhereInputRelationFilterType)(0),                // 11: wgpb.VariableWhereInputRelationFilterType
+	(ClaimType)(0),                                           // 12: wgpb.ClaimType
+	(ValueType)(0),                                           // 13: wgpb.ValueType
+	(OperationType)(0),                                       // 14: wgpb.OperationType
+	(DataSourceKind)(0),                                      // 15: wgpb.DataSourceKind
+	(DataSourceRESTRewriterType)(0),                          // 16: wgpb.DataSourceRESTRewriterType
+	(UpstreamAuthenticationKind)(0),                          // 17: wgpb.UpstreamAuthenticationKind
+	(SigningMethod)(0),                                       // 18: wgpb.SigningMethod
+	(HTTPMethod)(0),                                          // 19: wgpb.HTTPMethod
+	(ArgumentSource)(0),                                      // 20: wgpb.ArgumentSource
+	(ArgumentRenderConfiguration)(0),                         // 21: wgpb.ArgumentRenderConfiguration
+	(WebhookVerifierKind)(0),                                 // 22: wgpb.WebhookVerifierKind
+	(ConfigurationVariableKind)(0),                           // 23: wgpb.ConfigurationVariableKind
+	(*WunderNodeConfig)(nil),                                 // 24: wgpb.WunderNodeConfig
+	(*Server)(nil),                                           // 25: wgpb.Server
+	(*Certificate)(nil),                                      // 26: wgpb.Certificate
+	(*Logging)(nil),                                          // 27: wgpb.Logging
+	(*Api)(nil),                                              // 28: wgpb.Api
+	(*ApiAuthenticationConfig)(nil),                          // 29: wgpb.ApiAuthenticationConfig
+	(*JwksBasedAuthentication)(nil),                          // 30: wgpb.JwksBasedAuthentication
+	(*JwksAuthProvider)(nil),                                 // 31: wgpb.JwksAuthProvider
+	(*ApiAuthenticationHooks)(nil),                           // 32: wgpb.ApiAuthenticationHooks
+	(*CookieBasedAuthentication)(nil),                        // 33: wgpb.CookieBasedAuthentication
+	(*AuthProvider)(nil),                                     // 34: wgpb.AuthProvider
+	(*GithubAuthProviderConfig)(nil),                         // 35: wgpb.GithubAuthProviderConfig
+	(*OpenIDConnectQueryParameter)(nil),                      // 36: wgpb.OpenIDConnectQueryParameter
+	(*OpenIDConnectAuthProviderConfig)(nil),                  // 37: wgpb.OpenIDConnectAuthProviderConfig
+	(*ApiCacheConfig)(nil),                                   // 38: wgpb.ApiCacheConfig
+	(*InMemoryCacheConfig)(nil),                              // 39: wgpb.InMemoryCacheConfig
+	(*RedisCacheConfig)(nil),                                 // 40: wgpb.RedisCacheConfig
+	(*Operation)(nil),                                        // 41: wgpb.Operation
+	(*OperationSemaphore)(nil),                               // 42: wgpb.OperationSemaphore
+	(*OperationTransaction)(nil),                             // 43: wgpb.OperationTransaction
+	(*OperationMultipartForm)(nil),                           // 44: wgpb.OperationMultipartForm
+	(*OperationRateLimit)(nil),                               // 45: wgpb.OperationRateLimit
+	(*DatasourceQuote)(nil),                                  // 46: wgpb.DatasourceQuote
+	(*PostResolveTransformation)(nil),                        // 47: wgpb.PostResolveTransformation
+	(*PostResolveGetTransformation)(nil),                     // 48: wgpb.PostResolveGetTransformation
+	(*OperationVariablesConfiguration)(nil),                  // 49: wgpb.OperationVariablesConfiguration
+	(*VariableInjectionConfiguration)(nil),                   // 50: wgpb.VariableInjectionConfiguration
+	(*DateOffset)(nil),                                       // 51: wgpb.DateOffset
+	(*GraphQLDataSourceHooksConfiguration)(nil),              // 52: wgpb.GraphQLDataSourceHooksConfiguration
+	(*OperationHooksConfiguration)(nil),                      // 53: wgpb.OperationHooksConfiguration
+	(*MockResolveHookConfiguration)(nil),                     // 54: wgpb.MockResolveHookConfiguration
+	(*OperationAuthorizationConfig)(nil),                     // 55: wgpb.OperationAuthorizationConfig
+	(*OperationRoleConfig)(nil),                              // 56: wgpb.OperationRoleConfig
+	(*CustomClaim)(nil),                                      // 57: wgpb.CustomClaim
+	(*ClaimConfig)(nil),                                      // 58: wgpb.ClaimConfig
+	(*VariableWhereInputConfiguration)(nil),                  // 59: wgpb.VariableWhereInputConfiguration
+	(*VariableWhereInput)(nil),                               // 60: wgpb.VariableWhereInput
+	(*VariableWhereInputFilter)(nil),                         // 61: wgpb.VariableWhereInputFilter
+	(*VariableWhereInputScalarFilter)(nil),                   // 62: wgpb.VariableWhereInputScalarFilter
+	(*VariableWhereInputRelationFilter)(nil),                 // 63: wgpb.VariableWhereInputRelationFilter
+	(*OperationLiveQueryConfig)(nil),                         // 64: wgpb.OperationLiveQueryConfig
+	(*OperationAuthenticationConfig)(nil),                    // 65: wgpb.OperationAuthenticationConfig
+	(*OperationCacheConfig)(nil),                             // 66: wgpb.OperationCacheConfig
+	(*EngineConfiguration)(nil),                              // 67: wgpb.EngineConfiguration
+	(*DataSourceConfiguration)(nil),                          // 68: wgpb.DataSourceConfiguration
+	(*DirectiveConfiguration)(nil),                           // 69: wgpb.DirectiveConfiguration
+	(*DataSourceCustom_REST)(nil),                            // 70: wgpb.DataSourceCustom_REST
+	(*DataSourceRESTResponseExtractor)(nil),                  // 71: wgpb.DataSourceRESTResponseExtractor
+	(*DataSourceRESTResponseStatusCodeScope)(nil),            // 72: wgpb.DataSourceRESTResponseStatusCodeScope
+	(*DataSourceCustom_REST_Rewriter)(nil),                   // 73: wgpb.DataSourceCustom_REST_Rewriter
+	(*DataSourceRESTRewriter)(nil),                           // 74: wgpb.DataSourceRESTRewriter
+	(*DataSourceRESTSubObject)(nil),                          // 75: wgpb.DataSourceRESTSubObject
+	(*DataSourceRESTSubfield)(nil),                           // 76: wgpb.DataSourceRESTSubfield
+	(*StatusCodeTypeMapping)(nil),                            // 77: wgpb.StatusCodeTypeMapping
+	(*DataSourceCustom_GraphQL)(nil),                         // 78: wgpb.DataSourceCustom_GraphQL
+	(*DataSourceCustom_Database)(nil),                        // 79: wgpb.DataSourceCustom_Database
+	(*GraphQLFederationConfiguration)(nil),                   // 80: wgpb.GraphQLFederationConfiguration
+	(*DataSourceCustom_Static)(nil),                          // 81: wgpb.DataSourceCustom_Static
+	(*GraphQLSubscriptionConfiguration)(nil),                 // 82: wgpb.GraphQLSubscriptionConfiguration
+	(*FetchConfiguration)(nil),                               // 83: wgpb.FetchConfiguration
+	(*MTLSConfiguration)(nil),                                // 84: wgpb.MTLSConfiguration
+	(*UpstreamAuthentication)(nil),                           // 85: wgpb.UpstreamAuthentication
+	(*JwtUpstreamAuthenticationConfig)(nil),                  // 86: wgpb.JwtUpstreamAuthenticationConfig
+	(*JwtUpstreamAuthenticationWithAccessTokenExchange)(nil), // 87: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange
+	(*RESTSubscriptionConfiguration)(nil),                    // 88: wgpb.RESTSubscriptionConfiguration
+	(*URLQueryConfiguration)(nil),                            // 89: wgpb.URLQueryConfiguration
+	(*HTTPHeader)(nil),                                       // 90: wgpb.HTTPHeader
+	(*TypeConfiguration)(nil),                                // 91: wgpb.TypeConfiguration
+	(*FieldConfiguration)(nil),                               // 92: wgpb.FieldConfiguration
+	(*TypeField)(nil),                                        // 93: wgpb.TypeField
+	(*QuoteField)(nil),                                       // 94: wgpb.QuoteField
+	(*SingleTypeField)(nil),                                  // 95: wgpb.SingleTypeField
+	(*ArgumentConfiguration)(nil),                            // 96: wgpb.ArgumentConfiguration
+	(*WunderGraphConfiguration)(nil),                         // 97: wgpb.WunderGraphConfiguration
+	(*S3UploadProfileHooksConfiguration)(nil),                // 98: wgpb.S3UploadProfileHooksConfiguration
+	(*S3UploadProfile)(nil),                                  // 99: wgpb.S3UploadProfile
+	(*S3UploadConfiguration)(nil),                            // 100: wgpb.S3UploadConfiguration
+	(*UserDefinedApi)(nil),                                   // 101: wgpb.UserDefinedApi
+	(*ListenerOptions)(nil),                                  // 102: wgpb.ListenerOptions
+	(*NodeLogging)(nil),                                      // 103: wgpb.NodeLogging
+	(*NodeOptions)(nil),                                      // 104: wgpb.NodeOptions
+	(*ServerLogging)(nil),                                    // 105: wgpb.ServerLogging
+	(*ServerOptions)(nil),                                    // 106: wgpb.ServerOptions
+	(*WebhookConfiguration)(nil),                             // 107: wgpb.WebhookConfiguration
+	(*WebhookVerifier)(nil),                                  // 108: wgpb.WebhookVerifier
+	(*CorsConfiguration)(nil),                                // 109: wgpb.CorsConfiguration
+	(*ConfigurationVariable)(nil),                            // 110: wgpb.ConfigurationVariable
+	nil,                                                      // 111: wgpb.Operation.DatasourceQuotesEntry
+	nil,                                                      // 112: wgpb.DataSourceConfiguration.CustomRestMapEntry
+	nil,                                                      // 113: wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry
+	nil,                                                      // 114: wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry
+	nil,                                                      // 115: wgpb.DataSourceRESTRewriter.ValueRewritesEntry
+	nil,                                                      // 116: wgpb.DataSourceRESTRewriter.ApplySubCommonFieldValuesEntry
+	nil,                                                      // 117: wgpb.FetchConfiguration.HeaderEntry
+	nil,                                                      // 118: wgpb.TypeField.QuotesEntry
+	nil,                                                      // 119: wgpb.S3UploadConfiguration.UploadProfilesEntry
 }
 var file_wundernode_config_proto_depIdxs = []int32{
-	24,  // 0: wgpb.WunderNodeConfig.server:type_name -> wgpb.Server
-	26,  // 1: wgpb.WunderNodeConfig.logging:type_name -> wgpb.Logging
-	27,  // 2: wgpb.WunderNodeConfig.apis:type_name -> wgpb.Api
-	25,  // 3: wgpb.Server.certificates:type_name -> wgpb.Certificate
+	25,  // 0: wgpb.WunderNodeConfig.server:type_name -> wgpb.Server
+	27,  // 1: wgpb.WunderNodeConfig.logging:type_name -> wgpb.Logging
+	28,  // 2: wgpb.WunderNodeConfig.apis:type_name -> wgpb.Api
+	26,  // 3: wgpb.Server.certificates:type_name -> wgpb.Certificate
 	0,   // 4: wgpb.Logging.level:type_name -> wgpb.LogLevel
-	66,  // 5: wgpb.Api.engineConfiguration:type_name -> wgpb.EngineConfiguration
-	40,  // 6: wgpb.Api.operations:type_name -> wgpb.Operation
-	108, // 7: wgpb.Api.corsConfiguration:type_name -> wgpb.CorsConfiguration
-	37,  // 8: wgpb.Api.cacheConfig:type_name -> wgpb.ApiCacheConfig
-	28,  // 9: wgpb.Api.authenticationConfig:type_name -> wgpb.ApiAuthenticationConfig
-	99,  // 10: wgpb.Api.s3UploadConfiguration:type_name -> wgpb.S3UploadConfiguration
-	106, // 11: wgpb.Api.webhooks:type_name -> wgpb.WebhookConfiguration
-	32,  // 12: wgpb.ApiAuthenticationConfig.cookieBased:type_name -> wgpb.CookieBasedAuthentication
-	31,  // 13: wgpb.ApiAuthenticationConfig.hooks:type_name -> wgpb.ApiAuthenticationHooks
-	29,  // 14: wgpb.ApiAuthenticationConfig.jwksBased:type_name -> wgpb.JwksBasedAuthentication
-	30,  // 15: wgpb.JwksBasedAuthentication.providers:type_name -> wgpb.JwksAuthProvider
-	109, // 16: wgpb.JwksAuthProvider.issuer:type_name -> wgpb.ConfigurationVariable
-	109, // 17: wgpb.JwksAuthProvider.jwksJson:type_name -> wgpb.ConfigurationVariable
-	33,  // 18: wgpb.CookieBasedAuthentication.providers:type_name -> wgpb.AuthProvider
-	109, // 19: wgpb.CookieBasedAuthentication.authorizedRedirectUris:type_name -> wgpb.ConfigurationVariable
-	109, // 20: wgpb.CookieBasedAuthentication.authorizedRedirectUriRegexes:type_name -> wgpb.ConfigurationVariable
-	109, // 21: wgpb.CookieBasedAuthentication.hashKey:type_name -> wgpb.ConfigurationVariable
-	109, // 22: wgpb.CookieBasedAuthentication.blockKey:type_name -> wgpb.ConfigurationVariable
-	109, // 23: wgpb.CookieBasedAuthentication.csrfSecret:type_name -> wgpb.ConfigurationVariable
+	67,  // 5: wgpb.Api.engineConfiguration:type_name -> wgpb.EngineConfiguration
+	41,  // 6: wgpb.Api.operations:type_name -> wgpb.Operation
+	109, // 7: wgpb.Api.corsConfiguration:type_name -> wgpb.CorsConfiguration
+	38,  // 8: wgpb.Api.cacheConfig:type_name -> wgpb.ApiCacheConfig
+	29,  // 9: wgpb.Api.authenticationConfig:type_name -> wgpb.ApiAuthenticationConfig
+	100, // 10: wgpb.Api.s3UploadConfiguration:type_name -> wgpb.S3UploadConfiguration
+	107, // 11: wgpb.Api.webhooks:type_name -> wgpb.WebhookConfiguration
+	33,  // 12: wgpb.ApiAuthenticationConfig.cookieBased:type_name -> wgpb.CookieBasedAuthentication
+	32,  // 13: wgpb.ApiAuthenticationConfig.hooks:type_name -> wgpb.ApiAuthenticationHooks
+	30,  // 14: wgpb.ApiAuthenticationConfig.jwksBased:type_name -> wgpb.JwksBasedAuthentication
+	31,  // 15: wgpb.JwksBasedAuthentication.providers:type_name -> wgpb.JwksAuthProvider
+	110, // 16: wgpb.JwksAuthProvider.issuer:type_name -> wgpb.ConfigurationVariable
+	110, // 17: wgpb.JwksAuthProvider.jwksJson:type_name -> wgpb.ConfigurationVariable
+	34,  // 18: wgpb.CookieBasedAuthentication.providers:type_name -> wgpb.AuthProvider
+	110, // 19: wgpb.CookieBasedAuthentication.authorizedRedirectUris:type_name -> wgpb.ConfigurationVariable
+	110, // 20: wgpb.CookieBasedAuthentication.authorizedRedirectUriRegexes:type_name -> wgpb.ConfigurationVariable
+	110, // 21: wgpb.CookieBasedAuthentication.hashKey:type_name -> wgpb.ConfigurationVariable
+	110, // 22: wgpb.CookieBasedAuthentication.blockKey:type_name -> wgpb.ConfigurationVariable
+	110, // 23: wgpb.CookieBasedAuthentication.csrfSecret:type_name -> wgpb.ConfigurationVariable
 	1,   // 24: wgpb.AuthProvider.kind:type_name -> wgpb.AuthProviderKind
-	34,  // 25: wgpb.AuthProvider.githubConfig:type_name -> wgpb.GithubAuthProviderConfig
-	36,  // 26: wgpb.AuthProvider.oidcConfig:type_name -> wgpb.OpenIDConnectAuthProviderConfig
-	109, // 27: wgpb.GithubAuthProviderConfig.clientId:type_name -> wgpb.ConfigurationVariable
-	109, // 28: wgpb.GithubAuthProviderConfig.clientSecret:type_name -> wgpb.ConfigurationVariable
-	109, // 29: wgpb.OpenIDConnectQueryParameter.name:type_name -> wgpb.ConfigurationVariable
-	109, // 30: wgpb.OpenIDConnectQueryParameter.value:type_name -> wgpb.ConfigurationVariable
-	109, // 31: wgpb.OpenIDConnectAuthProviderConfig.issuer:type_name -> wgpb.ConfigurationVariable
-	109, // 32: wgpb.OpenIDConnectAuthProviderConfig.clientId:type_name -> wgpb.ConfigurationVariable
-	109, // 33: wgpb.OpenIDConnectAuthProviderConfig.clientSecret:type_name -> wgpb.ConfigurationVariable
-	35,  // 34: wgpb.OpenIDConnectAuthProviderConfig.queryParameters:type_name -> wgpb.OpenIDConnectQueryParameter
+	35,  // 25: wgpb.AuthProvider.githubConfig:type_name -> wgpb.GithubAuthProviderConfig
+	37,  // 26: wgpb.AuthProvider.oidcConfig:type_name -> wgpb.OpenIDConnectAuthProviderConfig
+	110, // 27: wgpb.GithubAuthProviderConfig.clientId:type_name -> wgpb.ConfigurationVariable
+	110, // 28: wgpb.GithubAuthProviderConfig.clientSecret:type_name -> wgpb.ConfigurationVariable
+	110, // 29: wgpb.OpenIDConnectQueryParameter.name:type_name -> wgpb.ConfigurationVariable
+	110, // 30: wgpb.OpenIDConnectQueryParameter.value:type_name -> wgpb.ConfigurationVariable
+	110, // 31: wgpb.OpenIDConnectAuthProviderConfig.issuer:type_name -> wgpb.ConfigurationVariable
+	110, // 32: wgpb.OpenIDConnectAuthProviderConfig.clientId:type_name -> wgpb.ConfigurationVariable
+	110, // 33: wgpb.OpenIDConnectAuthProviderConfig.clientSecret:type_name -> wgpb.ConfigurationVariable
+	36,  // 34: wgpb.OpenIDConnectAuthProviderConfig.queryParameters:type_name -> wgpb.OpenIDConnectQueryParameter
 	2,   // 35: wgpb.ApiCacheConfig.kind:type_name -> wgpb.ApiCacheKind
-	38,  // 36: wgpb.ApiCacheConfig.inMemoryConfig:type_name -> wgpb.InMemoryCacheConfig
-	39,  // 37: wgpb.ApiCacheConfig.redisConfig:type_name -> wgpb.RedisCacheConfig
-	13,  // 38: wgpb.Operation.operationType:type_name -> wgpb.OperationType
+	39,  // 36: wgpb.ApiCacheConfig.inMemoryConfig:type_name -> wgpb.InMemoryCacheConfig
+	40,  // 37: wgpb.ApiCacheConfig.redisConfig:type_name -> wgpb.RedisCacheConfig
+	14,  // 38: wgpb.Operation.operationType:type_name -> wgpb.OperationType
 	4,   // 39: wgpb.Operation.engine:type_name -> wgpb.OperationExecutionEngine
-	65,  // 40: wgpb.Operation.cacheConfig:type_name -> wgpb.OperationCacheConfig
-	64,  // 41: wgpb.Operation.authenticationConfig:type_name -> wgpb.OperationAuthenticationConfig
-	63,  // 42: wgpb.Operation.liveQueryConfig:type_name -> wgpb.OperationLiveQueryConfig
-	54,  // 43: wgpb.Operation.authorizationConfig:type_name -> wgpb.OperationAuthorizationConfig
-	52,  // 44: wgpb.Operation.hooksConfiguration:type_name -> wgpb.OperationHooksConfiguration
-	48,  // 45: wgpb.Operation.variablesConfiguration:type_name -> wgpb.OperationVariablesConfiguration
-	46,  // 46: wgpb.Operation.postResolveTransformations:type_name -> wgpb.PostResolveTransformation
-	110, // 47: wgpb.Operation.datasourceQuotes:type_name -> wgpb.Operation.DatasourceQuotesEntry
-	42,  // 48: wgpb.Operation.transaction:type_name -> wgpb.OperationTransaction
-	44,  // 49: wgpb.Operation.rateLimit:type_name -> wgpb.OperationRateLimit
-	41,  // 50: wgpb.Operation.semaphore:type_name -> wgpb.OperationSemaphore
-	43,  // 51: wgpb.Operation.multipartForms:type_name -> wgpb.OperationMultipartForm
+	66,  // 40: wgpb.Operation.cacheConfig:type_name -> wgpb.OperationCacheConfig
+	65,  // 41: wgpb.Operation.authenticationConfig:type_name -> wgpb.OperationAuthenticationConfig
+	64,  // 42: wgpb.Operation.liveQueryConfig:type_name -> wgpb.OperationLiveQueryConfig
+	55,  // 43: wgpb.Operation.authorizationConfig:type_name -> wgpb.OperationAuthorizationConfig
+	53,  // 44: wgpb.Operation.hooksConfiguration:type_name -> wgpb.OperationHooksConfiguration
+	49,  // 45: wgpb.Operation.variablesConfiguration:type_name -> wgpb.OperationVariablesConfiguration
+	47,  // 46: wgpb.Operation.postResolveTransformations:type_name -> wgpb.PostResolveTransformation
+	111, // 47: wgpb.Operation.datasourceQuotes:type_name -> wgpb.Operation.DatasourceQuotesEntry
+	43,  // 48: wgpb.Operation.transaction:type_name -> wgpb.OperationTransaction
+	45,  // 49: wgpb.Operation.rateLimit:type_name -> wgpb.OperationRateLimit
+	42,  // 50: wgpb.Operation.semaphore:type_name -> wgpb.OperationSemaphore
+	44,  // 51: wgpb.Operation.multipartForms:type_name -> wgpb.OperationMultipartForm
 	3,   // 52: wgpb.OperationTransaction.isolationLevel:type_name -> wgpb.OperationTransactionIsolationLevel
 	5,   // 53: wgpb.PostResolveTransformation.kind:type_name -> wgpb.PostResolveTransformationKind
-	47,  // 54: wgpb.PostResolveTransformation.get:type_name -> wgpb.PostResolveGetTransformation
-	49,  // 55: wgpb.OperationVariablesConfiguration.injectVariables:type_name -> wgpb.VariableInjectionConfiguration
-	58,  // 56: wgpb.OperationVariablesConfiguration.whereInputs:type_name -> wgpb.VariableWhereInputConfiguration
-	6,   // 57: wgpb.VariableInjectionConfiguration.variableKind:type_name -> wgpb.InjectVariableKind
-	50,  // 58: wgpb.VariableInjectionConfiguration.dateOffset:type_name -> wgpb.DateOffset
-	8,   // 59: wgpb.VariableInjectionConfiguration.dateToUnix:type_name -> wgpb.DateToUnix
-	7,   // 60: wgpb.DateOffset.unit:type_name -> wgpb.DateOffsetUnit
-	53,  // 61: wgpb.OperationHooksConfiguration.mockResolve:type_name -> wgpb.MockResolveHookConfiguration
-	57,  // 62: wgpb.OperationAuthorizationConfig.claims:type_name -> wgpb.ClaimConfig
-	55,  // 63: wgpb.OperationAuthorizationConfig.roleConfig:type_name -> wgpb.OperationRoleConfig
-	12,  // 64: wgpb.CustomClaim.type:type_name -> wgpb.ValueType
-	11,  // 65: wgpb.ClaimConfig.claimType:type_name -> wgpb.ClaimType
-	56,  // 66: wgpb.ClaimConfig.custom:type_name -> wgpb.CustomClaim
-	59,  // 67: wgpb.VariableWhereInputConfiguration.whereInput:type_name -> wgpb.VariableWhereInput
-	59,  // 68: wgpb.VariableWhereInput.not:type_name -> wgpb.VariableWhereInput
-	60,  // 69: wgpb.VariableWhereInput.filter:type_name -> wgpb.VariableWhereInputFilter
-	61,  // 70: wgpb.VariableWhereInputFilter.scalar:type_name -> wgpb.VariableWhereInputScalarFilter
-	62,  // 71: wgpb.VariableWhereInputFilter.relation:type_name -> wgpb.VariableWhereInputRelationFilter
-	9,   // 72: wgpb.VariableWhereInputScalarFilter.type:type_name -> wgpb.VariableWhereInputScalarFilterType
-	10,  // 73: wgpb.VariableWhereInputRelationFilter.type:type_name -> wgpb.VariableWhereInputRelationFilterType
-	59,  // 74: wgpb.VariableWhereInputRelationFilter.where:type_name -> wgpb.VariableWhereInput
-	67,  // 75: wgpb.EngineConfiguration.datasourceConfigurations:type_name -> wgpb.DataSourceConfiguration
-	91,  // 76: wgpb.EngineConfiguration.fieldConfigurations:type_name -> wgpb.FieldConfiguration
-	90,  // 77: wgpb.EngineConfiguration.typeConfigurations:type_name -> wgpb.TypeConfiguration
-	14,  // 78: wgpb.DataSourceConfiguration.kind:type_name -> wgpb.DataSourceKind
-	14,  // 79: wgpb.DataSourceConfiguration.kindForPrisma:type_name -> wgpb.DataSourceKind
-	92,  // 80: wgpb.DataSourceConfiguration.rootNodes:type_name -> wgpb.TypeField
-	92,  // 81: wgpb.DataSourceConfiguration.childNodes:type_name -> wgpb.TypeField
-	111, // 82: wgpb.DataSourceConfiguration.customRestMap:type_name -> wgpb.DataSourceConfiguration.CustomRestMapEntry
-	112, // 83: wgpb.DataSourceConfiguration.customRestRequestRewriterMap:type_name -> wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry
-	113, // 84: wgpb.DataSourceConfiguration.customRestResponseRewriterMap:type_name -> wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry
-	69,  // 85: wgpb.DataSourceConfiguration.customRest:type_name -> wgpb.DataSourceCustom_REST
-	77,  // 86: wgpb.DataSourceConfiguration.customGraphql:type_name -> wgpb.DataSourceCustom_GraphQL
-	80,  // 87: wgpb.DataSourceConfiguration.customStatic:type_name -> wgpb.DataSourceCustom_Static
-	78,  // 88: wgpb.DataSourceConfiguration.customDatabase:type_name -> wgpb.DataSourceCustom_Database
-	68,  // 89: wgpb.DataSourceConfiguration.directives:type_name -> wgpb.DirectiveConfiguration
-	82,  // 90: wgpb.DataSourceCustom_REST.fetch:type_name -> wgpb.FetchConfiguration
-	87,  // 91: wgpb.DataSourceCustom_REST.subscription:type_name -> wgpb.RESTSubscriptionConfiguration
-	76,  // 92: wgpb.DataSourceCustom_REST.statusCodeTypeMappings:type_name -> wgpb.StatusCodeTypeMapping
-	73,  // 93: wgpb.DataSourceCustom_REST.requestRewriters:type_name -> wgpb.DataSourceRESTRewriter
-	73,  // 94: wgpb.DataSourceCustom_REST.responseRewriters:type_name -> wgpb.DataSourceRESTRewriter
-	70,  // 95: wgpb.DataSourceCustom_REST.responseExtractor:type_name -> wgpb.DataSourceRESTResponseExtractor
-	71,  // 96: wgpb.DataSourceRESTResponseExtractor.statusCodeScopes:type_name -> wgpb.DataSourceRESTResponseStatusCodeScope
-	73,  // 97: wgpb.DataSourceCustom_REST_Rewriter.rewriters:type_name -> wgpb.DataSourceRESTRewriter
-	15,  // 98: wgpb.DataSourceRESTRewriter.type:type_name -> wgpb.DataSourceRESTRewriterType
-	114, // 99: wgpb.DataSourceRESTRewriter.valueRewrites:type_name -> wgpb.DataSourceRESTRewriter.ValueRewritesEntry
-	115, // 100: wgpb.DataSourceRESTRewriter.applySubCommonFieldValues:type_name -> wgpb.DataSourceRESTRewriter.ApplySubCommonFieldValuesEntry
-	74,  // 101: wgpb.DataSourceRESTRewriter.applySubObjects:type_name -> wgpb.DataSourceRESTSubObject
-	75,  // 102: wgpb.DataSourceRESTRewriter.applySubFieldTypes:type_name -> wgpb.DataSourceRESTSubfield
-	75,  // 103: wgpb.DataSourceRESTSubObject.fields:type_name -> wgpb.DataSourceRESTSubfield
-	82,  // 104: wgpb.DataSourceCustom_GraphQL.fetch:type_name -> wgpb.FetchConfiguration
-	81,  // 105: wgpb.DataSourceCustom_GraphQL.subscription:type_name -> wgpb.GraphQLSubscriptionConfiguration
-	79,  // 106: wgpb.DataSourceCustom_GraphQL.federation:type_name -> wgpb.GraphQLFederationConfiguration
-	51,  // 107: wgpb.DataSourceCustom_GraphQL.hooksConfiguration:type_name -> wgpb.GraphQLDataSourceHooksConfiguration
-	94,  // 108: wgpb.DataSourceCustom_GraphQL.customScalarTypeFields:type_name -> wgpb.SingleTypeField
-	109, // 109: wgpb.DataSourceCustom_Database.databaseURL:type_name -> wgpb.ConfigurationVariable
-	94,  // 110: wgpb.DataSourceCustom_Database.jsonTypeFields:type_name -> wgpb.SingleTypeField
-	109, // 111: wgpb.DataSourceCustom_Static.data:type_name -> wgpb.ConfigurationVariable
-	109, // 112: wgpb.GraphQLSubscriptionConfiguration.url:type_name -> wgpb.ConfigurationVariable
-	109, // 113: wgpb.FetchConfiguration.url:type_name -> wgpb.ConfigurationVariable
-	18,  // 114: wgpb.FetchConfiguration.method:type_name -> wgpb.HTTPMethod
-	116, // 115: wgpb.FetchConfiguration.header:type_name -> wgpb.FetchConfiguration.HeaderEntry
-	109, // 116: wgpb.FetchConfiguration.body:type_name -> wgpb.ConfigurationVariable
-	88,  // 117: wgpb.FetchConfiguration.query:type_name -> wgpb.URLQueryConfiguration
-	84,  // 118: wgpb.FetchConfiguration.upstreamAuthentication:type_name -> wgpb.UpstreamAuthentication
-	83,  // 119: wgpb.FetchConfiguration.mTLS:type_name -> wgpb.MTLSConfiguration
-	109, // 120: wgpb.FetchConfiguration.baseUrl:type_name -> wgpb.ConfigurationVariable
-	109, // 121: wgpb.FetchConfiguration.path:type_name -> wgpb.ConfigurationVariable
-	109, // 122: wgpb.MTLSConfiguration.key:type_name -> wgpb.ConfigurationVariable
-	109, // 123: wgpb.MTLSConfiguration.cert:type_name -> wgpb.ConfigurationVariable
-	16,  // 124: wgpb.UpstreamAuthentication.kind:type_name -> wgpb.UpstreamAuthenticationKind
-	85,  // 125: wgpb.UpstreamAuthentication.jwtConfig:type_name -> wgpb.JwtUpstreamAuthenticationConfig
-	86,  // 126: wgpb.UpstreamAuthentication.jwtWithAccessTokenExchangeConfig:type_name -> wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange
-	109, // 127: wgpb.JwtUpstreamAuthenticationConfig.secret:type_name -> wgpb.ConfigurationVariable
-	17,  // 128: wgpb.JwtUpstreamAuthenticationConfig.signingMethod:type_name -> wgpb.SigningMethod
-	109, // 129: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.secret:type_name -> wgpb.ConfigurationVariable
-	17,  // 130: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.signingMethod:type_name -> wgpb.SigningMethod
-	109, // 131: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.accessTokenExchangeEndpoint:type_name -> wgpb.ConfigurationVariable
-	109, // 132: wgpb.HTTPHeader.values:type_name -> wgpb.ConfigurationVariable
-	95,  // 133: wgpb.FieldConfiguration.argumentsConfiguration:type_name -> wgpb.ArgumentConfiguration
-	117, // 134: wgpb.TypeField.quotes:type_name -> wgpb.TypeField.QuotesEntry
-	19,  // 135: wgpb.ArgumentConfiguration.sourceType:type_name -> wgpb.ArgumentSource
-	20,  // 136: wgpb.ArgumentConfiguration.renderConfiguration:type_name -> wgpb.ArgumentRenderConfiguration
-	100, // 137: wgpb.WunderGraphConfiguration.api:type_name -> wgpb.UserDefinedApi
-	97,  // 138: wgpb.S3UploadProfile.hooks:type_name -> wgpb.S3UploadProfileHooksConfiguration
-	109, // 139: wgpb.S3UploadConfiguration.endpoint:type_name -> wgpb.ConfigurationVariable
-	109, // 140: wgpb.S3UploadConfiguration.accessKeyID:type_name -> wgpb.ConfigurationVariable
-	109, // 141: wgpb.S3UploadConfiguration.secretAccessKey:type_name -> wgpb.ConfigurationVariable
-	109, // 142: wgpb.S3UploadConfiguration.bucketName:type_name -> wgpb.ConfigurationVariable
-	109, // 143: wgpb.S3UploadConfiguration.bucketLocation:type_name -> wgpb.ConfigurationVariable
-	118, // 144: wgpb.S3UploadConfiguration.uploadProfiles:type_name -> wgpb.S3UploadConfiguration.UploadProfilesEntry
-	66,  // 145: wgpb.UserDefinedApi.engineConfiguration:type_name -> wgpb.EngineConfiguration
-	40,  // 146: wgpb.UserDefinedApi.operations:type_name -> wgpb.Operation
-	108, // 147: wgpb.UserDefinedApi.corsConfiguration:type_name -> wgpb.CorsConfiguration
-	28,  // 148: wgpb.UserDefinedApi.authenticationConfig:type_name -> wgpb.ApiAuthenticationConfig
-	99,  // 149: wgpb.UserDefinedApi.s3UploadConfiguration:type_name -> wgpb.S3UploadConfiguration
-	109, // 150: wgpb.UserDefinedApi.allowedHostNames:type_name -> wgpb.ConfigurationVariable
-	106, // 151: wgpb.UserDefinedApi.webhooks:type_name -> wgpb.WebhookConfiguration
-	105, // 152: wgpb.UserDefinedApi.serverOptions:type_name -> wgpb.ServerOptions
-	103, // 153: wgpb.UserDefinedApi.nodeOptions:type_name -> wgpb.NodeOptions
-	109, // 154: wgpb.ListenerOptions.host:type_name -> wgpb.ConfigurationVariable
-	109, // 155: wgpb.ListenerOptions.port:type_name -> wgpb.ConfigurationVariable
-	109, // 156: wgpb.NodeLogging.level:type_name -> wgpb.ConfigurationVariable
-	109, // 157: wgpb.NodeOptions.nodeUrl:type_name -> wgpb.ConfigurationVariable
-	109, // 158: wgpb.NodeOptions.publicNodeUrl:type_name -> wgpb.ConfigurationVariable
-	101, // 159: wgpb.NodeOptions.listen:type_name -> wgpb.ListenerOptions
-	102, // 160: wgpb.NodeOptions.logger:type_name -> wgpb.NodeLogging
-	109, // 161: wgpb.ServerLogging.level:type_name -> wgpb.ConfigurationVariable
-	109, // 162: wgpb.ServerOptions.serverUrl:type_name -> wgpb.ConfigurationVariable
-	101, // 163: wgpb.ServerOptions.listen:type_name -> wgpb.ListenerOptions
-	104, // 164: wgpb.ServerOptions.logger:type_name -> wgpb.ServerLogging
-	107, // 165: wgpb.WebhookConfiguration.verifier:type_name -> wgpb.WebhookVerifier
-	21,  // 166: wgpb.WebhookVerifier.kind:type_name -> wgpb.WebhookVerifierKind
-	109, // 167: wgpb.WebhookVerifier.secret:type_name -> wgpb.ConfigurationVariable
-	109, // 168: wgpb.CorsConfiguration.allowedOrigins:type_name -> wgpb.ConfigurationVariable
-	22,  // 169: wgpb.ConfigurationVariable.kind:type_name -> wgpb.ConfigurationVariableKind
-	45,  // 170: wgpb.Operation.DatasourceQuotesEntry.value:type_name -> wgpb.DatasourceQuote
-	69,  // 171: wgpb.DataSourceConfiguration.CustomRestMapEntry.value:type_name -> wgpb.DataSourceCustom_REST
-	72,  // 172: wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry.value:type_name -> wgpb.DataSourceCustom_REST_Rewriter
-	72,  // 173: wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry.value:type_name -> wgpb.DataSourceCustom_REST_Rewriter
-	89,  // 174: wgpb.FetchConfiguration.HeaderEntry.value:type_name -> wgpb.HTTPHeader
-	93,  // 175: wgpb.TypeField.QuotesEntry.value:type_name -> wgpb.QuoteField
-	98,  // 176: wgpb.S3UploadConfiguration.UploadProfilesEntry.value:type_name -> wgpb.S3UploadProfile
+	48,  // 54: wgpb.PostResolveTransformation.get:type_name -> wgpb.PostResolveGetTransformation
+	50,  // 55: wgpb.OperationVariablesConfiguration.injectVariables:type_name -> wgpb.VariableInjectionConfiguration
+	59,  // 56: wgpb.OperationVariablesConfiguration.whereInputs:type_name -> wgpb.VariableWhereInputConfiguration
+	7,   // 57: wgpb.VariableInjectionConfiguration.variableKind:type_name -> wgpb.InjectVariableKind
+	51,  // 58: wgpb.VariableInjectionConfiguration.dateOffset:type_name -> wgpb.DateOffset
+	9,   // 59: wgpb.VariableInjectionConfiguration.dateToUnix:type_name -> wgpb.DateToUnix
+	8,   // 60: wgpb.DateOffset.unit:type_name -> wgpb.DateOffsetUnit
+	54,  // 61: wgpb.OperationHooksConfiguration.mockResolve:type_name -> wgpb.MockResolveHookConfiguration
+	58,  // 62: wgpb.OperationAuthorizationConfig.claims:type_name -> wgpb.ClaimConfig
+	56,  // 63: wgpb.OperationAuthorizationConfig.roleConfig:type_name -> wgpb.OperationRoleConfig
+	13,  // 64: wgpb.CustomClaim.type:type_name -> wgpb.ValueType
+	12,  // 65: wgpb.ClaimConfig.claimType:type_name -> wgpb.ClaimType
+	57,  // 66: wgpb.ClaimConfig.custom:type_name -> wgpb.CustomClaim
+	60,  // 67: wgpb.VariableWhereInputConfiguration.whereInput:type_name -> wgpb.VariableWhereInput
+	60,  // 68: wgpb.VariableWhereInput.not:type_name -> wgpb.VariableWhereInput
+	61,  // 69: wgpb.VariableWhereInput.filter:type_name -> wgpb.VariableWhereInputFilter
+	62,  // 70: wgpb.VariableWhereInputFilter.scalar:type_name -> wgpb.VariableWhereInputScalarFilter
+	63,  // 71: wgpb.VariableWhereInputFilter.relation:type_name -> wgpb.VariableWhereInputRelationFilter
+	10,  // 72: wgpb.VariableWhereInputScalarFilter.type:type_name -> wgpb.VariableWhereInputScalarFilterType
+	11,  // 73: wgpb.VariableWhereInputRelationFilter.type:type_name -> wgpb.VariableWhereInputRelationFilterType
+	60,  // 74: wgpb.VariableWhereInputRelationFilter.where:type_name -> wgpb.VariableWhereInput
+	68,  // 75: wgpb.EngineConfiguration.datasourceConfigurations:type_name -> wgpb.DataSourceConfiguration
+	92,  // 76: wgpb.EngineConfiguration.fieldConfigurations:type_name -> wgpb.FieldConfiguration
+	91,  // 77: wgpb.EngineConfiguration.typeConfigurations:type_name -> wgpb.TypeConfiguration
+	15,  // 78: wgpb.DataSourceConfiguration.kind:type_name -> wgpb.DataSourceKind
+	15,  // 79: wgpb.DataSourceConfiguration.kindForPrisma:type_name -> wgpb.DataSourceKind
+	93,  // 80: wgpb.DataSourceConfiguration.rootNodes:type_name -> wgpb.TypeField
+	93,  // 81: wgpb.DataSourceConfiguration.childNodes:type_name -> wgpb.TypeField
+	112, // 82: wgpb.DataSourceConfiguration.customRestMap:type_name -> wgpb.DataSourceConfiguration.CustomRestMapEntry
+	113, // 83: wgpb.DataSourceConfiguration.customRestRequestRewriterMap:type_name -> wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry
+	114, // 84: wgpb.DataSourceConfiguration.customRestResponseRewriterMap:type_name -> wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry
+	70,  // 85: wgpb.DataSourceConfiguration.customRest:type_name -> wgpb.DataSourceCustom_REST
+	78,  // 86: wgpb.DataSourceConfiguration.customGraphql:type_name -> wgpb.DataSourceCustom_GraphQL
+	81,  // 87: wgpb.DataSourceConfiguration.customStatic:type_name -> wgpb.DataSourceCustom_Static
+	79,  // 88: wgpb.DataSourceConfiguration.customDatabase:type_name -> wgpb.DataSourceCustom_Database
+	69,  // 89: wgpb.DataSourceConfiguration.directives:type_name -> wgpb.DirectiveConfiguration
+	83,  // 90: wgpb.DataSourceCustom_REST.fetch:type_name -> wgpb.FetchConfiguration
+	88,  // 91: wgpb.DataSourceCustom_REST.subscription:type_name -> wgpb.RESTSubscriptionConfiguration
+	77,  // 92: wgpb.DataSourceCustom_REST.statusCodeTypeMappings:type_name -> wgpb.StatusCodeTypeMapping
+	74,  // 93: wgpb.DataSourceCustom_REST.requestRewriters:type_name -> wgpb.DataSourceRESTRewriter
+	74,  // 94: wgpb.DataSourceCustom_REST.responseRewriters:type_name -> wgpb.DataSourceRESTRewriter
+	71,  // 95: wgpb.DataSourceCustom_REST.responseExtractor:type_name -> wgpb.DataSourceRESTResponseExtractor
+	72,  // 96: wgpb.DataSourceRESTResponseExtractor.statusCodeScopes:type_name -> wgpb.DataSourceRESTResponseStatusCodeScope
+	74,  // 97: wgpb.DataSourceCustom_REST_Rewriter.rewriters:type_name -> wgpb.DataSourceRESTRewriter
+	16,  // 98: wgpb.DataSourceRESTRewriter.type:type_name -> wgpb.DataSourceRESTRewriterType
+	115, // 99: wgpb.DataSourceRESTRewriter.valueRewrites:type_name -> wgpb.DataSourceRESTRewriter.ValueRewritesEntry
+	116, // 100: wgpb.DataSourceRESTRewriter.applySubCommonFieldValues:type_name -> wgpb.DataSourceRESTRewriter.ApplySubCommonFieldValuesEntry
+	75,  // 101: wgpb.DataSourceRESTRewriter.applySubObjects:type_name -> wgpb.DataSourceRESTSubObject
+	76,  // 102: wgpb.DataSourceRESTRewriter.applySubFieldTypes:type_name -> wgpb.DataSourceRESTSubfield
+	76,  // 103: wgpb.DataSourceRESTSubObject.fields:type_name -> wgpb.DataSourceRESTSubfield
+	83,  // 104: wgpb.DataSourceCustom_GraphQL.fetch:type_name -> wgpb.FetchConfiguration
+	82,  // 105: wgpb.DataSourceCustom_GraphQL.subscription:type_name -> wgpb.GraphQLSubscriptionConfiguration
+	80,  // 106: wgpb.DataSourceCustom_GraphQL.federation:type_name -> wgpb.GraphQLFederationConfiguration
+	52,  // 107: wgpb.DataSourceCustom_GraphQL.hooksConfiguration:type_name -> wgpb.GraphQLDataSourceHooksConfiguration
+	95,  // 108: wgpb.DataSourceCustom_GraphQL.customScalarTypeFields:type_name -> wgpb.SingleTypeField
+	110, // 109: wgpb.DataSourceCustom_Database.databaseURL:type_name -> wgpb.ConfigurationVariable
+	95,  // 110: wgpb.DataSourceCustom_Database.jsonTypeFields:type_name -> wgpb.SingleTypeField
+	110, // 111: wgpb.DataSourceCustom_Static.data:type_name -> wgpb.ConfigurationVariable
+	110, // 112: wgpb.GraphQLSubscriptionConfiguration.url:type_name -> wgpb.ConfigurationVariable
+	110, // 113: wgpb.FetchConfiguration.url:type_name -> wgpb.ConfigurationVariable
+	19,  // 114: wgpb.FetchConfiguration.method:type_name -> wgpb.HTTPMethod
+	117, // 115: wgpb.FetchConfiguration.header:type_name -> wgpb.FetchConfiguration.HeaderEntry
+	110, // 116: wgpb.FetchConfiguration.body:type_name -> wgpb.ConfigurationVariable
+	89,  // 117: wgpb.FetchConfiguration.query:type_name -> wgpb.URLQueryConfiguration
+	85,  // 118: wgpb.FetchConfiguration.upstreamAuthentication:type_name -> wgpb.UpstreamAuthentication
+	84,  // 119: wgpb.FetchConfiguration.mTLS:type_name -> wgpb.MTLSConfiguration
+	110, // 120: wgpb.FetchConfiguration.baseUrl:type_name -> wgpb.ConfigurationVariable
+	110, // 121: wgpb.FetchConfiguration.path:type_name -> wgpb.ConfigurationVariable
+	110, // 122: wgpb.MTLSConfiguration.key:type_name -> wgpb.ConfigurationVariable
+	110, // 123: wgpb.MTLSConfiguration.cert:type_name -> wgpb.ConfigurationVariable
+	17,  // 124: wgpb.UpstreamAuthentication.kind:type_name -> wgpb.UpstreamAuthenticationKind
+	86,  // 125: wgpb.UpstreamAuthentication.jwtConfig:type_name -> wgpb.JwtUpstreamAuthenticationConfig
+	87,  // 126: wgpb.UpstreamAuthentication.jwtWithAccessTokenExchangeConfig:type_name -> wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange
+	110, // 127: wgpb.JwtUpstreamAuthenticationConfig.secret:type_name -> wgpb.ConfigurationVariable
+	18,  // 128: wgpb.JwtUpstreamAuthenticationConfig.signingMethod:type_name -> wgpb.SigningMethod
+	110, // 129: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.secret:type_name -> wgpb.ConfigurationVariable
+	18,  // 130: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.signingMethod:type_name -> wgpb.SigningMethod
+	110, // 131: wgpb.JwtUpstreamAuthenticationWithAccessTokenExchange.accessTokenExchangeEndpoint:type_name -> wgpb.ConfigurationVariable
+	110, // 132: wgpb.HTTPHeader.values:type_name -> wgpb.ConfigurationVariable
+	96,  // 133: wgpb.FieldConfiguration.argumentsConfiguration:type_name -> wgpb.ArgumentConfiguration
+	118, // 134: wgpb.TypeField.quotes:type_name -> wgpb.TypeField.QuotesEntry
+	20,  // 135: wgpb.ArgumentConfiguration.sourceType:type_name -> wgpb.ArgumentSource
+	21,  // 136: wgpb.ArgumentConfiguration.renderConfiguration:type_name -> wgpb.ArgumentRenderConfiguration
+	101, // 137: wgpb.WunderGraphConfiguration.api:type_name -> wgpb.UserDefinedApi
+	98,  // 138: wgpb.S3UploadProfile.hooks:type_name -> wgpb.S3UploadProfileHooksConfiguration
+	110, // 139: wgpb.S3UploadConfiguration.endpoint:type_name -> wgpb.ConfigurationVariable
+	110, // 140: wgpb.S3UploadConfiguration.accessKeyID:type_name -> wgpb.ConfigurationVariable
+	110, // 141: wgpb.S3UploadConfiguration.secretAccessKey:type_name -> wgpb.ConfigurationVariable
+	110, // 142: wgpb.S3UploadConfiguration.bucketName:type_name -> wgpb.ConfigurationVariable
+	110, // 143: wgpb.S3UploadConfiguration.bucketLocation:type_name -> wgpb.ConfigurationVariable
+	119, // 144: wgpb.S3UploadConfiguration.uploadProfiles:type_name -> wgpb.S3UploadConfiguration.UploadProfilesEntry
+	67,  // 145: wgpb.UserDefinedApi.engineConfiguration:type_name -> wgpb.EngineConfiguration
+	41,  // 146: wgpb.UserDefinedApi.operations:type_name -> wgpb.Operation
+	109, // 147: wgpb.UserDefinedApi.corsConfiguration:type_name -> wgpb.CorsConfiguration
+	29,  // 148: wgpb.UserDefinedApi.authenticationConfig:type_name -> wgpb.ApiAuthenticationConfig
+	100, // 149: wgpb.UserDefinedApi.s3UploadConfiguration:type_name -> wgpb.S3UploadConfiguration
+	110, // 150: wgpb.UserDefinedApi.allowedHostNames:type_name -> wgpb.ConfigurationVariable
+	107, // 151: wgpb.UserDefinedApi.webhooks:type_name -> wgpb.WebhookConfiguration
+	106, // 152: wgpb.UserDefinedApi.serverOptions:type_name -> wgpb.ServerOptions
+	104, // 153: wgpb.UserDefinedApi.nodeOptions:type_name -> wgpb.NodeOptions
+	110, // 154: wgpb.ListenerOptions.host:type_name -> wgpb.ConfigurationVariable
+	110, // 155: wgpb.ListenerOptions.port:type_name -> wgpb.ConfigurationVariable
+	110, // 156: wgpb.NodeLogging.level:type_name -> wgpb.ConfigurationVariable
+	110, // 157: wgpb.NodeOptions.nodeUrl:type_name -> wgpb.ConfigurationVariable
+	110, // 158: wgpb.NodeOptions.publicNodeUrl:type_name -> wgpb.ConfigurationVariable
+	102, // 159: wgpb.NodeOptions.listen:type_name -> wgpb.ListenerOptions
+	103, // 160: wgpb.NodeOptions.logger:type_name -> wgpb.NodeLogging
+	110, // 161: wgpb.ServerLogging.level:type_name -> wgpb.ConfigurationVariable
+	110, // 162: wgpb.ServerOptions.serverUrl:type_name -> wgpb.ConfigurationVariable
+	102, // 163: wgpb.ServerOptions.listen:type_name -> wgpb.ListenerOptions
+	105, // 164: wgpb.ServerOptions.logger:type_name -> wgpb.ServerLogging
+	108, // 165: wgpb.WebhookConfiguration.verifier:type_name -> wgpb.WebhookVerifier
+	22,  // 166: wgpb.WebhookVerifier.kind:type_name -> wgpb.WebhookVerifierKind
+	110, // 167: wgpb.WebhookVerifier.secret:type_name -> wgpb.ConfigurationVariable
+	110, // 168: wgpb.CorsConfiguration.allowedOrigins:type_name -> wgpb.ConfigurationVariable
+	23,  // 169: wgpb.ConfigurationVariable.kind:type_name -> wgpb.ConfigurationVariableKind
+	46,  // 170: wgpb.Operation.DatasourceQuotesEntry.value:type_name -> wgpb.DatasourceQuote
+	70,  // 171: wgpb.DataSourceConfiguration.CustomRestMapEntry.value:type_name -> wgpb.DataSourceCustom_REST
+	73,  // 172: wgpb.DataSourceConfiguration.CustomRestRequestRewriterMapEntry.value:type_name -> wgpb.DataSourceCustom_REST_Rewriter
+	73,  // 173: wgpb.DataSourceConfiguration.CustomRestResponseRewriterMapEntry.value:type_name -> wgpb.DataSourceCustom_REST_Rewriter
+	90,  // 174: wgpb.FetchConfiguration.HeaderEntry.value:type_name -> wgpb.HTTPHeader
+	94,  // 175: wgpb.TypeField.QuotesEntry.value:type_name -> wgpb.QuoteField
+	99,  // 176: wgpb.S3UploadConfiguration.UploadProfilesEntry.value:type_name -> wgpb.S3UploadProfile
 	177, // [177:177] is the sub-list for method output_type
 	177, // [177:177] is the sub-list for method input_type
 	177, // [177:177] is the sub-list for extension type_name
@@ -10383,7 +10444,7 @@ func file_wundernode_config_proto_init() {
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_wundernode_config_proto_rawDesc,
-			NumEnums:      23,
+			NumEnums:      24,
 			NumMessages:   96,
 			NumExtensions: 0,
 			NumServices:   0,
