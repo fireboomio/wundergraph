@@ -132,6 +132,11 @@ func RequestIDMiddleware(handler http.Handler) http.Handler {
 	})
 }
 
+func ClearRequestIDForAll(request *http.Request) context.Context {
+	request.Header.Del(RequestIDHeader)
+	return context.WithValue(request.Context(), RequestIDKey{}, "")
+}
+
 func RequestIDFromContext(ctx context.Context) string {
 	requestID, ok := ctx.Value(RequestIDKey{}).(string)
 	if !ok {

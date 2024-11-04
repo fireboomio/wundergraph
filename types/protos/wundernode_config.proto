@@ -209,6 +209,7 @@ message PostResolveTransformation {
   PostResolveTransformationKind kind = 1;
   int32 depth = 2;
   PostResolveGetTransformation get = 3;
+  optional PostResolveTransformationMath math = 4;
 }
 
 message PostResolveGetTransformation {
@@ -226,6 +227,8 @@ enum PostResolveTransformationMath {
   SUM = 2;
   AVG = 3;
   COUNT = 4;
+  FIRST = 5;
+  LAST = 6;
 }
 
 message OperationVariablesConfiguration {

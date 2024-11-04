@@ -24,8 +24,12 @@ func AddClearFieldDirectiveName(name string) {
 	clearFieldDirectiveNames = append(clearFieldDirectiveNames, name)
 }
 
+func isIntrospectionQuery(doc *ast.Document) bool {
+	return doc.OperationNameExists("IntrospectionQuery")
+}
+
 func clearDocumentForClearRequired(ctx *resolve.Context, doc *ast.Document, autoCompleteRequired bool) (autoComplete *graphqlAutoComplete, err error) {
-	if doc.OperationNameExists("IntrospectionQuery") {
+	if isIntrospectionQuery(doc) {
 		return
 	}
 

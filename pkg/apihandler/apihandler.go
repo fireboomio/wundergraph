@@ -700,8 +700,6 @@ func (h *GraphQLHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	requestLogger := h.log.With(logging.WithRequestIDFromContext(r.Context()))
-
 	buf := pool.GetBytesBuffer()
 	defer pool.PutBytesBuffer(buf)
 	_, err := io.Copy(buf, r.Body)
@@ -734,6 +732,10 @@ func (h *GraphQLHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	shared.Doc.Input.ResetInputString(requestQuery)
 	shared.Parser.Parse(shared.Doc, shared.Report)
 
+	requestLogger := h.log.With(logging.WithRequestIDFromContext(r.Context()))
+	if isIntrospectionQuery(shared.Doc) {
+		shared.Ctx.Context = logging.ClearRequestIDForAll(r)
+	}
 	if shared.Report.HasErrors() {
 		h.logInternalErrors(shared.Report, requestLogger)
 		h.writeRequestErrors(shared.Report, w, requestLogger)

@@ -53,7 +53,8 @@ func StartTraceContext(ctx, followCtx context.Context, operationName string, sta
 }
 
 func StartTraceRequest(r *http.Request, startSpanFunc ...func(span opentracing.Span)) (*http.Request, func(...func(opentracing.Span))) {
-	if RequestIDFromContext(r.Context()) == "" || !opentracing.IsGlobalTracerRegistered() {
+	requestID := RequestIDFromContext(r.Context())
+	if requestID == "" || !opentracing.IsGlobalTracerRegistered() {
 		return r, spanWithEmptySpan
 	}
 
@@ -91,7 +92,9 @@ func StartTraceRequest(r *http.Request, startSpanFunc ...func(span opentracing.S
 	}
 	r = r.WithContext(ctx)
 	return r, func(finishSpanFunc ...func(span opentracing.Span)) {
-		finishTrace(span, finishSpanFunc...)
+		if r.Header.Get(RequestIDHeader) == requestID {
+			finishTrace(span, finishSpanFunc...)
+		}
 	}
 }
 
