@@ -220,6 +220,14 @@ enum PostResolveTransformationKind {
   GET_POST_RESOLVE_TRANSFORMATION = 0;
 }
 
+enum PostResolveTransformationMath {
+  MAX = 0;
+  MIN = 1;
+  SUM = 2;
+  AVG = 3;
+  COUNT = 4;
+}
+
 message OperationVariablesConfiguration {
   repeated VariableInjectionConfiguration injectVariables = 1;
   repeated VariableWhereInputConfiguration whereInputs = 2;
