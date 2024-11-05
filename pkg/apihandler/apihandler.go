@@ -441,6 +441,7 @@ func (r *Builder) registerOperation(operation *wgpb.Operation, ctx context.Conte
 	queryParamsAllowList := maps.Keys(stringInterpolator.PropertiesTypeMap)
 
 	postResolveTransformer := postresolvetransform.NewTransformer(operation.PostResolveTransformations)
+	postResolveTransformer.SetGraphqlTransformEnabled(operation.GraphqlTransformEnabled)
 
 	hooksPipelineCommonConfig := hooks.PipelineConfig{
 		Client:             r.middlewareClient,
@@ -686,7 +687,10 @@ var (
 	errInvalid = errors.New("invalid")
 )
 
-const requestHeaderTag = "X-FB-Tag"
+const (
+	requestHeaderTag              = "X-FB-Tag"
+	requestHeaderTransformEnabled = "X-FB-Transform-Enabled"
+)
 
 func invokeRemoteIpLimit(w http.ResponseWriter, r *http.Request, ctx context.Context) (invoked bool) {
 	if invoked = r.Header.Get(requestHeaderTag) != ctx.Value(requestHeaderTag); invoked {
@@ -731,6 +735,9 @@ func (h *GraphQLHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	shared.Ctx.Request.Header = r.Header
 	shared.Doc.Input.ResetInputString(requestQuery)
 	shared.Parser.Parse(shared.Doc, shared.Report)
+	if cast.ToBool(r.Header.Get(requestHeaderTransformEnabled)) {
+		shared.Ctx.Context = context.WithValue(shared.Ctx.Context, resolve.TransformEnabled, true)
+	}
 
 	requestLogger := h.log.With(logging.WithRequestIDFromContext(r.Context()))
 	if isIntrospectionQuery(shared.Doc) {
@@ -1426,6 +1433,9 @@ func (h *QueryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := pool.GetCtx(r, r, pool.Config{
 		RenameTypeNames: h.renameTypeNames,
 	})
+	if h.operation.GraphqlTransformEnabled {
+		ctx.Context = context.WithValue(ctx.Context, resolve.TransformEnabled, true)
+	}
 
 	defer func() {
 		if cacheIsStale {
@@ -1855,6 +1865,9 @@ func (h *MutationHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := pool.GetCtx(r, r, pool.Config{
 		RenameTypeNames: h.renameTypeNames,
 	})
+	if h.operation.GraphqlTransformEnabled {
+		ctx.Context = context.WithValue(ctx.Context, resolve.TransformEnabled, true)
+	}
 	defer pool.PutCtx(ctx)
 
 	ct := r.Header.Get("Content-Type")

@@ -6,83 +6,117 @@ import (
 	"github.com/buger/jsonparser"
 	"github.com/spf13/cast"
 	"github.com/tidwall/gjson"
+	"github.com/wundergraph/graphql-go-tools/pkg/lexer/literal"
 	"github.com/wundergraph/wundergraph/pkg/wgpb"
 	"slices"
 	"strings"
+	"sync"
 )
 
 type Transformer struct {
-	transformations []*wgpb.PostResolveTransformation
+	graphqlTransformEnabled bool
+	transformations         []*wgpb.PostResolveTransformation
+	mathTempMapPool         sync.Pool
+}
+
+type transformerMathTemp struct {
+	path   []string
+	values [][]byte
 }
 
 func NewTransformer(transformations []*wgpb.PostResolveTransformation) *Transformer {
 	return &Transformer{
 		transformations: transformations,
+		mathTempMapPool: sync.Pool{
+			New: func() any { return make(map[string]*transformerMathTemp, 16) },
+		},
 	}
 }
 
-func (t *Transformer) handleMath(output []byte, tos [][]string, math *wgpb.PostResolveTransformationMath) ([]byte, error) {
-	var (
-		err     error
-		touched []string
-	)
-	for i := range tos {
-		_to := tos[i][:len(tos[i])-1]
-		_toPath := strings.Join(_to, ".")
-		if slices.Contains(touched, _toPath) {
-			continue
+func (t *Transformer) SetGraphqlTransformEnabled(enabled bool) {
+	t.graphqlTransformEnabled = enabled
+}
+
+func (t *Transformer) getMathTempMap() map[string]*transformerMathTemp {
+	return t.mathTempMapPool.Get().(map[string]*transformerMathTemp)
+}
+
+func (t *Transformer) freeMathTempMap(mathTempMap map[string]*transformerMathTemp) {
+	for k, v := range mathTempMap {
+		for i := range v.values {
+			v.values[i] = nil
 		}
-		touched = append(touched, _toPath)
-		value, valueType, _, _ := jsonparser.Get(output, _to...)
-		if valueType != jsonparser.Array {
-			return nil, fmt.Errorf("data on path [%s] expect array for Math [%s]", _toPath, math.String())
-		}
-		var arrayItems [][]byte
-		_, _ = jsonparser.ArrayEach(value, func(itemVal []byte, itemType jsonparser.ValueType, _ int, _ error) {
-			if valueType == jsonparser.String {
-				itemVal = []byte(`"` + string(itemVal) + `"`)
+		v.path = nil
+		v.values = nil
+		delete(mathTempMap, k)
+	}
+	t.mathTempMapPool.Put(mathTempMap)
+}
+
+func (t *Transformer) handleMath(output []byte, mathTempMap map[string]*transformerMathTemp, math wgpb.PostResolveTransformationMath) ([]byte, error) {
+	var err error
+	for _, v := range mathTempMap {
+		mathPath, mathValues := v.path, v.values
+		itemsLength := len(mathValues)
+		if itemsLength == 0 {
+			switch math {
+			case wgpb.PostResolveTransformationMath_MIN,
+				wgpb.PostResolveTransformationMath_MAX,
+				wgpb.PostResolveTransformationMath_FIRST,
+				wgpb.PostResolveTransformationMath_LAST:
+				output = jsonparser.Delete(output, mathPath...)
+				continue
 			}
-			arrayItems = append(arrayItems, itemVal)
-		})
-		if len(arrayItems) == 0 {
-			continue
 		}
 
 		var mathResult []byte
-		switch *math {
+		switch math {
 		case wgpb.PostResolveTransformationMath_MIN:
-			mathResult = slices.MinFunc(arrayItems, bytes.Compare)
+			mathResult = slices.MinFunc(mathValues, bytes.Compare)
 		case wgpb.PostResolveTransformationMath_MAX:
-			mathResult = slices.MaxFunc(arrayItems, bytes.Compare)
+			mathResult = slices.MaxFunc(mathValues, bytes.Compare)
 		case wgpb.PostResolveTransformationMath_SUM, wgpb.PostResolveTransformationMath_AVG:
 			var numberValue float64
-			for j := range arrayItems {
-				numberValue += cast.ToFloat64(string(arrayItems[j]))
+			for j := range mathValues {
+				numberValue += cast.ToFloat64(string(mathValues[j]))
 			}
-			if *math == wgpb.PostResolveTransformationMath_AVG {
-				numberValue = numberValue / float64(len(arrayItems))
+			if numberValue > 0 {
+				if math == wgpb.PostResolveTransformationMath_AVG {
+					numberValue = numberValue / float64(itemsLength)
+				}
+				mathResult = []byte(fmt.Sprintf(`%f`, numberValue))
+			} else {
+				mathResult = literal.ZeroNumberValue
 			}
-			mathResult = []byte(fmt.Sprintf(`%f`, numberValue))
 		case wgpb.PostResolveTransformationMath_COUNT:
-			mathResult = []byte(fmt.Sprintf(`%d`, len(arrayItems)))
+			if itemsLength > 0 {
+				mathResult = []byte(fmt.Sprintf(`%d`, itemsLength))
+			} else {
+				mathResult = literal.ZeroNumberValue
+			}
 		case wgpb.PostResolveTransformationMath_FIRST:
-			mathResult = arrayItems[0]
+			mathResult = mathValues[0]
 		case wgpb.PostResolveTransformationMath_LAST:
-			mathResult = arrayItems[len(arrayItems)-1]
+			mathResult = mathValues[len(mathValues)-1]
 		default:
 			continue
 		}
-		if output, err = jsonparser.Set(output, mathResult, _to...); err != nil {
+		if output, err = jsonparser.Set(output, mathResult, mathPath...); err != nil {
 			return nil, err
 		}
 	}
-	return output, nil
+	return output, err
 }
 
 func (t *Transformer) applyGet(input []byte, get *wgpb.PostResolveGetTransformation, math *wgpb.PostResolveTransformationMath) (output []byte, err error) {
 	output = input
 	froms := t.resolvePaths(output, [][]string{get.From})
-	tos := t.resolvePaths(output, [][]string{get.To})
+	var tos [][]string
+	if slices.Equal(get.From, get.To) {
+		tos = froms
+	} else {
+		tos = t.resolvePaths(output, [][]string{get.To})
+	}
 	if len(froms) != len(tos) {
 		if len(froms) == 0 {
 			output, err = jsonparser.Set(output, []byte("null"), tos[0][:len(tos[0])-1]...)
@@ -91,10 +125,17 @@ func (t *Transformer) applyGet(input []byte, get *wgpb.PostResolveGetTransformat
 		err = fmt.Errorf("applyGet: from and to must have the same length")
 		return
 	}
+
 	var (
-		value     []byte
-		valueType jsonparser.ValueType
+		value       []byte
+		valueType   jsonparser.ValueType
+		tosLength   = len(tos)
+		mathTempMap map[string]*transformerMathTemp
 	)
+	if math != nil {
+		mathTempMap = t.getMathTempMap()
+		defer t.freeMathTempMap(mathTempMap)
+	}
 	for i := range froms {
 		value, valueType, _, err = jsonparser.Get(output, froms[i]...)
 		if err != nil {
@@ -106,12 +147,30 @@ func (t *Transformer) applyGet(input []byte, get *wgpb.PostResolveGetTransformat
 		} else if valueType == jsonparser.String {
 			value = []byte(`"` + string(value) + `"`)
 		}
+		if math != nil {
+			mathPath := tos[i][:len(tos[i])-1]
+			mathPathStr := strings.Join(mathPath, ",")
+			mathTemp, ok := mathTempMap[mathPathStr]
+			if !ok {
+				mathTemp = &transformerMathTemp{values: make([][]byte, 0, tosLength), path: mathPath}
+				mathTempMap[mathPathStr] = mathTemp
+			}
+			mathTemp.values = append(mathTemp.values, value)
+			continue
+		}
 		if output, err = jsonparser.Set(output, value, tos[i]...); err != nil {
 			return
 		}
 	}
-	if math != nil && len(tos) > 0 {
-		output, err = t.handleMath(output, tos, math)
+
+	if math != nil {
+		if len(tos) == 0 {
+			for _, item := range t.resolvePaths(output, [][]string{get.To[:len(get.To)-1]}) {
+				itemPath := item
+				mathTempMap[strings.Join(itemPath, ",")] = &transformerMathTemp{path: itemPath}
+			}
+		}
+		output, err = t.handleMath(output, mathTempMap, *math)
 	}
 	return
 }
@@ -168,7 +227,7 @@ func (t *Transformer) Transform(input []byte) (output []byte, err error) {
 
 	output = input
 
-	if len(t.transformations) == 0 || gjson.Null == gjson.GetBytes(output, "data").Type {
+	if t.graphqlTransformEnabled || len(t.transformations) == 0 || gjson.Null == gjson.GetBytes(output, "data").Type {
 		return
 	}
 

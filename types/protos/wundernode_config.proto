@@ -160,6 +160,7 @@ message Operation {
   OperationSemaphore semaphore = 23;
   repeated OperationMultipartForm multipartForms = 24;
   bool ruleExpressionExisted = 25;
+  bool graphqlTransformEnabled = 26;
   string internalVariablesSchema = 254; // [omitempty]
   string injectedVariablesSchema = 255; // [omitempty]
   bytes hookVariableDefaultValues = 253; // [omitempty]

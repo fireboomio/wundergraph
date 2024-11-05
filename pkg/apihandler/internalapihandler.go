@@ -148,6 +148,7 @@ func (i *InternalBuilder) registerOperation(operation *wgpb.Operation, ctx conte
 	shared.Postprocess.Process(preparedPlan)
 
 	postResolveTransformer := postresolvetransform.NewTransformer(operation.PostResolveTransformations)
+	postResolveTransformer.SetGraphqlTransformEnabled(operation.GraphqlTransformEnabled)
 	hooksPipelineCommonConfig := hooks.PipelineConfig{
 		Client:             i.middlewareClient,
 		Operation:          operation,
@@ -326,6 +327,9 @@ func (h *InternalApiHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	ctx := pool.GetCtx(r, clientRequest, pool.Config{
 		RenameTypeNames: h.renameTypeNames,
 	})
+	if h.operation.GraphqlTransformEnabled {
+		ctx.Context = context.WithValue(ctx.Context, resolve.TransformEnabled, true)
+	}
 	defer pool.PutCtx(ctx)
 	if applyContext != nil {
 		applyContext(ctx)
