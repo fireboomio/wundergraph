@@ -688,8 +688,8 @@ var (
 )
 
 const (
-	requestHeaderTag              = "X-FB-Tag"
-	requestHeaderTransformEnabled = "X-FB-Transform-Enabled"
+	requestHeaderTag        = "X-FB-Tag"
+	requestHeaderMockSwitch = "X-FB-Mock-Switch"
 )
 
 func invokeRemoteIpLimit(w http.ResponseWriter, r *http.Request, ctx context.Context) (invoked bool) {
@@ -735,7 +735,7 @@ func (h *GraphQLHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	shared.Ctx.Request.Header = r.Header
 	shared.Doc.Input.ResetInputString(requestQuery)
 	shared.Parser.Parse(shared.Doc, shared.Report)
-	if cast.ToBool(r.Header.Get(requestHeaderTransformEnabled)) {
+	if cast.ToBool(r.Header.Get(requestHeaderMockSwitch)) {
 		shared.Ctx.Context = context.WithValue(shared.Ctx.Context, resolve.TransformEnabled, true)
 	}
 
