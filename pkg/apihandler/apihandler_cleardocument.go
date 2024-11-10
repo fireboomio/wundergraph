@@ -1,9 +1,12 @@
 package apihandler
 
 import (
+	"bytes"
 	"errors"
 	"github.com/wundergraph/graphql-go-tools/pkg/ast"
+	"github.com/wundergraph/graphql-go-tools/pkg/astvisitor"
 	"github.com/wundergraph/graphql-go-tools/pkg/engine/resolve"
+	"github.com/wundergraph/graphql-go-tools/pkg/lexer/literal"
 	"golang.org/x/exp/maps"
 	"golang.org/x/exp/slices"
 	"strings"
@@ -28,7 +31,7 @@ func isIntrospectionQuery(doc *ast.Document) bool {
 	return doc.OperationNameExists("IntrospectionQuery")
 }
 
-func clearDocumentForClearRequired(ctx *resolve.Context, doc *ast.Document, autoCompleteRequired bool) (autoComplete *graphqlAutoComplete, err error) {
+func (h *GraphQLHandler) clearDocumentForClearRequired(ctx *resolve.Context, doc *ast.Document, autoCompleteRequired bool) (autoComplete *graphqlAutoComplete, err error) {
 	if isIntrospectionQuery(doc) {
 		return
 	}
@@ -66,8 +69,8 @@ func clearDocumentForClearRequired(ctx *resolve.Context, doc *ast.Document, auto
 		}
 	}
 	autoComplete = newGraphqlAutoComplete(doc, autoCompleteRequired)
-	recoverVariablesFuncs := clearDocumentForVariables(doc, autoCompleteRequired, clearRequiredForVariableFunc)
-	clearFieldsFuncs, recoverFieldsFuncs := clearDocumentForFields(doc, autoCompleteRequired, clearRequiredForFieldFunc, clearRawFieldFunc)
+	recoverVariablesFuncs := h.clearDocumentForVariables(doc, autoCompleteRequired, clearRequiredForVariableFunc)
+	clearFieldsFuncs, recoverFieldsFuncs := h.clearDocumentForFields(doc, autoCompleteRequired, clearRequiredForFieldFunc, clearRawFieldFunc)
 	defer func() {
 		for _, clearFunc := range clearFieldsFuncs {
 			clearFunc()
@@ -84,11 +87,17 @@ func clearDocumentForClearRequired(ctx *resolve.Context, doc *ast.Document, auto
 	return
 }
 
-func clearDocumentForVariables(doc *ast.Document, autoCompleteRequired bool, clearRequiredCheck func(ast.VariableDefinition) bool) (recoverFuncs []func()) {
+func (h *GraphQLHandler) clearDocumentForVariables(doc *ast.Document, autoCompleteRequired bool, clearRequiredCheck func(ast.VariableDefinition) bool) (recoverFuncs []func()) {
 	savedVariableDefs := make(map[int]ast.VariableDefinition, len(doc.VariableDefinitions))
+	touchedVariableRefs := make([]int, 0, len(doc.Arguments))
+	for _, item := range doc.Arguments {
+		touchedVariableRefs = append(touchedVariableRefs, doc.SearchVariableRefs(item.Value)...)
+	}
 	for index, item := range doc.VariableDefinitions {
 		clearRequired := clearRequiredCheck(item)
-		if clearRequired {
+		if clearRequired && !slices.ContainsFunc(touchedVariableRefs, func(i int) bool {
+			return doc.VariableValueNameString(i) == doc.VariableValueNameString(item.VariableValue.Ref)
+		}) {
 			continue
 		}
 		savedVariableDefs[index] = item
@@ -142,8 +151,7 @@ func clearDocumentForVariables(doc *ast.Document, autoCompleteRequired bool, cle
 	return
 }
 
-func clearDocumentForFields(doc *ast.Document, autoCompleteRequired bool, checkRequiredCheck func(ast.Field) bool,
-	otherClears ...func(int, bool, bool, bool)) (clearFuncs, recoverFuncs []func()) {
+func (h *GraphQLHandler) clearDocumentForFields(doc *ast.Document, autoCompleteRequired bool, checkRequiredCheck func(ast.Field) bool, otherClears ...func(int, bool, bool, bool)) (clearFuncs, recoverFuncs []func()) {
 	clearedFieldIndexes := make(map[int]bool)
 	for index, item := range doc.Fields {
 		fieldName := doc.FieldNameString(index)
@@ -159,6 +167,7 @@ func clearDocumentForFields(doc *ast.Document, autoCompleteRequired bool, checkR
 	}
 
 	if len(clearedFieldIndexes) > 0 {
+		h.recallDefinedField(clearedFieldIndexes, doc)
 		clearedSelectionIndexes := make(map[int]bool)
 		for index, item := range doc.Selections {
 			if item.Kind == ast.SelectionKindField {
@@ -180,14 +189,32 @@ func clearDocumentForFields(doc *ast.Document, autoCompleteRequired bool, checkR
 				savedSelectionRefs = append(savedSelectionRefs, selectionRef)
 			}
 			if !slices.Equal(originSelectionRefs, savedSelectionRefs) {
-				clearIndex := index
+				clearSetIndex := index
 				clearFuncs = append(clearFuncs, func() {
-					doc.SelectionSets[clearIndex].SelectionRefs = savedSelectionRefs
+					doc.SelectionSets[clearSetIndex].SelectionRefs = savedSelectionRefs
 				})
 				if autoCompleteRequired {
 					recoverFuncs = append(recoverFuncs, func() {
-						doc.SelectionSets[clearIndex].SelectionRefs = originSelectionRefs
+						doc.SelectionSets[clearSetIndex].SelectionRefs = originSelectionRefs
 					})
+				}
+				if len(savedSelectionRefs) == 0 {
+					for i := range doc.Fields {
+						if !doc.Fields[i].HasSelections || doc.Fields[i].SelectionSet != clearSetIndex {
+							continue
+						}
+
+						clearFieldIndex := i
+						clearFuncs = append(clearFuncs, func() {
+							doc.Fields[clearFieldIndex].HasSelections = false
+						})
+						if autoCompleteRequired {
+							recoverFuncs = append(recoverFuncs, func() {
+								doc.Fields[clearFieldIndex].HasSelections = true
+							})
+						}
+						break
+					}
 				}
 			}
 		}
@@ -195,8 +222,8 @@ func clearDocumentForFields(doc *ast.Document, autoCompleteRequired bool, checkR
 	return
 }
 
-func clearDocumentForPreparePlan(doc *ast.Document) {
-	clearDocumentForVariables(doc, false, func(variableDef ast.VariableDefinition) bool {
+func (h *GraphQLHandler) clearDocumentForPreparePlan(doc *ast.Document) {
+	h.clearDocumentForVariables(doc, false, func(variableDef ast.VariableDefinition) bool {
 		variableValue := variableDef.VariableValue
 		return variableValue.Kind == ast.ValueKindVariable && doc.VariableValues[variableValue.Ref].Generated
 	})
@@ -208,6 +235,54 @@ func clearDocumentForPreparePlan(doc *ast.Document) {
 	for index, item := range doc.ObjectFields {
 		if item.HasOriginValue {
 			doc.ObjectFields[index].Value = item.OriginValue
+		}
+	}
+}
+
+func (h *GraphQLHandler) recallDefinedField(clearedFieldIndexes map[int]bool, doc *ast.Document) {
+	walker := astvisitor.NewWalker(48)
+	_recallVisitor := &recallDefinedField{
+		Walker:              &walker,
+		clearedFieldIndexes: clearedFieldIndexes,
+	}
+	walker.RegisterEnterDocumentVisitor(_recallVisitor)
+	walker.RegisterEnterFieldVisitor(_recallVisitor)
+	_recallVisitor.Walk(doc, h.definition, nil)
+}
+
+type recallDefinedField struct {
+	*astvisitor.Walker
+	clearedFieldIndexes map[int]bool
+	operation           *ast.Document
+	definition          *ast.Document
+}
+
+func (f *recallDefinedField) EnterDocument(operation, definition *ast.Document) {
+	f.operation = operation
+	f.definition = definition
+}
+
+func (f *recallDefinedField) EnterField(ref int) {
+	switch f.EnclosingTypeDefinition.Kind {
+	case ast.NodeKindInterfaceTypeDefinition, ast.NodeKindObjectTypeDefinition:
+		f.tryRecall(ref, f.EnclosingTypeDefinition)
+	}
+}
+
+func (f *recallDefinedField) tryRecall(ref int, enclosingTypeDefinition ast.Node) {
+	if _, ok := f.clearedFieldIndexes[ref]; !ok {
+		return
+	}
+	fieldName := f.operation.FieldNameBytes(ref)
+	if bytes.Equal(fieldName, literal.TYPENAME) {
+		return
+	}
+	definitions := f.definition.NodeFieldDefinitions(enclosingTypeDefinition)
+	for _, i := range definitions {
+		definitionName := f.definition.FieldDefinitionNameBytes(i)
+		if bytes.Equal(fieldName, definitionName) {
+			delete(f.clearedFieldIndexes, ref)
+			return
 		}
 	}
 }

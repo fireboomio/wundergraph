@@ -145,6 +145,9 @@ func (i *InternalBuilder) registerOperation(operation *wgpb.Operation, ctx conte
 	}
 
 	preparedPlan := shared.Planner.Plan(shared.Doc, i.definition, operation.Name, shared.Report)
+	if shared.Report.HasErrors() {
+		return fmt.Errorf(ErrMsgOperationPlanningFailed, shared.Report)
+	}
 	shared.Postprocess.Process(preparedPlan)
 
 	postResolveTransformer := postresolvetransform.NewTransformer(operation.PostResolveTransformations)

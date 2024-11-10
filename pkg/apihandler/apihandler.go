@@ -683,10 +683,6 @@ type planWithExtractedVariables struct {
 	variables    []byte
 }
 
-var (
-	errInvalid = errors.New("invalid")
-)
-
 const (
 	requestHeaderTag        = "X-FB-Tag"
 	requestHeaderMockSwitch = "X-FB-Mock-Switch"
@@ -751,14 +747,7 @@ func (h *GraphQLHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	autoCompleteRequired := r.URL.Query().Has("autoComplete")
-	autoComplete, err := clearDocumentForClearRequired(shared.Ctx, shared.Doc, autoCompleteRequired)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
-		return
-	}
 	_, _ = shared.Hash.Write(requestOperationName)
-
 	err = shared.Printer.Print(shared.Doc, h.definition, shared.Hash)
 	if err != nil {
 		requestLogger.Error("shared printer print failed", zap.Error(err))
@@ -773,8 +762,14 @@ func (h *GraphQLHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	operationHash := shared.Hash.Sum64()
+	autoCompleteRequired := r.URL.Query().Has("autoComplete")
+	autoComplete, err := h.clearDocumentForClearRequired(shared.Ctx, shared.Doc, autoCompleteRequired)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
+	operationHash := shared.Hash.Sum64()
 	h.preparedMux.RLock()
 	prepared, exists := h.prepared[operationHash]
 	h.preparedMux.RUnlock()
@@ -792,7 +787,7 @@ func (h *GraphQLHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		if autoCompleteRequired {
-			autoComplete.prependRecoverFunc(func() { clearDocumentForPreparePlan(shared.Doc) })
+			autoComplete.prependRecoverFunc(func() { h.clearDocumentForPreparePlan(shared.Doc) })
 		}
 	}
 	shared.Ctx.Variables, _ = handleSpecial(shared.Ctx.Variables)
@@ -915,10 +910,13 @@ func (h *GraphQLHandler) preparePlan(operationHash uint64, requestOperationName 
 
 		state := shared.Validation.Validate(shared.Doc, h.definition, shared.Report)
 		if state != astvalidation.Valid {
-			return nil, errInvalid
+			return nil, fmt.Errorf(ErrMsgOperationValidationFailed, shared.Report)
 		}
 
 		preparedPlan := shared.Planner.Plan(shared.Doc, h.definition, unsafebytes.BytesToString(requestOperationName), shared.Report)
+		if shared.Report.HasErrors() {
+			return nil, fmt.Errorf(ErrMsgOperationPlanningFailed, shared.Report)
+		}
 		shared.Postprocess.Process(preparedPlan)
 
 		prepared := planWithExtractedVariables{
