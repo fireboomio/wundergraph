@@ -790,7 +790,8 @@ func (p *Planner) addVariableDefinitionsRecursively(value ast.Value, argumentNam
 		isJSON:       isJSON,
 		isRaw:        parentIsJson,
 		parentIsJson: parentIsJson,
-		nullable:     parentNullable || p.containsNullableKey(argumentTypeName),
+		nullable: parentNullable || p.containsNullableKey(argumentTypeName) ||
+			!p.visitor.Definition.TypeIsNonNull(argumentType) && (p.visitor.Definition.TypeIsScalar(argumentType, p.visitor.Definition) || p.visitor.Definition.TypeIsEnum(argumentType, p.visitor.Definition)),
 	})
 }
 
