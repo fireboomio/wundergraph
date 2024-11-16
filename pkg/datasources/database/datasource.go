@@ -592,7 +592,7 @@ func (p *Planner) addJsonField(ref int) {
 	astField := ast.Field{
 		Name: p.upstreamOperation.Input.AppendInputString(fieldName),
 	}
-	if nameOrAlias != fieldName && !p.disallowFieldAlias {
+	if nameOrAlias != fieldName && (!p.disallowFieldAlias || p.visitor.FieldHasConfig(ref) && ref != p.rootFieldRef) {
 		astField.Alias = ast.Alias{
 			IsDefined: true,
 			Name:      p.upstreamOperation.Input.AppendInputString(nameOrAlias),
@@ -1064,7 +1064,7 @@ func (p *Planner) addField(ref int) {
 	}
 
 	downstreamFieldName := p.visitor.Operation.FieldAliasOrNameString(ref)
-	if downstreamFieldName != fieldName && !p.disallowFieldAlias {
+	if downstreamFieldName != fieldName && (!p.disallowFieldAlias || p.visitor.FieldHasConfig(ref) && ref != p.rootFieldRef) {
 		astField.Alias = ast.Alias{
 			IsDefined: true,
 			Name:      p.upstreamOperation.Input.AppendInputString(downstreamFieldName),
