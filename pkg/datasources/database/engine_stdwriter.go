@@ -48,7 +48,7 @@ func (t *stdoutWriter) Write(p []byte) (n int, err error) {
 }
 
 type (
-	stderrWriter struct{ engine *Engine }
+	stderrWriter struct{ setStderrFunc func(msg stderrMsg) }
 	stderrMsg    string
 )
 
@@ -58,7 +58,7 @@ func (p stderrMsg) Error() string {
 
 func (t *stderrWriter) Write(p []byte) (n int, err error) {
 	if v := translateError(p); len(v) > 0 {
-		t.engine.stderr = stderrMsg(v)
+		t.setStderrFunc(stderrMsg(v))
 	}
 	return len(p), nil
 }

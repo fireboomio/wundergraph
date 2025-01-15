@@ -16,8 +16,9 @@ var (
 )
 
 var (
-	prismaErrorCodePath = []string{"error_code"}
-	prismaErrorMetaPath = []string{"meta"}
+	prismaErrorCodePath    = []string{"error_code"}
+	prismaErrorMetaPath    = []string{"meta"}
+	prismaErrorMessagePath = []string{"message"}
 
 	graphqlErrorsPath              = []string{"errors"}
 	graphqlItemErrorPath           = []string{"error"}
@@ -50,7 +51,8 @@ func translateError(prismaErrorBytes []byte) []byte {
 	codeBytes, _, _, _ := jsonparser.Get(prismaErrorBytes, prismaErrorCodePath...)
 	metaBytes, _, _, _ := jsonparser.Get(prismaErrorBytes, prismaErrorMetaPath...)
 	if len(codeBytes) == 0 || len(metaBytes) == 0 {
-		return nil
+		messageBytes, _, _, _ := jsonparser.Get(prismaErrorBytes, prismaErrorMessagePath...)
+		return messageBytes
 	}
 
 	codeStr := string(codeBytes)
