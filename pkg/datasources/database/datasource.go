@@ -122,6 +122,7 @@ type Configuration struct {
 	DatasourceKindForPrisma wgpb.DataSourceKind
 	DatasourceName          string
 	DatabaseURL             string
+	ExecuteTimeoutSeconds   int32
 	CloseTimeoutSeconds     int32
 	JsonTypeFields          []SingleTypeField
 	JsonInputVariables      []string
@@ -196,8 +197,11 @@ func (p *Planner) Register(visitor *plan.Visitor, configuration plan.DataSourceC
 
 	p.config = loadPlannerConfig(configuration.RootNodes)
 
+	if p.config.ExecuteTimeoutSeconds == 0 {
+		p.config.ExecuteTimeoutSeconds = 10
+	}
 	if p.config.CloseTimeoutSeconds == 0 {
-		p.config.CloseTimeoutSeconds = 10
+		p.config.CloseTimeoutSeconds = 30
 	}
 
 	p.isNested = isNested
@@ -334,7 +338,8 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 	var engine *LazyEngine
 	if !p.testsSkipEngine {
 		prismaSchema := prismaCache[p.config.DatabaseURL]
-		engine = p.engineFactory.Engine(prismaSchema, p.config.WunderGraphDir, p.config.CloseTimeoutSeconds, p.config.EnvironmentVariable)
+		engine = p.engineFactory.Engine(prismaSchema, p.config.WunderGraphDir,
+			p.config.ExecuteTimeoutSeconds, p.config.CloseTimeoutSeconds, p.config.EnvironmentVariable)
 		engine.client = p.client
 	}
 
@@ -1114,7 +1119,8 @@ type LazyEngineFactory struct {
 	engines map[string]*LazyEngine
 }
 
-func (f *LazyEngineFactory) Engine(prismaSchema, wundergraphDir string, closeTimeoutSeconds int32, environmentVariable string) *LazyEngine {
+func (f *LazyEngineFactory) Engine(prismaSchema, wundergraphDir string,
+	executeTimeoutSeconds int32, closeTimeoutSeconds int32, environmentVariable string) *LazyEngine {
 	if f.engines == nil {
 		f.engines = map[string]*LazyEngine{}
 	}
@@ -1122,7 +1128,8 @@ func (f *LazyEngineFactory) Engine(prismaSchema, wundergraphDir string, closeTim
 	if exists {
 		return engine
 	}
-	engine = newLazyEngine(prismaSchema, wundergraphDir, closeTimeoutSeconds, environmentVariable)
+	engine = newLazyEngine(prismaSchema, wundergraphDir,
+		executeTimeoutSeconds, closeTimeoutSeconds, environmentVariable)
 	go engine.start(f.closer)
 	runtime.SetFinalizer(engine, finalizeEngine)
 	f.engines[prismaSchema] = engine
@@ -1138,10 +1145,11 @@ func finalizeEngine(e *LazyEngine) {
 type LazyEngine struct {
 	mutex *sync.Mutex
 
-	environmentVariable string
-	prismaSchema        string
-	wundergraphDir      string
-	closeTimeoutSeconds int32
+	environmentVariable   string
+	prismaSchema          string
+	wundergraphDir        string
+	executeTimeoutSeconds int32
+	closeTimeoutSeconds   int32
 
 	engine          HybridEngine
 	engineCloser    *time.Timer
@@ -1150,13 +1158,15 @@ type LazyEngine struct {
 	closed          bool
 }
 
-func newLazyEngine(prismaSchema string, wundergraphDir string, closeTimeoutSeconds int32, environmentVariable string) *LazyEngine {
+func newLazyEngine(prismaSchema string, wundergraphDir string,
+	executeTimeoutSeconds int32, closeTimeoutSeconds int32, environmentVariable string) *LazyEngine {
 	return &LazyEngine{
-		mutex:               &sync.Mutex{},
-		environmentVariable: environmentVariable,
-		prismaSchema:        prismaSchema,
-		wundergraphDir:      wundergraphDir,
-		closeTimeoutSeconds: closeTimeoutSeconds,
+		mutex:                 &sync.Mutex{},
+		environmentVariable:   environmentVariable,
+		prismaSchema:          prismaSchema,
+		wundergraphDir:        wundergraphDir,
+		executeTimeoutSeconds: executeTimeoutSeconds,
+		closeTimeoutSeconds:   closeTimeoutSeconds,
 	}
 }
 
@@ -1267,7 +1277,7 @@ func (s *Source) Load(ctx context.Context, input []byte, w io.Writer) (err error
 	request = s.ensureMutationPrefix(request)
 	spanFuncs = append(spanFuncs, logging.SpanWithLogInput(request))
 
-	buf, err := s.execute(ctx, request, time.Second*5)
+	buf, err := s.execute(ctx, request, time.Duration(s.engine.executeTimeoutSeconds)*time.Second)
 	defer pool.PutBytesBuffer(buf)
 	if err != nil {
 		return
@@ -1291,7 +1301,10 @@ func (s *Source) execute(ctx context.Context, request []byte, timeout time.Durat
 	)
 	buf = pool.GetBytesBuffer()
 	ctx, cancel := context.WithCancel(ctx)
-	timer := time.AfterFunc(timeout, cancel)
+	timer := time.AfterFunc(timeout, func() {
+		cancel()
+		s.log.Debug("database.Source.Execute.Timeout", zap.Int("executing", s.engine.engineExecuting))
+	})
 	extendCancelFunc := func() { timer.Reset(timeout) }
 	for {
 		if retryTimes == 0 {

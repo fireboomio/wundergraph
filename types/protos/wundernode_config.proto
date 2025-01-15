@@ -565,6 +565,7 @@ message DataSourceCustom_Database {
   ConfigurationVariable databaseURL = 1;
   string prismaSchema = 2;
   string graphqlSchema = 3;
+  int32 executeTimeoutSeconds = 8;
   // closeTimeoutSeconds define that the database connection will be closed after the given amount of seconds of inactivity
   int32 closeTimeoutSeconds = 4;
   repeated SingleTypeField jsonTypeFields = 5;

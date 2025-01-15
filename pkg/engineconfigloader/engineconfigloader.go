@@ -471,6 +471,9 @@ func (l *EngineConfigLoader) Load(engineConfig *wgpb.EngineConfiguration, wgServ
 					FieldName: field.FieldName,
 				})
 			}
+			if config.ExecuteTimeoutSeconds == 0 {
+				config.ExecuteTimeoutSeconds = 10
+			}
 			if config.CloseTimeoutSeconds == 0 {
 				config.CloseTimeoutSeconds = 30
 			}
