@@ -462,6 +462,7 @@ func (l *EngineConfigLoader) Load(engineConfig *wgpb.EngineConfiguration, wgServ
 				DatasourceName:          in.Id,
 				DatabaseURL:             databaseURL,
 				EnvironmentVariable:     in.CustomDatabase.EnvironmentVariable,
+				ExecuteTimeoutSeconds:   in.CustomDatabase.ExecuteTimeoutSeconds,
 				CloseTimeoutSeconds:     in.CustomDatabase.CloseTimeoutSeconds,
 				WunderGraphDir:          l.wundergraphDir,
 			}
