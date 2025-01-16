@@ -299,9 +299,6 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 		)
 		if variable.isRaw {
 			renderer = &RawJsonVariableRenderer{parentIsJson: variable.parentIsJson}
-			if p.isOptionalRaw {
-				p.optionalParametersKey = variable.name
-			}
 		} else if variable.isJSON {
 			// renderer = resolve.NewGraphQLVariableRenderer(`{"type":"string"}`)
 			renderer = &JsonStringVariableRenderer{}
@@ -514,6 +511,7 @@ func (p *Planner) EnterField(ref int) {
 
 	if p.isOptionalRawField(ref) {
 		p.isOptionalRaw = true
+		defer p.addOptionalParameters(p.nodes[len(p.nodes)-1].Ref)
 	}
 
 	p.ensureEmptyParametersArgOnRawOperations(ref)

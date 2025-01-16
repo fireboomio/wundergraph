@@ -6,10 +6,12 @@ import (
 	"fmt"
 	"github.com/buger/jsonparser"
 	json "github.com/json-iterator/go"
+	"github.com/tidwall/sjson"
 	"github.com/wundergraph/graphql-go-tools/pkg/ast"
 	"github.com/wundergraph/graphql-go-tools/pkg/astprinter"
 	"github.com/wundergraph/graphql-go-tools/pkg/engine/resolve"
 	"github.com/wundergraph/graphql-go-tools/pkg/lexer/literal"
+	"github.com/wundergraph/wundergraph/internal/unsafebytes"
 	"github.com/wundergraph/wundergraph/pkg/pool"
 	"github.com/wundergraph/wundergraph/pkg/wgpb"
 	"golang.org/x/exp/slices"
@@ -302,6 +304,20 @@ func (p *Planner) isOptionalRawField(fieldRef int) bool {
 		name == "optional_executeRaw" || strings.HasSuffix(name, "_optional_executeRaw")
 }
 
+func (p *Planner) addOptionalParameters(upstreamFieldRef int) {
+	variableNameBytes := p.visitor.Operation.GenerateUnusedVariableDefinitionName(p.nodes[0].Ref)
+	p.optionalParametersKey = unsafebytes.BytesToString(variableNameBytes)
+	p.visitor.Operation.Input.Variables, _ = sjson.SetRawBytes(
+		p.visitor.Operation.Input.Variables,
+		p.optionalParametersKey, literal.ZeroArrayValue)
+	_, argRef := p.upstreamOperation.AddVariableValueArgument([]byte("parameters"), variableNameBytes) // add the argument to the field, but don't redefine it
+	p.upstreamOperation.AddArgumentToField(upstreamFieldRef, argRef)
+	p.inlinedVariables = append(p.inlinedVariables, inlinedVariable{
+		name:  p.optionalParametersKey,
+		isRaw: true,
+	})
+}
+
 func (p *Planner) rewriteVariable(ctx *resolve.Context, key string, value []byte, valueType jsonparser.ValueType) ([]byte, error) {
 	if !p.isOptionalRaw || len(p.optionalParametersKey) == 0 || valueType != jsonparser.Array {
 		return value, nil
@@ -310,16 +326,18 @@ func (p *Planner) rewriteVariable(ctx *resolve.Context, key string, value []byte
 	if !ok {
 		return value, nil
 	}
-	if v, ok := p.optionalParameters.LoadAndDelete(ctx); ok && p.optionalParametersKey == key {
-		return v.([]byte), nil
+	if p.optionalParametersKey == key {
+		if v, _ok := p.optionalParameters.LoadAndDelete(ctx); _ok {
+			return v.([]byte), nil
+		}
+		return value, nil
 	}
 
 	var (
 		savedParameters []*optionalParameter
 		savedSqlBytes   [][]byte
 	)
-	_, _ = jsonparser.ArrayEach(value, func(v []byte, t jsonparser.ValueType, _ int, _ error) {
-		sqlBytes, _, _, _ := jsonparser.Get(v, "sql")
+	_, _ = jsonparser.ArrayEach(value, func(sqlBytes []byte, _ jsonparser.ValueType, _ int, _ error) {
 		dollarParams := dollarParameterRegexp.FindAllString(string(sqlBytes), -1)
 		ampersandParams := ampersandParameterRegexp.FindAllString(string(sqlBytes), -1)
 		dollarParamsLen, ampersandParamsLen := len(dollarParams), len(ampersandParams)
