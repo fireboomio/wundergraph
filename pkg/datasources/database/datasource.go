@@ -73,6 +73,7 @@ type Planner struct {
 type inlinedVariable struct {
 	name         string
 	typeRef      int
+	generated    bool
 	nullable     bool
 	isJSON       bool
 	isRaw        bool
@@ -311,9 +312,10 @@ func (p *Planner) ConfigureFetch() plan.FetchConfiguration {
 			}
 		}
 		contextVariable := &resolve.ContextVariable{
-			Path:     []string{variable.name},
-			Renderer: renderer,
-			Nullable: variable.nullable,
+			Path:      []string{variable.name},
+			Renderer:  renderer,
+			Nullable:  variable.nullable,
+			Generated: variable.generated,
 		}
 		replacement, _ := p.variables.AddVariable(contextVariable)
 		currentRegexp, err := regexp.Compile(fmt.Sprintf(`%s\b`, regexp.QuoteMeta(currentName)))
@@ -710,10 +712,11 @@ func (p *Planner) configureFieldArgumentSource(upstreamFieldRef, downstreamField
 	}
 
 	p.inlinedVariables = append(p.inlinedVariables, inlinedVariable{
-		name:    variableNameStr,
-		typeRef: variableDefinitionType,
-		isJSON:  isJSON,
-		isRaw:   p.isRawArgument(downstreamFieldRef, argumentName),
+		name:      variableNameStr,
+		typeRef:   variableDefinitionType,
+		isJSON:    isJSON,
+		isRaw:     p.isRawArgument(downstreamFieldRef, argumentName),
+		generated: p.visitor.Operation.VariableValueIsGenerated(argumentValue.Ref),
 	})
 }
 
@@ -793,6 +796,7 @@ func (p *Planner) addVariableDefinitionsRecursively(value ast.Value, argumentNam
 		isJSON:       isJSON,
 		isRaw:        parentIsJson,
 		parentIsJson: parentIsJson,
+		generated:    p.visitor.Operation.VariableValueIsGenerated(value.Ref),
 		nullable: parentNullable || p.containsNullableKey(argumentTypeName) ||
 			!p.visitor.Definition.TypeIsNonNull(argumentType) && (p.visitor.Definition.TypeIsScalar(argumentType, p.visitor.Definition) || p.visitor.Definition.TypeIsEnum(argumentType, p.visitor.Definition)),
 	})
@@ -880,6 +884,7 @@ func (p *Planner) configureObjectFieldSource(upstreamFieldRef int, argumentConfi
 
 	variableName := p.upstreamOperation.GenerateUnusedVariableDefinitionName(p.nodes[0].Ref)
 	variableValue, argument := p.upstreamOperation.AddVariableValueArgument([]byte(argumentConfiguration.Name), variableName)
+	p.upstreamOperation.VariableValues[variableValue].Generated = true
 	p.upstreamOperation.AddArgumentToField(upstreamFieldRef, argument)
 	importedType := p.visitor.Importer.ImportType(argumentType, p.visitor.Definition, p.upstreamOperation)
 	p.upstreamOperation.AddVariableDefinitionToOperationDefinition(p.nodes[0].Ref, variableValue, importedType)

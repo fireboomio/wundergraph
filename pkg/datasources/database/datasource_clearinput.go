@@ -282,21 +282,22 @@ func (r *OptionalQueryRenderer) RenderVariable(_ context.Context, data []byte, o
 }
 
 var (
-	dollarParameterRegexp         = regexp.MustCompile(`\${\w+}`)
-	ampersandParameterRegexp      = regexp.MustCompile(`&{\w+}`)
+	stringArraySplit              = []byte(`","`)
+	dollarTemplateRegexp          = regexp.MustCompile(`\${\w+}`)
+	dollarParameterRegexp         = regexp.MustCompile(`\$\w+\b`)
 	optionalParameterReplaceFuncs = map[wgpb.DataSourceKind]optionalParameterReplaceFunc{
+		wgpb.DataSourceKind_SQLITE:     func(int, []byte) []byte { return []byte(`?`) },
 		wgpb.DataSourceKind_MYSQL:      func(int, []byte) []byte { return []byte(`?`) },
 		wgpb.DataSourceKind_POSTGRESQL: func(i int, _ []byte) []byte { return []byte(fmt.Sprintf(`$%d`, i+1)) },
 	}
 )
 
-type (
-	optionalParameter struct {
-		param []byte
-		value []byte
-	}
-	optionalParameterReplaceFunc func(int, []byte) []byte
-)
+type optionalParameterReplaceFunc func(int, []byte) []byte
+
+func SupportOptionalRaw(kind wgpb.DataSourceKind) bool {
+	_, ok := optionalParameterReplaceFuncs[kind]
+	return ok
+}
 
 func (p *Planner) isOptionalRawField(fieldRef int) bool {
 	name := p.visitor.Operation.FieldNameString(fieldRef)
@@ -310,11 +311,13 @@ func (p *Planner) addOptionalParameters(upstreamFieldRef int) {
 	p.visitor.Operation.Input.Variables, _ = sjson.SetRawBytes(
 		p.visitor.Operation.Input.Variables,
 		p.optionalParametersKey, literal.ZeroArrayValue)
-	_, argRef := p.upstreamOperation.AddVariableValueArgument([]byte("parameters"), variableNameBytes) // add the argument to the field, but don't redefine it
+	variableValue, argRef := p.upstreamOperation.AddVariableValueArgument([]byte("parameters"), variableNameBytes) // add the argument to the field, but don't redefine it
+	p.upstreamOperation.VariableValues[variableValue].Generated = true
 	p.upstreamOperation.AddArgumentToField(upstreamFieldRef, argRef)
 	p.inlinedVariables = append(p.inlinedVariables, inlinedVariable{
-		name:  p.optionalParametersKey,
-		isRaw: true,
+		generated: true,
+		name:      p.optionalParametersKey,
+		isRaw:     true,
 	})
 }
 
@@ -333,52 +336,52 @@ func (p *Planner) rewriteVariable(ctx *resolve.Context, key string, value []byte
 		return value, nil
 	}
 
+	sqlArrayCount := bytes.Count(value, stringArraySplit) + 1
 	var (
-		savedParameters []*optionalParameter
-		savedSqlBytes   [][]byte
+		savedParameterIndex int
+		itemParameterBytes  = make([][]byte, 0, 8)
+		savedParameterBytes = make([][]byte, 0, sqlArrayCount*2)
+		savedSqlBytes       = make([][]byte, 0, sqlArrayCount)
 	)
 	_, _ = jsonparser.ArrayEach(value, func(sqlBytes []byte, _ jsonparser.ValueType, _ int, _ error) {
-		dollarParams := dollarParameterRegexp.FindAllString(string(sqlBytes), -1)
-		ampersandParams := ampersandParameterRegexp.FindAllString(string(sqlBytes), -1)
-		dollarParamsLen, ampersandParamsLen := len(dollarParams), len(ampersandParams)
-		if dollarParamsLen == 0 && ampersandParamsLen == 0 {
-			savedSqlBytes = append(savedSqlBytes, sqlBytes)
-			return
-		}
-		for _, param := range ampersandParams {
-			paramValue, _, _, _ := jsonparser.Get(ctx.Variables, param[2:len(param)-1])
-			sqlBytes = bytes.Replace(sqlBytes, []byte(param), paramValue, 1)
-		}
-		itemSavedParameters := make([]*optionalParameter, 0, dollarParamsLen)
-		for _, param := range dollarParams {
-			paramKey := param[2 : len(param)-1]
-			paramValue, paramValueType, paramOffset, _ := jsonparser.Get(ctx.Variables, paramKey)
+		itemParameterBytes = itemParameterBytes[:0]
+		itemParameterIndex := savedParameterIndex
+		itemSqlBytesRequired := true
+		sqlBytes = dollarParameterRegexp.ReplaceAllFunc(sqlBytes, func(matchBytes []byte) []byte {
+			if !itemSqlBytesRequired {
+				return nil
+			}
+			paramKey := matchBytes[1:]
+			paramValue, paramValueType, paramOffset, _ := jsonparser.Get(ctx.Variables, string(paramKey))
 			if paramValueType == jsonparser.NotExist {
-				break
+				itemSqlBytesRequired = false
+				return nil
 			}
 			if paramValueType == jsonparser.String {
 				paramValue = ctx.Variables[paramOffset-len(paramValue)-2 : paramOffset]
 			}
-			itemSavedParameters = append(itemSavedParameters, &optionalParameter{
-				param: []byte(param), value: paramValue,
-			})
-		}
-		if len(itemSavedParameters) == dollarParamsLen {
+			itemParameterBytes = append(itemParameterBytes, paramValue)
+			modifiedBytes := parameterReplaceFunc(itemParameterIndex, paramKey)
+			itemParameterIndex++
+			return modifiedBytes
+		})
+		if itemSqlBytesRequired {
 			savedSqlBytes = append(savedSqlBytes, sqlBytes)
-			savedParameters = append(savedParameters, itemSavedParameters...)
+			savedParameterIndex = itemParameterIndex
+			savedParameterBytes = append(savedParameterBytes, itemParameterBytes...)
 		}
 	})
 
-	var (
-		finalParameterBytes [][]byte
-		finalSqlBytes       = bytes.Join(savedSqlBytes, literal.SPACE)
-	)
-	for i, item := range savedParameters {
-		replaceElement := parameterReplaceFunc(i, item.param)
-		finalSqlBytes = bytes.Replace(finalSqlBytes, item.param, replaceElement, 1)
-		finalParameterBytes = append(finalParameterBytes, item.value)
-	}
-	p.optionalParameters.Store(ctx, makeArrayBytes(finalParameterBytes))
+	finalSqlBytes := bytes.Join(savedSqlBytes, literal.SPACE)
+	finalSqlBytes = dollarTemplateRegexp.ReplaceAllFunc(finalSqlBytes, func(matchBytes []byte) []byte {
+		templateValue, _, _, _err := jsonparser.Get(ctx.Variables, string(matchBytes[2:len(matchBytes)-1]))
+		if _err != nil {
+			return matchBytes
+		}
+		return templateValue
+	})
+	finalParameterBytes := makeArrayBytes(savedParameterBytes)
+	p.optionalParameters.Store(ctx, finalParameterBytes)
 	return finalSqlBytes, nil
 }
 

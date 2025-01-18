@@ -12,7 +12,7 @@ import (
 var (
 	TranslateErrorFunc func(string) string
 	colorRegexp        = regexp.MustCompile(`(\\)u001b\[\d+(;\d+)?m`)
-	placeHolderRegexp  = regexp.MustCompile(`\{[a-zA-Z0-9_]+\}`)
+	placeHolderRegexp  = regexp.MustCompile(`\{[a-zA-Z0-9_]+}`)
 )
 
 var (

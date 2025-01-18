@@ -93,6 +93,7 @@ type Shared struct {
 
 func (s *Shared) Reset() {
 	s.Doc.Reset()
+	s.Doc.Input.Length = len(s.Doc.Input.RawBytes)
 	s.Hash.Reset()
 	s.Report.Reset()
 	s.Ctx.Free()
