@@ -3,6 +3,7 @@ package pool
 import (
 	"bytes"
 	"context"
+	"github.com/spf13/cast"
 	"hash"
 	"net/http"
 	"sync"
@@ -93,7 +94,6 @@ type Shared struct {
 
 func (s *Shared) Reset() {
 	s.Doc.Reset()
-	s.Doc.Input.Length = len(s.Doc.Input.RawBytes)
 	s.Hash.Reset()
 	s.Report.Reset()
 	s.Ctx.Free()
@@ -133,6 +133,8 @@ func (p *Pool) GetSharedFromRequest(ctx context.Context, r *http.Request, planCo
 		s.Ctx.Context = c
 		s.Ctx.Request.Header = r.Header
 		s.Ctx.RenameTypeNames = cfg.RenameTypeNames
+		s.Ctx.DateFormatFunc = DateFormatFunc
+		s.Doc.Input.RawBytes = make([]byte, 0, cast.ToInt(r.Header.Get("Content-Length")))
 		return s
 	}
 	resolveCtx := resolve.NewContext(c)

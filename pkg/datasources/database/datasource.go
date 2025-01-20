@@ -1304,10 +1304,7 @@ func (s *Source) execute(ctx context.Context, request []byte, timeout time.Durat
 	)
 	buf = pool.GetBytesBuffer()
 	ctx, cancel := context.WithCancel(ctx)
-	timer := time.AfterFunc(timeout, func() {
-		cancel()
-		s.log.Debug("database.Source.Execute.Timeout", zap.Int("executing", s.engine.engineExecuting))
-	})
+	timer := time.AfterFunc(timeout, cancel)
 	extendCancelFunc := func() { timer.Reset(timeout) }
 	for {
 		if retryTimes == 0 {
