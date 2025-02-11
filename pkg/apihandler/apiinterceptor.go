@@ -90,8 +90,11 @@ func intercept(handler http.Handler, hooksClient *hooks.Client, operation *wgpb.
 			defer pool.PutBytesBuffer(buf)
 
 			if err = handleAfterResponseHook(respInterceptor, r, metaData, buf, hooksClient); err != nil {
-				http.Error(w, err.Error(), http.StatusInternalServerError)
-				return
+				h := respInterceptor.writer.Header()
+				h.Del("Content-Length")
+				h.Set("Content-Type", "text/plain; charset=utf-8")
+				respInterceptor.WriteHeader(http.StatusBadRequest)
+				respInterceptor.rewriteBodyBytes([]byte(err.Error()))
 			}
 
 			respInterceptor.writeToOrigin()
