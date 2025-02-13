@@ -43,7 +43,8 @@ type (
 	eventbus struct {
 		subscribers map[Channel][]*subscriber
 		notices     []*noticer
-		lock        sync.RWMutex
+		rwLock      sync.RWMutex
+		globalLock  *sync.Mutex
 	}
 	noticer struct {
 		events  []Event
@@ -90,6 +91,10 @@ func EnsureEventSubscribe(data any) {
 	}
 }
 
+func SetGlobalLock(locker *sync.Mutex) {
+	eb.globalLock = locker
+}
+
 func DirectCall(channel Channel, event Event, data any) any {
 	if result, _ := searchSubscriber(channel, event); result != nil {
 		return result.handler(data)
@@ -99,15 +104,15 @@ func DirectCall(channel Channel, event Event, data any) any {
 }
 
 func Notice(notice func(Channel, Event, any), event ...Event) {
-	eb.lock.Lock()
-	defer eb.lock.Unlock()
+	eb.rwLock.Lock()
+	defer eb.rwLock.Unlock()
 
 	eb.notices = append(eb.notices, &noticer{event, notice})
 }
 
 func Subscribe(channel Channel, event Event, handler func(any) any) {
-	eb.lock.Lock()
-	defer eb.lock.Unlock()
+	eb.rwLock.Lock()
+	defer eb.rwLock.Unlock()
 
 	result, caller := searchSubscriber(channel, event)
 	if result != nil {
@@ -118,7 +123,7 @@ func Subscribe(channel Channel, event Event, handler func(any) any) {
 }
 
 func Publish(channel Channel, event Event, data any) bool {
-	eb.lock.RLock()
+	eb.rwLock.RLock()
 
 	subscribers := eb.subscribers[channel]
 	var handlers []func(any) any
@@ -132,11 +137,15 @@ func Publish(channel Channel, event Event, data any) bool {
 		}
 	}
 	if len(handlers) == 0 || breakHandler == nil {
-		eb.lock.RUnlock()
+		eb.rwLock.RUnlock()
 		return false
 	}
 
 	go func() {
+		if eb.globalLock != nil {
+			eb.globalLock.Lock()
+			defer eb.globalLock.Unlock()
+		}
 		latestData := data
 		start := time.Now()
 		for _, handler := range handlers {
@@ -152,7 +161,7 @@ func Publish(channel Channel, event Event, data any) bool {
 				notice.handler(channel, event, data)
 			}
 		}
-		eb.lock.RUnlock()
+		eb.rwLock.RUnlock()
 	}()
 	return true
 }
