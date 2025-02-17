@@ -42,6 +42,9 @@ func (s *Source) rewriteOutput(output []byte) []byte {
 		switch rewriter.Type {
 		case wgpb.DataSourceRESTRewriterType_fieldRewrite:
 			itemRewriteFunc = func(path []string, _ []byte, valueType jsonparser.ValueType) ([]string, []byte, jsonparser.ValueType) {
+				if rewriterValueType := jsonparser.ValueType(rewriter.ValueType); rewriterValueType != jsonparser.NotExist {
+					valueType = rewriterValueType
+				}
 				return append(path[:len(path)-1], rewriter.FieldRewriteTo), nil, valueType
 			}
 		case wgpb.DataSourceRESTRewriterType_applyAllSubObject:

@@ -526,6 +526,7 @@ message DataSourceRESTRewriter {
   string quoteObjectName = 3; // [omitempty]
   string fieldRewriteTo = 4; // [omitempty]
   // request rewrite
+  int32 valueType = 12; // [omitempty]
   map<string, string> valueRewrites = 5; // [omitempty]
   string customObjectName = 6; // [omitempty]
   string customEnumField = 7; // [omitempty]
