@@ -5,6 +5,7 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/opentracing/opentracing-go/ext"
 	"github.com/opentracing/opentracing-go/log"
+	"go.uber.org/zap/zapcore"
 	"net/http"
 	"net/http/httputil"
 	"strings"
@@ -24,12 +25,14 @@ const (
 )
 
 var (
+	LogLevel          zapcore.Level
 	traceDebug        bool
 	spanWithEmptySpan = func(...func(opentracing.Span)) {}
 )
 
-func SetTraceDebug(value bool) {
-	traceDebug = value
+func SetLogLevel(level zapcore.Level) {
+	LogLevel = level
+	traceDebug = LogLevel.Enabled(zapcore.DebugLevel)
 }
 
 func StartTraceContext(ctx, followCtx context.Context, operationName string, startSpanFunc ...func(span opentracing.Span)) (context.Context, func(...func(opentracing.Span))) {

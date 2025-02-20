@@ -7,7 +7,9 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/jensneuse/abstractlogger"
 	"github.com/wundergraph/graphql-go-tools/pkg/ast"
+	"github.com/wundergraph/wundergraph/pkg/logging"
 	"golang.org/x/exp/slices"
 	"net"
 	"net/http"
@@ -55,6 +57,7 @@ type DefaultFactoryResolver struct {
 	static           *staticdatasource.Factory
 	database         *database.Factory
 	hooksClient      *hooks.Client
+	logger           abstractlogger.Logger
 }
 
 func NewDefaultFactoryResolver(transportFactory ApiTransportFactory, baseTransport http.RoundTripper,
@@ -75,6 +78,7 @@ func NewDefaultFactoryResolver(transportFactory ApiTransportFactory, baseTranspo
 			HTTPClient:      defaultHttpClient,
 			StreamingClient: streamingClient,
 			BatchFactory:    graphql_datasource.NewBatchFactory(),
+			Logger:          abstractlogger.NewZapLogger(zap.L(), abstractlogger.Level(logging.LogLevel)),
 		},
 		rest: &oas_datasource.Factory{
 			Client:          defaultHttpClient,
@@ -214,6 +218,7 @@ func (d *DefaultFactoryResolver) Resolve(ds *wgpb.DataSourceConfiguration) (plan
 			HTTPClient:      d.graphql.HTTPClient,
 			StreamingClient: d.graphql.StreamingClient,
 			BatchFactory:    d.graphql.BatchFactory,
+			Logger:          d.logger,
 		}
 
 		if d.requiresCustomHTTPClient(ds, ds.CustomGraphql.Fetch) {
