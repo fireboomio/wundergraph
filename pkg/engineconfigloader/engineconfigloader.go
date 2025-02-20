@@ -57,7 +57,6 @@ type DefaultFactoryResolver struct {
 	static           *staticdatasource.Factory
 	database         *database.Factory
 	hooksClient      *hooks.Client
-	logger           abstractlogger.Logger
 }
 
 func NewDefaultFactoryResolver(transportFactory ApiTransportFactory, baseTransport http.RoundTripper,
@@ -218,7 +217,7 @@ func (d *DefaultFactoryResolver) Resolve(ds *wgpb.DataSourceConfiguration) (plan
 			HTTPClient:      d.graphql.HTTPClient,
 			StreamingClient: d.graphql.StreamingClient,
 			BatchFactory:    d.graphql.BatchFactory,
-			Logger:          d.logger,
+			Logger:          d.graphql.Logger,
 		}
 
 		if d.requiresCustomHTTPClient(ds, ds.CustomGraphql.Fetch) {
