@@ -2290,6 +2290,9 @@ func (r *Builder) registerAuth(insecureCookies bool) error {
 }
 
 func (r *Builder) registerCookieAuthHandlers(router *mux.Router, cookie *securecookie.SecureCookie, authHooks authentication.Hooks) error {
+	if r.api.AuthenticationConfig == nil || r.api.AuthenticationConfig.CookieBased == nil {
+		return nil
+	}
 
 	oidcProviders, err := r.configureOpenIDConnectProviders()
 	if err != nil {
@@ -2302,10 +2305,6 @@ func (r *Builder) registerCookieAuthHandlers(router *mux.Router, cookie *securec
 		Hooks:           authHooks,
 		Log:             r.log,
 	})
-
-	if r.api.AuthenticationConfig == nil || r.api.AuthenticationConfig.CookieBased == nil {
-		return nil
-	}
 
 	for _, provider := range r.api.AuthenticationConfig.CookieBased.Providers {
 		r.configureCookieProvider(router, provider, cookie)
