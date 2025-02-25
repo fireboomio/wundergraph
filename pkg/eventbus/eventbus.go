@@ -33,6 +33,8 @@ const (
 	EventBreak       Event = "break"
 )
 
+var syncEvents = []Event{EventInvalid, EventRuntime}
+
 type (
 	EventSubscribe interface {
 		Subscribe()
@@ -44,7 +46,7 @@ type (
 		subscribers map[Channel][]*subscriber
 		notices     []*noticer
 		rwLock      sync.RWMutex
-		globalLock  *sync.Mutex
+		globalLock  *sync.RWMutex
 	}
 	noticer struct {
 		events  []Event
@@ -91,7 +93,7 @@ func EnsureEventSubscribe(data any) {
 	}
 }
 
-func SetGlobalLock(locker *sync.Mutex) {
+func SetGlobalLock(locker *sync.RWMutex) {
 	eb.globalLock = locker
 }
 
@@ -141,10 +143,10 @@ func Publish(channel Channel, event Event, data any) bool {
 		return false
 	}
 
-	go func() {
+	runner := func() {
 		if eb.globalLock != nil {
-			eb.globalLock.Lock()
-			defer eb.globalLock.Unlock()
+			eb.globalLock.RLock()
+			defer eb.globalLock.RUnlock()
 		}
 		latestData := data
 		start := time.Now()
@@ -162,7 +164,12 @@ func Publish(channel Channel, event Event, data any) bool {
 			}
 		}
 		eb.rwLock.RUnlock()
-	}()
+	}
+	if slices.Contains(syncEvents, event) {
+		runner()
+	} else {
+		go runner()
+	}
 	return true
 }
 
