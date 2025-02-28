@@ -8,15 +8,17 @@ import (
 	"github.com/opentracing/opentracing-go"
 	"github.com/r3labs/sse/v2"
 	"github.com/wundergraph/graphql-go-tools/pkg/engine/plan"
+	"github.com/wundergraph/graphql-go-tools/pkg/lexer/literal"
 	"github.com/wundergraph/wundergraph/pkg/customhttpclient"
 	"github.com/wundergraph/wundergraph/pkg/logging"
 	"io"
 	"math"
 	"net/http"
+	"strings"
 )
 
 const (
-	errorResponseFormat = `{"errors":[{"message":"%s"]}`
+	errorResponseFormat = `{"errors":[{"message":"%s"}]}`
 	dataResponseFormat  = `{"data":%s}`
 )
 
@@ -68,19 +70,40 @@ func (s *subscriptionSource) subscribe(ctx context.Context, input []byte, next c
 
 	_, resp, err := customhttpclient.Do(s.streamingClient, ctx, input)
 	if err != nil {
+		err = errors.New(strings.ReplaceAll(err.Error(), `"`, `'`))
 		return
 	}
-	if resp.Header.Get(customhttpclient.ContentTypeHeader) != customhttpclient.TextEventStreamMine {
+	if resp.StatusCode != http.StatusOK {
+		bodyBytes, _ := io.ReadAll(resp.Body)
+		bodyBytes = bytes.TrimSuffix(bodyBytes, literal.LINETERMINATOR)
+		if bytes.HasPrefix(bodyBytes, literal.LBRACE) && bytes.HasSuffix(bodyBytes, literal.RBRACE) {
+			newBodyBytes := make([]byte, 0, len(bodyBytes)*2)
+			var quoted bool
+			for i := range bodyBytes {
+				switch bodyBytes[i] {
+				case '"':
+					quoted = !quoted
+					newBodyBytes = append(newBodyBytes, literal.BACKSLASH...)
+					newBodyBytes = append(newBodyBytes, literal.QUOTE...)
+				case ' ', '\n':
+					if quoted {
+						newBodyBytes = append(newBodyBytes, bodyBytes[i])
+					}
+				default:
+					newBodyBytes = append(newBodyBytes, bodyBytes[i])
+				}
+			}
+			bodyBytes = newBodyBytes
+		}
+		err = errors.New(string(bodyBytes))
+		return
+	}
+	if !strings.HasPrefix(resp.Header.Get(customhttpclient.ContentTypeHeader), customhttpclient.TextEventStreamMine) {
 		err = errors.New("response is not a text event stream")
 		return
 	}
 	if resp.Body == nil {
 		err = errors.New("response body is nil")
-		return
-	}
-	if resp.StatusCode != http.StatusOK {
-		bodyBytes, _ := io.ReadAll(resp.Body)
-		err = errors.New(string(bodyBytes))
 		return
 	}
 	defer func() { _ = resp.Body.Close() }()
