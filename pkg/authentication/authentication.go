@@ -658,6 +658,7 @@ func NewLoadUserMw(config LoadUserConfig) (map[string]func(*http.Request) bool, 
 			providerConfig, err := introspectionOpenIDConnectProvider(issuer, jwkHttpClient, false)
 			if err != nil {
 				config.Log.Error("jwks introspection failed",
+					zap.String("authentication", provider.Id),
 					zap.Error(err), zap.String("issuer", issuer))
 				continue
 			}
@@ -666,6 +667,7 @@ func NewLoadUserMw(config LoadUserConfig) (map[string]func(*http.Request) bool, 
 			userInfoURL, err := url.Parse(userInfoEndpoint)
 			if err != nil {
 				config.Log.Error("jwks userInfo endpoint invalid URL",
+					zap.String("authentication", provider.Id),
 					zap.Error(err), zap.String("URL", userInfoEndpoint))
 				continue
 			}
@@ -675,6 +677,7 @@ func NewLoadUserMw(config LoadUserConfig) (map[string]func(*http.Request) bool, 
 				cancel()
 				if err != nil {
 					config.Log.Error("loading jwks from URL failed",
+						zap.String("authentication", provider.Id),
 						zap.Error(err), zap.String("URL", jwksURL))
 					continue
 				}
@@ -690,6 +693,7 @@ func NewLoadUserMw(config LoadUserConfig) (map[string]func(*http.Request) bool, 
 				jwks, err := keyfunc.NewJSON(json.RawMessage(js))
 				if err != nil {
 					config.Log.Error("loading jwks from JSON failed",
+						zap.String("authentication", provider.Id),
 						zap.Error(err), zap.String("JSON", js))
 					continue
 				}

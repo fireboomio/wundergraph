@@ -66,6 +66,7 @@ message JwksBasedAuthentication {
 }
 
 message JwksAuthProvider {
+  string id = 1;
   ConfigurationVariable issuer = 5;
   ConfigurationVariable jwksJson = 2;
   int64 userInfoCacheTtlSeconds = 4;
