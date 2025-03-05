@@ -1416,7 +1416,7 @@ func (h *QueryHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r = setOperationMetaData(r, h.operation, h.queryParamsAllowList, h.cache)
 
 	if proceed := h.rbacEnforcer.Enforce(r); !proceed {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Error(w, "Permission not enough", http.StatusForbidden)
 		return
 	}
 
@@ -1851,7 +1851,7 @@ func (h *MutationHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	r = setOperationMetaData(r, h.operation, h.queryParamsAllowList, h.cache)
 
 	if proceed := h.rbacEnforcer.Enforce(r); !proceed {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Error(w, "Permission not enough", http.StatusForbidden)
 		return
 	}
 
@@ -2003,7 +2003,7 @@ func (h *SubscriptionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) 
 	r = setOperationMetaData(r, h.operation, h.queryParamsAllowList, h.cache)
 
 	if proceed := h.rbacEnforcer.Enforce(r); !proceed {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Error(w, "Permission not enough", http.StatusForbidden)
 		return
 	}
 
@@ -2525,7 +2525,7 @@ func (h *FunctionHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	defer pool.PutCtx(ctx)
 
 	if proceed := h.rbacEnforcer.Enforce(r); !proceed {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Error(w, "Permission not enough", http.StatusForbidden)
 		return
 	}
 

@@ -169,6 +169,7 @@ type Client struct {
 	httpClient          *retryablehttp.Client
 	subscriptionsClient *retryablehttp.Client
 	log                 *zap.Logger
+	healthQuery         map[string]interface{}
 }
 
 func NewClient(serverUrl string, logger *zap.Logger) *Client {
@@ -211,6 +212,10 @@ func buildClient(requestTimeout time.Duration) *retryablehttp.Client {
 
 func (c *Client) ResetServerUrl(serverUrl string) {
 	c.serverUrl = serverUrl
+}
+
+func (c *Client) ResetHealthQuery(query map[string]interface{}) {
+	c.healthQuery = query
 }
 
 func (c *Client) DoProxyRequest(ctx context.Context, hook MiddlewareHook, jsonData []byte, buf *bytes.Buffer) (*MiddlewareHookResponse, error) {
@@ -501,7 +506,15 @@ func (c *Client) doMiddlewareRequest(ctx context.Context, action string, hook Mi
 }
 
 func (c *Client) DoHealthCheckRequest(ctx context.Context, writer ...io.Writer) (status bool) {
-	req, err := retryablehttp.NewRequestWithContext(ctx, "GET", c.serverUrl+"/health", nil)
+	url := c.serverUrl + "/health"
+	if c.healthQuery != nil {
+		queries := make([]string, 0, len(c.healthQuery))
+		for k, v := range c.healthQuery {
+			queries = append(queries, fmt.Sprintf("%s=%v", k, v))
+		}
+		url += "?" + strings.Join(queries, "&")
+	}
+	req, err := retryablehttp.NewRequestWithContext(ctx, "GET", url, nil)
 	if err != nil {
 		return false
 	}

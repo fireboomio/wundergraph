@@ -364,11 +364,11 @@ func (u *User) Load(loader *UserLoader, r *http.Request) error {
 				if err != nil {
 					loader.log.Warn("could not parse token", zap.String("token", tokenString),
 						zap.Time("timeFunc", jwt.TimeFunc()), zap.Error(err))
-					continue
+					return DeniedError(err.Error())
 				}
 				if token != nil && !token.Valid {
 					loader.log.Warn("token is invalid", zap.Any("token", token))
-					continue
+					return DeniedError("token is invalid")
 				}
 			}
 

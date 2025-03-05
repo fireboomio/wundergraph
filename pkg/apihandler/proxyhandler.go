@@ -61,7 +61,7 @@ type ProxyHandler struct {
 
 func (h *ProxyHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if proceed := h.rbacEnforcer.Enforce(r); !proceed {
-		http.Error(w, "Unauthorized", http.StatusUnauthorized)
+		http.Error(w, "Permission not enough", http.StatusForbidden)
 		return
 	}
 
