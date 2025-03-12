@@ -26,7 +26,7 @@ const (
 
 var (
 	LogLevel          zapcore.Level
-	withSpanIO        bool
+	withSpanInout     bool
 	spanWithEmptySpan = func(...func(opentracing.Span)) {}
 )
 
@@ -34,8 +34,8 @@ func SetLogLevel(level zapcore.Level) {
 	LogLevel = level
 }
 
-func WithSpanIO(enabled bool) {
-	withSpanIO = enabled
+func WithSpanInout(enabled bool) {
+	withSpanInout = enabled
 }
 
 func StartTraceContext(ctx, followCtx context.Context, operationName string, startSpanFunc ...func(span opentracing.Span)) (context.Context, func(...func(opentracing.Span))) {
@@ -79,7 +79,7 @@ func StartTraceRequest(r *http.Request, startSpanFunc ...func(span opentracing.S
 	httpUrl, _ := strings.CutPrefix(r.URL.RequestURI(), "?")
 	ext.HTTPUrl.Set(span, httpUrl)
 	ext.HTTPMethod.Set(span, r.Method)
-	if withSpanIO {
+	if withSpanInout {
 		requestBodyBytes, _ := httputil.DumpRequest(r, NoneMultipartContentType(r))
 		span.LogFields(log.String(SpanLogFieldHttpRequest, string(requestBodyBytes)))
 	}
@@ -121,7 +121,7 @@ func extractSpanContextFromHttpHeaders(r *http.Request) (opentracing.SpanContext
 
 func SpanWithLogResponse(resp *http.Response) func(opentracing.Span) {
 	var responseBodyBytes []byte
-	if resp != nil && withSpanIO {
+	if resp != nil && withSpanInout {
 		responseBodyBytes, _ = httputil.DumpResponse(resp, NoneStreamContentType(resp.Header))
 	}
 	return func(span opentracing.Span) {
@@ -149,7 +149,7 @@ func SpanWithLogError(err error) func(opentracing.Span) {
 
 func SpanWithLogInput(input []byte) func(opentracing.Span) {
 	return func(span opentracing.Span) {
-		if withSpanIO && len(input) > 0 {
+		if withSpanInout && len(input) > 0 {
 			span.LogFields(log.String(spanLogFieldDatasourceInput, string(input)))
 		}
 	}
@@ -157,7 +157,7 @@ func SpanWithLogInput(input []byte) func(opentracing.Span) {
 
 func SpanWithLogOriginInput(originInput []byte) func(opentracing.Span) {
 	return func(span opentracing.Span) {
-		if withSpanIO && len(originInput) > 0 {
+		if withSpanInout && len(originInput) > 0 {
 			span.LogFields(log.String(spanLogFieldDatasourceOriginInput, string(originInput)))
 		}
 	}
@@ -165,7 +165,7 @@ func SpanWithLogOriginInput(originInput []byte) func(opentracing.Span) {
 
 func SpanWithLogOutput(output []byte) func(opentracing.Span) {
 	return func(span opentracing.Span) {
-		if withSpanIO && len(output) > 0 {
+		if withSpanInout && len(output) > 0 {
 			span.LogFields(log.String(spanLogFieldDatasourceOutput, string(output)))
 		}
 	}
