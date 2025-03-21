@@ -26,16 +26,11 @@ const (
 
 var (
 	LogLevel          zapcore.Level
-	withSpanInout     bool
 	spanWithEmptySpan = func(...func(opentracing.Span)) {}
 )
 
 func SetLogLevel(level zapcore.Level) {
 	LogLevel = level
-}
-
-func WithSpanInout(enabled bool) {
-	withSpanInout = enabled
 }
 
 func StartTraceContext(ctx, followCtx context.Context, operationName string, startSpanFunc ...func(span opentracing.Span)) (context.Context, func(...func(opentracing.Span))) {
@@ -60,7 +55,7 @@ func StartTraceContext(ctx, followCtx context.Context, operationName string, sta
 
 func StartTraceRequest(r *http.Request, startSpanFunc ...func(span opentracing.Span)) (*http.Request, func(...func(opentracing.Span))) {
 	requestID := RequestIDFromContext(r.Context())
-	if requestID == "" || !opentracing.IsGlobalTracerRegistered() {
+	if !opentracing.IsGlobalTracerRegistered() || requestID == "" {
 		return r, spanWithEmptySpan
 	}
 
@@ -79,10 +74,8 @@ func StartTraceRequest(r *http.Request, startSpanFunc ...func(span opentracing.S
 	httpUrl, _ := strings.CutPrefix(r.URL.RequestURI(), "?")
 	ext.HTTPUrl.Set(span, httpUrl)
 	ext.HTTPMethod.Set(span, r.Method)
-	if withSpanInout {
-		requestBodyBytes, _ := httputil.DumpRequest(r, NoneMultipartContentType(r))
-		span.LogFields(log.String(SpanLogFieldHttpRequest, string(requestBodyBytes)))
-	}
+	requestBodyBytes, _ := httputil.DumpRequest(r, NoneMultipartContentType(r))
+	span.LogFields(log.String(SpanLogFieldHttpRequest, string(requestBodyBytes)))
 	for _, item := range startSpanFunc {
 		item(span)
 	}
@@ -121,7 +114,7 @@ func extractSpanContextFromHttpHeaders(r *http.Request) (opentracing.SpanContext
 
 func SpanWithLogResponse(resp *http.Response) func(opentracing.Span) {
 	var responseBodyBytes []byte
-	if resp != nil && withSpanInout {
+	if opentracing.IsGlobalTracerRegistered() && resp != nil {
 		responseBodyBytes, _ = httputil.DumpResponse(resp, NoneStreamContentType(resp.Header))
 	}
 	return func(span opentracing.Span) {
@@ -149,7 +142,7 @@ func SpanWithLogError(err error) func(opentracing.Span) {
 
 func SpanWithLogInput(input []byte) func(opentracing.Span) {
 	return func(span opentracing.Span) {
-		if withSpanInout && len(input) > 0 {
+		if opentracing.IsGlobalTracerRegistered() && len(input) > 0 {
 			span.LogFields(log.String(spanLogFieldDatasourceInput, string(input)))
 		}
 	}
@@ -157,7 +150,7 @@ func SpanWithLogInput(input []byte) func(opentracing.Span) {
 
 func SpanWithLogOriginInput(originInput []byte) func(opentracing.Span) {
 	return func(span opentracing.Span) {
-		if withSpanInout && len(originInput) > 0 {
+		if opentracing.IsGlobalTracerRegistered() && len(originInput) > 0 {
 			span.LogFields(log.String(spanLogFieldDatasourceOriginInput, string(originInput)))
 		}
 	}
@@ -165,7 +158,7 @@ func SpanWithLogOriginInput(originInput []byte) func(opentracing.Span) {
 
 func SpanWithLogOutput(output []byte) func(opentracing.Span) {
 	return func(span opentracing.Span) {
-		if withSpanInout && len(output) > 0 {
+		if opentracing.IsGlobalTracerRegistered() && len(output) > 0 {
 			span.LogFields(log.String(spanLogFieldDatasourceOutput, string(output)))
 		}
 	}
